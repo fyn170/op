@@ -44,24 +44,14 @@ jobs:
       if: (!cancelled())
       run: df -hT
  
-    - name: Get the latest download url of Phicomm-N1 release
-      if: (!cancelled())
-      run: |
-        curl -s "https://api.github.com/repos/ophub/op/releases" | grep -o "openwrt_.*/openwrt_phicomm_.*\.zip" | head -n 1 > DOWNLOAD_URL
-        [ -s DOWNLOAD_URL ] && echo "DOWNLOAD_URL=https://github.com/ophub/op/releases/download/$(cat DOWNLOAD_URL)" >> $GITHUB_ENV
- 
     - name: Download firmware
       id: download
       if: env.UPLOAD_FIRMWARE == 'true' && !cancelled()
       run: |
+        curl -s "https://api.github.com/repos/ophub/op/releases" | grep -o "openwrt_.*/openwrt_phicomm_.*\.zip" | head -n 1 > DOWNLOAD_URL
+        [ -s DOWNLOAD_URL ] && echo "DOWNLOAD_URL=https://github.com/ophub/op/releases/download/$(cat DOWNLOAD_URL)" >> $GITHUB_ENV
         wget -q -P ${{ env.OPENWRT_PATH }}/flippy ${{ env.DOWNLOAD_URL }}
-        cd ${{ env.OPENWRT_PATH }}/flippy && unzip *.zip
-        echo "USE_KERNEL=$( ls -d */ | head -n 1  | head -c-2 )" >> $GITHUB_ENV
         echo "FILE_DATE=$(date +"%Y.%m.%d")" >> $GITHUB_ENV
-        cd $( ls -d */ | head -n 1 ) && gzip -d *.img.gz && mv *.img ../phicomm.img && cd ../
-        rm -rf $( find ${PWD}/* -type d )
-        rm -rf $( find ${PWD}/* -type f ! -name "*.img" )
-        [ -f *.img ] && echo $(ls *.img) file exist || echo *.img file does not exist
         echo "::set-output name=status::success"
 
     - name: Build firmware
@@ -81,7 +71,7 @@ jobs:
       uses: actions/upload-artifact@master
       if: steps.build.outputs.status == 'success' && env.UPLOAD_FIRMWARE == 'true' && !cancelled()
       with:
-        name: openwrt_${{ env.USE_KERNEL }}_${{ env.OP_TAG }}_${{ env.FILE_DATE }}
+        name: openwrt_${{ env.OP_TAG }}_${{ env.FILE_DATE }}
         path: ${{ env.FILEPATH }}
 
     - name: Upload firmware to cowtransfer
