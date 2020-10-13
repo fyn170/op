@@ -65,7 +65,7 @@ check_zip_file() {
         for kernel_folder in $( ls -d */ | head -c-2 ); do
             kernel_version=${kernel_folder%/*}
             cd ${kernel_version} && gzip -df *.img.gz && mv -f *.img ../${kernel_version}.img && sync && cd ../
-            echo_color "yellow" "(1/5) gzip: ${kernel_version}" "..."
+            echo_color "yellow" "(1/5) Use kernel: ${kernel_version}" "..."
         done
 
         rm -rf $( find ${PWD}/* -type d ) 2>/dev/null
@@ -108,7 +108,7 @@ losetup_mount_img() {
      mount ${lodev}p2 ${root_tmp}
      [ $lodev ] || echo_color "red" "(3/5) mount ${lodev}p2 failed!" "..."
 
-     echo_color "green" "(3/5) End losetup_mount_img" "Use: ${lodev} ..."
+     echo_color "green" "(3/5) End losetup_mount_img" "make_${flippy_file} losetup to ${lodev} ..."
 
 }
 
@@ -130,16 +130,16 @@ edit_uenv() {
             old_x96_dtb="#FDT=\/dtb\/amlogic\/meson-sm1-x96-max-plus-100m.dtb"
             new_x96_dtb="FDT=\/dtb\/amlogic\/meson-sm1-x96-max-plus-100m.dtb"
             sed -i "s/${old_x96_dtb}/${new_x96_dtb}/g" uEnv.txt
-            echo_color "yellow" "(4/5) x96: convert completed" "..."
+            echo_color "yellow" "(4/5) x96: Convert completed" "..."
             ;;
         hk1)
             old_hk1_dtb="#FDT=\/dtb\/amlogic\/meson-sm1-hk1box-vontar-x3.dtb"
             new_hk1_dtb="FDT=\/dtb\/amlogic\/meson-sm1-hk1box-vontar-x3.dtb"
             sed -i "s/${old_hk1_dtb}/${new_hk1_dtb}/g" uEnv.txt
-            echo_color "yellow" "(4/5) hk1: convert completed" "..."
+            echo_color "yellow" "(4/5) hk1: Convert completed" "..."
             ;;
         *)
-            echo_color "red" "(4/5) have no this firmware: ${convert_firmware}"  "Please select from this list: [ ${firmware_list[@]} ]"
+            echo_color "red" "(4/5) Have no this firmware: ${convert_firmware}"  "Please select from this list: [ ${firmware_list[@]} ]"
             no_firmware=ture
             ;;
         esac
@@ -173,7 +173,7 @@ umount_ulosetup() {
      openwrt_filename=openwrt_${firmware_dtb}_${flippy_file%.*}_$(date +"%Y.%m.%d").img
      cp -f ${flippy_folder}/make_${flippy_file} ${build_save_folder}/${openwrt_filename}
      chmod -R 777 ${build_save_folder}
-     echo_color "yellow" "(5/5) convert to ${build_save_folder}/${openwrt_filename}" "..."
+     echo_color "yellow" "(5/5) Convert to ${build_save_folder}/${openwrt_filename}" "..."
      
      sync
 
@@ -188,10 +188,10 @@ if [[ ! -n "${convert_firmware}" ]]; then echo_color "red" "(0/5) Parameter is e
 if [[ ! "${firmware_list[@]}"  =~ "${convert_firmware}" ]] &&  [[ ! "${convert_firmware}" = "all" ]]; then echo_color "red" "(0/5) Parameter error" "..."; fi
 
 # begin run the script
-echo_color "purple" "Start convert."  "..."
-[ $( ls $flippy_folder/*.zip | wc -l ) -gt 0 ] && check_zip_file || echo_color "green" "(1/5) End: Have no *.zip Files."
+echo_color "purple" "Start convert"  "..."
+[ $( ls $flippy_folder/*.zip | wc -l ) -gt 0 ] && check_zip_file || echo_color "green" "(1/5) End check_zip_file" "Have no *.zip Files ..."
 
-# Use Phicomm N1 firmware to build s905x3 related firmware (x96 hk1)
+# Use Phicomm N1 firmware (*.img) to build s905x3 related firmware (x96 hk1)
 [ $( ls $flippy_folder/*.img | wc -l ) -eq 0 ] && echo_color "red" "(0/5) Error: *.img Files does not exist!" || {
     for kernel in $( ls $flippy_folder/*.img ); do
         if [ ${convert_firmware} = "all" ];then
@@ -215,6 +215,6 @@ echo_color "purple" "Start convert."  "..."
 }
 
 rm -rf  ${flippy_folder}/*  2>/dev/null
-echo_color "purple" "Convert completed."  "..."
+echo_color "purple" "Convert completed"  "..."
 # end run the script
 
