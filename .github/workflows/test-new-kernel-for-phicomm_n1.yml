@@ -15,7 +15,7 @@ on:
     branches:
       - main
     paths:
-      - '.github/workflows/test.yml'
+      - '.github/workflows/test-new-kernel-for-phicomm_n1.yml'
   #schedule:
     #- cron: '0 0 * * 5'
   #watch:
