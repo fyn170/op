@@ -64,8 +64,8 @@ jobs:
         wget -q -P ${{ env.OPENWRT_PATH }}/openwrt ${{ env.DOWNLOAD_URL }}
         cd ${{ env.OPENWRT_PATH }}/openwrt && unzip *.zip
         rm -rf $( find ${PWD}/* -type d )
-        rm -rf $( find ${PWD}/* -type f -name "*.zip" )
-        [ -f *.tar.gz ] && echo $(ls *.tar.gz) file exist || echo *.tar.gz file does not exist
+        rm -rf $( find ${PWD}/* -type f ! -name "*.tar.gzg" )
+        [ -f *.tar.gz ] && echo -e $(ls *.tar.gz) file exist || echo -e *.tar.gz file does not exist
         echo "FILE_DATE=$(date +"%Y.%m.%d")" >> $GITHUB_ENV
         echo "::set-output name=status::success"
 
