@@ -61,18 +61,17 @@ check_zip_file() {
         Support the use of *.img and *.zip files"
     else
         cd ${flippy_folder} && unzip -o *.zip && sync
+        openwrt_zip_name=$( ls *.zip )
         for kernel_folder in $( ls -d */ | head -c-2 ); do
             kernel_version=${kernel_folder%/*}
             cd ${kernel_version} && gzip -df *.img.gz && mv -f *.img ../${kernel_version}.img && sync && cd ../
             echo_color "yellow" "(1/5) gzip: ${kernel_version}" "..."
         done
 
-        rm -rf $( find ${PWD}/* -type d ) || echo_color "red" "(1/5) Error: Failed to delete folder" "..."
-        rm -rf $( find ${PWD}/* -type f ! -name "*.img" ) || echo_color "red" "(1/5) Error: Failed to delete files" "..."
+        rm -rf $( find ${PWD}/* -type d ) 2>/dev/null
+        rm -rf $( find ${PWD}/* -type f ! -name "*.img" ) 2>/dev/null
 
-        # begin run the script
-        echo_color "purple" "Start convert"  "Use *.zip file Convert to [ ${convert_firmware} ] ..."
-        echo_color "green" "(1/5) End check_zip_files" "Use: ${flippy_file}..."
+        echo_color "green" "(1/5) End check_zip_files" "Use [ ${openwrt_zip_name} ] Convert to [ ${convert_firmware} ]..."
     fi
     cd ../
 
@@ -82,16 +81,13 @@ check_zip_file() {
 # Check files
 check_build_files() {
 
-    #flippy_file=${kernel#*/}
     flippy_file=${1}
     if  [  ! -f ${flippy_folder}/${flippy_file} ]; then
         echo_color "red" "(2/5) Error: Files does not exist"  "\n \
         Please check if the following one files exist: \n \
         ${flippy_folder}/${flippy_file} "
     else
-        # begin run the script
-        echo_color "purple" "Start convert"  "Use [ ${flippy_file} ] Convert to [ ${convert_firmware} ] ..."
-        echo_color "green" "(2/5) End check_build_files" "Use: ${flippy_file}..."
+        echo_color "green" "(2/5) End check_build_files" "Use [ ${flippy_file} ] Convert to [ ${convert_firmware} ]..."
     fi
 
 }
@@ -190,6 +186,9 @@ umount_ulosetup() {
 #Parameter validity check
 if [[ ! -n "${convert_firmware}" ]]; then echo_color "red" "(0/5) Parameter is empty!" "..."; fi
 if [[ ! "${firmware_list[@]}"  =~ "${convert_firmware}" ]] &&  [[ ! "${convert_firmware}" = "all" ]]; then echo_color "red" "(0/5) Parameter error" "..."; fi
+
+# begin run the script
+echo_color "purple" "Start convert."  "..."
 [ $( ls $flippy_folder/*.zip | wc -l ) -gt 0 ] && check_zip_file || echo_color "green" "(1/5) End: Have no *.zip Files."
 
 # Use Phicomm N1 firmware to build s905x3 related firmware (x96 hk1)
@@ -216,7 +215,6 @@ if [[ ! "${firmware_list[@]}"  =~ "${convert_firmware}" ]] &&  [[ ! "${convert_f
 }
 
 rm -rf  ${flippy_folder}/*  2>/dev/null
-echo_color "purple" "convert completed"  "..."
-
+echo_color "purple" "Convert completed."  "..."
 # end run the script
 
