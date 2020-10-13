@@ -62,9 +62,9 @@ jobs:
       if: env.UPLOAD_FIRMWARE == 'true' && !cancelled()
       run: |
         wget -q -P ${{ env.OPENWRT_PATH }}/openwrt ${{ env.DOWNLOAD_URL }}
-        cd ${{ env.OPENWRT_PATH }}/openwrt && unzip *.zip
+        cd ${{ env.OPENWRT_PATH }}/openwrt && unzip *.zip && sync
         rm -rf $( find ${PWD}/* -type d )
-        rm -rf $( find ${PWD}/* -type f ! -name "*.tar.gzg" )
+        rm -rf $( find ${PWD}/* -type f ! -name "*.tar.gz" )
         [ -f *.tar.gz ] && echo -e $(ls *.tar.gz) file exist || echo -e *.tar.gz file does not exist
         echo "FILE_DATE=$(date +"%Y.%m.%d")" >> $GITHUB_ENV
         echo "::set-output name=status::success"
