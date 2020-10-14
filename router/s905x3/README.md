@@ -54,9 +54,9 @@ iptables -t nat -I POSTROUTING -o br-lan -j MASQUERADE      #If the interface is
 #FDT=/dtb/amlogic/meson-gxl-s905d-phicomm-n1-thresh.dtb
 #
 #X96 Max+ (S905X3 for 100m)
-#FDT=/dtb/amlogic/meson-sm1-x96-max-plus-100m.dtb
+FDT=/dtb/amlogic/meson-sm1-x96-max-plus-100m.dtb
 #X96 Max+ (S905X3 for 1000M) [tag: s905x3]
-FDT=/dtb/amlogic/meson-sm1-x96-max-plus.dtb
+#FDT=/dtb/amlogic/meson-sm1-x96-max-plus.dtb
 #
 #HK1 BoX (S905X3 for 1000M) [tag: hk1]
 #FDT=/dtb/amlogic/meson-sm1-hk1box-vontar-x3.dtb
