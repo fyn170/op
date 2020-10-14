@@ -1,18 +1,38 @@
 #!/bin/bash
 
-#===============================================================================================================
+#============================================================================================================================
 # https://github.com/ophub/op
 # Description: Use Phicomm N1 firmware to build s905x3 related firmware (x96 hk1)
 # Function: Use Phicomm N1 firmware to build s905x3 related firmware
 # Copyright (C) 2020 https://github.com/ophub/op
-# make parameter: all / x96 / hk1
-#===============================================================================================================
-
-# Modify Phicomm N1 firmware's folder
-# Support putting multiple *.img files into compiling together
-flippy_folder="flippy"
+#============================================================================================================================
+#
+# example: ~/op/router/s905x3/
+# ├── flippy
+# │   ├── phicomm_n1_firmware_01.img
+# │   ├── phicomm_n1_firmware_02.img
+# │   ├── phicomm_n1_firmware_more.img
+# │   │
+# │   └── or phicomm_n1_firmware.zip
+# │
+# └── make
+#
+# Usage: Use Ubuntu 18 LTS 64-bit
+# 01. Log in to the home directory of the local Ubuntu system
+# 02. git clone https://github.com/ophub/op.git
+# 03. cd ~/op/router/s905x3/
+# 04. Put phicomm_n1_firmware file into ${flippy_folder} (Support putting multiple *.img files into compiling together)
+# 05. Run: sudo ./make all (make parameter: all / x96 / hk1)
+# 06. The generated files path: ~/op/router/s905x3/${build_save_folder}
+# 07. git push to your github
+# 08. Github.com Build openwrt: ~/op/.github/workflows/build-openwrt-s905x3.yml
+#
+# Tips: If run 'sudo ./make all' is 'Command not found'. run: 'sudo chmod +x make'
+#
+#============================================================================================================================
 
 # Default setting ( Don't modify )
+flippy_folder="flippy"
 build_tmp_folder="tmp"
 boot_tmp=${build_tmp_folder}/boot
 root_tmp=${build_tmp_folder}/root
@@ -65,7 +85,7 @@ check_zip_file() {
         for kernel_folder in $( ls -d */ | head -c-2 ); do
             kernel_version=${kernel_folder%/*}
             cd ${kernel_version} && gzip -df *.img.gz && mv -f *.img ../${kernel_version}.img && sync && cd ../
-            echo_color "yellow" "(1/5) Use kernel: ${kernel_version}" "..."
+            echo_color "yellow" "(1/5) Get the kernel: ${kernel_version}" "..."
         done
 
         rm -rf $( find ${PWD}/* -type d ) 2>/dev/null
@@ -77,8 +97,7 @@ check_zip_file() {
 
 }
 
-
-# Check files
+# Check *.img files
 check_build_files() {
 
     flippy_file=${1}
@@ -189,7 +208,7 @@ if [[ ! "${firmware_list[@]}"  =~ "${convert_firmware}" ]] &&  [[ ! "${convert_f
 
 # begin run the script
 echo_color "purple" "Start convert"  "..."
-[ $( ls $flippy_folder/*.zip | wc -l ) -gt 0 ] && check_zip_file || echo_color "green" "(1/5) End check_zip_file" "Have no *.zip Files ..."
+[ $( ls $flippy_folder/*.zip | wc -l ) -gt 0 ] && check_zip_file || echo_color "green" "(1/5) End check_zip_file" "Have no *.zip Files..."
 
 # Use Phicomm N1 firmware (*.img) to build s905x3 related firmware (x96 hk1)
 [ $( ls $flippy_folder/*.img | wc -l ) -eq 0 ] && echo_color "red" "(0/5) Error: *.img Files does not exist!" || {
