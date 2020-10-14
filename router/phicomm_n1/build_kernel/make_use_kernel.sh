@@ -25,11 +25,7 @@
 # 07. git push to your github
 # 08. Github.com Build openwrt: ~/op/.github/workflows/build-openwrt-phicomm_n1.yml
 #
-# Tips: If run 'sudo ./make_use_kernel.sh' is 'Command not found'
-# 01. chmod a+x make_use_kernel.sh
-# 02. vi make_use_kernel.sh
-# 03. :set ff=unix
-# 04. :wq
+# Tips: If run 'sudo ./make_use_kernel.sh' is 'Command not found'. Run: sudo chmod +x make_use_kernel.sh
 #
 #===============================================================================================================
 
