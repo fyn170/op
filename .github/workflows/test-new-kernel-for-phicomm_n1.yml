@@ -68,9 +68,8 @@ jobs:
       id: build
       if: steps.download.outputs.status == 'success' && env.UPLOAD_FIRMWARE == 'true' && !cancelled()
       run: |
-        chmod +x ${{ env.OPENWRT_PATH }}/make
-        sudo rm -rf $OUT_PATH
-        sudo ${{ env.OPENWRT_PATH }}/make -d
+        cd ${{ env.OPENWRT_PATH }} && sudo rm -rf $OUT_PATH 2>/dev/null
+        chmod +x make && sudo ./make -d
         cd $OUT_PATH
         for x in $(ls .); do
           cd $x && gzip *.img && cd ../
