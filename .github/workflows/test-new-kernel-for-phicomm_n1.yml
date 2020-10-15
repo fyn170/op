@@ -36,6 +36,7 @@ env:
   UPLOAD_FIRMWARE: true
   UPLOAD_RELEASE: true
   UPLOAD_WETRANSFER: true
+  RECENT_LASTEST: 30
   TZ: Asia/Shanghai
 
 jobs:
@@ -86,11 +87,12 @@ jobs:
         echo "::set-output name=status::success"
 
     - name: Upload firmware directory for Phicomm N1
-      uses: actions/upload-artifact@master
+      uses: actions/upload-artifact@v2
       if: steps.build.outputs.status == 'success' && env.UPLOAD_FIRMWARE == 'true' && !cancelled()
       with:
         name: openwrt_phicomm_n1_test_${{ env.FILE_DATE }}
         path: ${{ env.FILEPATH }}
+        retention-days: ${{ env.RECENT_LASTEST }}
 
     - name: Upload firmware to WeTransfer
       if: steps.build.outputs.status == 'success' && env.UPLOAD_WETRANSFER == 'true' && !cancelled()
