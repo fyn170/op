@@ -23,6 +23,9 @@ on:
 
 env:
   OPENWRT_PATH: router/phicomm_n1
+  OUT_PATH: router/phicomm_n1/out
+  OPENWRT_ORGANIZE_PATH: router/phicomm_n1/openwrt
+  MAKE_FILE: router/phicomm_n1/make
   SSH_ACTIONS: true
   UPLOAD_FIRMWARE: true
   UPLOAD_RELEASE: true
@@ -60,10 +63,8 @@ jobs:
       id: build
       if: steps.download.outputs.status == 'success' && env.UPLOAD_FIRMWARE == 'true' && !cancelled()
       run: |
-        cd ${{ env.OPENWRT_PATH }}
-        [ -f openwrt/*.tar.gz ] && echo -e $(ls openwrt/*.tar.gz) file exist || echo -e *.tar.gz file does not exist
-        sudo ./make -d
-        cd out
+        sudo $MAKE_FILE -d
+        cd $OUT_PATH
         for x in $(ls .); do
           cd $x && gzip *.img && cd ../
         done
