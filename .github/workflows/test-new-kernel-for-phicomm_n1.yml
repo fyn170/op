@@ -61,6 +61,7 @@ jobs:
       if: steps.download.outputs.status == 'success' && env.UPLOAD_FIRMWARE == 'true' && !cancelled()
       run: |
         cd ${{ env.OPENWRT_PATH }}
+        [ -f openwrt/*.tar.gz ] && echo -e $(ls openwrt/*.tar.gz) file exist || echo -e *.tar.gz file does not exist
         sudo ./make -d
         cd out
         for x in $(ls .); do
