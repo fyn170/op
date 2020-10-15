@@ -39,6 +39,7 @@ env:
   UPLOAD_RELEASE: true
   UPLOAD_COWTRANSFER: false
   UPLOAD_WETRANSFER: true
+  RECENT_LASTEST: 30
   TZ: Asia/Shanghai
 
 jobs:
@@ -125,6 +126,7 @@ jobs:
       with:
         name: Bin_openwrt_armvirt_64_${{ env.FILE_DATE }}
         path: openwrt/bin
+        retention-days: ${{ env.RECENT_LASTEST }}
 
     - name: Organize files
       id: organize
@@ -142,7 +144,8 @@ jobs:
       with:
         name: openwrt_armvirt_64_${{ env.FILE_DATE }}
         path: ${{ env.TMPFILEPATH }}
-        
+        retention-days: ${{ env.RECENT_LASTEST }}
+
     - name: Build firmware for N1
       id: buildn1
       if: steps.organize.outputs.status == 'success' && env.UPLOAD_FIRMWARE == 'true' && !cancelled()
@@ -166,6 +169,7 @@ jobs:
       with:
         name: openwrt_phicomm_n1_${{ env.FILE_DATE }}
         path: ${{ env.FILEPATH }}
+        retention-days: ${{ env.RECENT_LASTEST }}
 
     - name: Upload firmware to cowtransfer
       if: steps.organize.outputs.status == 'success' && env.UPLOAD_COWTRANSFER == 'true' && !cancelled()
