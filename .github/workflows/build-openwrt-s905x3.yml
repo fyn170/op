@@ -104,5 +104,5 @@ jobs:
           Default password: password
           Default WIFI name: OpenWrt
           Default WIFI password: none
-          [ ! ${{ env.WET_URL }} ] || [WETRANSFER](${{ env.WET_URL }})
+          [WETRANSFER](${{ env.WET_URL }})
      
