@@ -23,10 +23,7 @@ on:
 
 env:
   OPENWRT_PATH: router/phicomm_n1
-  OUT_PATH: router/phicomm_n1/out
-  OPENWRT_ORGANIZE_PATH: router/phicomm_n1/openwrt
-  MAKE_FILE: router/phicomm_n1/make
-  SSH_ACTIONS: true
+  SSH_ACTIONS: false
   UPLOAD_FIRMWARE: true
   UPLOAD_RELEASE: true
   UPLOAD_WETRANSFER: true
@@ -63,6 +60,7 @@ jobs:
       id: build
       if: steps.download.outputs.status == 'success' && env.UPLOAD_FIRMWARE == 'true' && !cancelled()
       run: |
+        sudo chmod +x ${{ env.OPENWRT_PATH }}/make
         sudo ${{ env.OPENWRT_PATH }}/make -d
         cd ${{ env.OPENWRT_PATH }}/out
         for x in $(ls .); do
