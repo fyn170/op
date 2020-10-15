@@ -29,6 +29,7 @@ env:
   UPLOAD_RELEASE: true
   UPLOAD_COWTRANSFER: false
   UPLOAD_WETRANSFER: true
+  RECENT_LASTEST: 30
   TZ: Asia/Shanghai
 
 jobs:
@@ -65,11 +66,12 @@ jobs:
         echo "::set-output name=status::success"
 
     - name: Upload firmware to Actions
-      uses: actions/upload-artifact@master
+      uses: actions/upload-artifact@v2
       if: steps.build.outputs.status == 'success' && env.UPLOAD_FIRMWARE == 'true' && !cancelled()
       with:
         name: openwrt_s905x3_${{ env.FILE_DATE }}
         path: ${{ env.FILEPATH }}
+        retention-days: ${{ env.RECENT_LASTEST }}
 
     - name: Upload firmware to cowtransfer
       if: steps.build.outputs.status == 'success' && env.UPLOAD_COWTRANSFER == 'true' && !cancelled()
@@ -102,5 +104,5 @@ jobs:
           Default password: password
           Default WIFI name: OpenWrt
           Default WIFI password: none
-          [WETRANSFER](${{ env.WET_URL }})
+          [ ! ${{ env.WET_URL }} ] || [WETRANSFER](${{ env.WET_URL }})
      
