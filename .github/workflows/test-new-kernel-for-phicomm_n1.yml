@@ -22,14 +22,6 @@ on:
     #types: started
 
 env:
-  REPO_URL: https://github.com/coolsnowwolf/lede
-  REPO_BRANCH: master
-  FEEDS_CONF: feeds.conf.default
-  CONFIG_FILE: router/phicomm_n1/.config
-  DIY_P1_SH: router/phicomm_n1/diy-part1.sh
-  DIY_P2_SH: router/phicomm_n1/diy-part2.sh
-  TMP_PATH: router/phicomm_n1/tmp
-  OUT_PATH: router/phicomm_n1/out
   OPENWRT_PATH: router/phicomm_n1
   SSH_ACTIONS: true
   UPLOAD_FIRMWARE: true
@@ -68,9 +60,10 @@ jobs:
       id: build
       if: steps.download.outputs.status == 'success' && env.UPLOAD_FIRMWARE == 'true' && !cancelled()
       run: |
-        cd ${{ env.OPENWRT_PATH }} && sudo rm -rf $OUT_PATH 2>/dev/null
-        chmod +x make && sudo ./make -d
-        cd $OUT_PATH
+        cd ${{ env.OPENWRT_PATH }}
+        chmod +x make
+        sudo ./make -d
+        cd out
         for x in $(ls .); do
           cd $x && gzip *.img && cd ../
         done
