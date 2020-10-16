@@ -4,9 +4,7 @@ die() {
     echo -e "\033[1;31mError:\033[0m $1" && exit 1
 }
 
-#Support the input of optional parameters (x96/hk1), When flashing any original firmware into emmc, and adapt the model specified by the parameter. 
-#No parameters is Phicomm-N1 model
-firmware_list="x96 hk1"
+#For change X96-Max+(S905x3)1000M dtb path
 firmware_dtb=${1}
 
 emmc=$(lsblk | grep -oE 'mmcblk[0-9]' | sort | uniq)
@@ -90,12 +88,8 @@ else
    sed -i 's/ROOTFS/ROOT_EMMC/' $ins_boot/uEnv.txt
 fi
 
-if [ -n "${firmware_dtb}" ]; then
-    
-    echo "Start edit uEnv.txt for ${firmware_dtb}."
-
-    case "${firmware_dtb}" in
-    x96)
+[ "${firmware_dtb}" = "x96" ] && {    
+    echo "Start edit uEnv.txt for ${firmware_dtb}"
         old_x96_100dtb="FDT=\/dtb\/amlogic\/meson-sm1-x96-max-plus-100m.dtb"
         new_x96_100dtb="#FDT=\/dtb\/amlogic\/meson-sm1-x96-max-plus-100m.dtb"
         sed -i "s/^${old_x96_100dtb}/${new_x96_100dtb}/g" $ins_boot/uEnv.txt
@@ -104,24 +98,10 @@ if [ -n "${firmware_dtb}" ]; then
         old_x96_1000dtb="#FDT=\/dtb\/amlogic\/meson-sm1-x96-max-plus.dtb"
         new_x96_1000dtb="FDT=\/dtb\/amlogic\meson-sm1-x96-max-plus.dtb"
         sed -i "s/^${old_x96_1000dtb}/${new_x96_1000dtb}/g" $ins_boot/uEnv.txt
-        echo "dtb_open: meson-sm1-x96-max-plus.dtb"
-        ;;
-    hk1)
-        old_hk1_dtb="#FDT=\/dtb\/amlogic\/meson-sm1-hk1box-vontar-x3.dtb"
-        new_hk1_dtb="FDT=\/dtb\/amlogic\/meson-sm1-hk1box-vontar-x3.dtb"
-        sed -i "s/^${old_hk1_dtb}/${new_hk1_dtb}/g" $ins_boot/uEnv.txt
-        echo "dtb_open: meson-sm1-hk1box-vontar-x3.dtb"
-        ;;
-    *)
-        die "Parameter error: ${firmware_dtb}. Can parameters: x96/hk1"
-        ;;
-    esac
-    
+        echo "dtb_open: meson-sm1-x96-max-plus.dtb"   
     sync
-    
-    echo "End edit uEnv.txt for ${firmware_dtb}."
-    
-fi
+    echo "End edit uEnv.txt for ${firmware_dtb}"
+}
 
 rm -f $ins_boot/s9*
 rm -f $ins_boot/aml*
