@@ -32,7 +32,7 @@ n1-install.sh x96
 reboot
 
 #For HK1  Box(S905x3) 1000M
-n1-install.sh hk1           
+n1-install.sh           
 reboot
 
 # Wait for the installation to complete. remove the USB hard disk, unplug/plug in the power again, reboot into EMMC.
