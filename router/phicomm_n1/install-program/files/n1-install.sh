@@ -6,7 +6,7 @@ die() {
 
 #Support the input of optional parameters (x96/hk1/n1), When flashing any original firmware into emmc, and adapt the model specified by the parameter. 
 #The default is N1 model (no parameters)
-firmware_list=("x96" "hk1" "n1")
+firmware_list="x96 hk1 n1"
 firmware_dtb=${1}
 
 emmc=$(lsblk | grep -oE 'mmcblk[0-9]' | sort | uniq)
@@ -91,8 +91,6 @@ else
 fi
 
 if [ -n "${firmware_dtb}" ]; then
-
-    if [[ ! "${firmware_list[@]}"  =~ "${firmware_dtb}" ]]; then die "Parameter error: ${firmware_dtb}. Can parameters: x96/hk1/n1"; fi
     
     echo "edit uEnv for ${firmware_dtb}."
 
