@@ -6,7 +6,7 @@ die() {
 
 #Support the input of optional parameters (x96/hk1/n1), When flashing any original firmware into emmc, and adapt the model specified by the parameter. 
 #The default is N1 model (no parameters)
-firmware_list="x96 hk1 n1"
+firmware_list="x96 hk1"
 firmware_dtb=${1}
 
 emmc=$(lsblk | grep -oE 'mmcblk[0-9]' | sort | uniq)
@@ -94,25 +94,10 @@ if [ -n "${firmware_dtb}" ]; then
     
     echo "Start edit uEnv.txt for ${firmware_dtb}."
 
-        old_n1_dtb="FDT=\/dtb\/amlogic\/meson-gxl-s905d-phicomm-n1.dtb"
-        new_n1_dtb="#FDT=\/dtb\/amlogic\/meson-gxl-s905d-phicomm-n1.dtb"
-        sed -i "s/^${old_n1_dtb}/${new_n1_dtb}/g" $ins_boot/uEnv.txt
-        echo "dtb_close: meson-gxl-s905d-phicomm-n1.dtb"
-        
         old_x96_100dtb="FDT=\/dtb\/amlogic\/meson-sm1-x96-max-plus-100m.dtb"
         new_x96_100dtb="#FDT=\/dtb\/amlogic\/meson-sm1-x96-max-plus-100m.dtb"
         sed -i "s/^${old_x96_100dtb}/${new_x96_100dtb}/g" $ins_boot/uEnv.txt
         echo "dtb_close: meson-sm1-x96-max-plus-100m.dtb"
-        
-        old_x96_1000dtb="FDT=\/dtb\/amlogic\/meson-sm1-x96-max-plus.dtb"
-        new_x96_1000dtb="#FDT=\/dtb\/amlogic\meson-sm1-x96-max-plus.dtb"
-        sed -i "s/^${old_x96_1000dtb}/${new_x96_1000dtb}/g" $ins_boot/uEnv.txt
-        echo "dtb_close: meson-sm1-x96-max-plus.dtb"
-
-        old_hk1_dtb="FDT=\/dtb\/amlogic\/meson-sm1-hk1box-vontar-x3.dtb"
-        new_hk1_dtb="#FDT=\/dtb\/amlogic\/meson-sm1-hk1box-vontar-x3.dtb"
-        sed -i "s/^${old_hk1_dtb}/${new_hk1_dtb}/g" $ins_boot/uEnv.txt
-        echo "dtb_close: meson-sm1-hk1box-vontar-x3.dtb"
         
         sync
 
@@ -129,14 +114,8 @@ if [ -n "${firmware_dtb}" ]; then
         sed -i "s/^${old_hk1_dtb}/${new_hk1_dtb}/g" $ins_boot/uEnv.txt
         echo "dtb_open: meson-sm1-hk1box-vontar-x3.dtb"
         ;;
-    n1)
-        old_n1_dtb="#FDT=\/dtb\/amlogic\/meson-gxl-s905d-phicomm-n1.dtb"
-        new_n1_dtb="FDT=\/dtb\/amlogic\/meson-gxl-s905d-phicomm-n1.dtb"
-        sed -i "s/^${old_n1_dtb}/${new_n1_dtb}/g" $ins_boot/uEnv.txt
-        echo "dtb_open: meson-gxl-s905d-phicomm-n1.dtb"
-        ;;
     *)
-        die "Parameter error: ${firmware_dtb}. Can parameters: x96/hk1/n1"
+        die "Parameter error: ${firmware_dtb}. Can parameters: x96/hk1"
         ;;
     esac
     
