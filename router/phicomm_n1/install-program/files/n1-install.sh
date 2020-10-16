@@ -112,7 +112,7 @@ if [ -n "${firmware_dtb}" ]; then
         old_hk1_dtb="FDT=\/dtb\/amlogic\/meson-sm1-hk1box-vontar-x3.dtb"
         new_hk1_dtb="#FDT=\/dtb\/amlogic\/meson-sm1-hk1box-vontar-x3.dtb"
         sed -i "s/${old_hk1_dtb}/${new_hk1_dtb}/g" $ins_boot/uEnv.txt
-        echo "dtb_open: meson-sm1-hk1box-vontar-x3.dtb"
+        echo "dtb_close: meson-sm1-hk1box-vontar-x3.dtb"
         
         sync
 
