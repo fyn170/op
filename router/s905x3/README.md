@@ -81,12 +81,12 @@ example: ~/op/router/s905x3/
 #Phicomm-N1 (thresh)
 #FDT=/dtb/amlogic/meson-gxl-s905d-phicomm-n1-thresh.dtb
 #
-#X96-Max+, H96-Max-X3-Round (S905X3 for 100m) [tag: x96]
+#X96-Max+ & H96-Max-X3-Round (100m) [tag: x96]
 FDT=/dtb/amlogic/meson-sm1-x96-max-plus-100m.dtb
-#X96-Max+, H96-Max-X3-Round (S905X3 for 1000M)
+#X96-Max+ & H96-Max-X3-Round (1000m)
 #FDT=/dtb/amlogic/meson-sm1-x96-max-plus.dtb
 #
-#HK1-Box (S905X3 for 1000M) [tag: hk1]
+#HK1-Box [tag: hk1]
 #FDT=/dtb/amlogic/meson-sm1-hk1box-vontar-x3.dtb
 ````
 
