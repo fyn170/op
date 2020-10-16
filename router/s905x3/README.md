@@ -39,7 +39,7 @@ n1-install.sh x96
 reboot
 
 #For HK1 Box(S905x3) 1000M
-n1-install.sh           
+n1-install.sh
 reboot
 
 # Wait for the installation to complete. remove the USB hard disk, unplug/plug in the power again, reboot into EMMC.
@@ -48,7 +48,7 @@ reboot
 Upgrading OpenWrt: `Login in to openwrt` → `system menu` → `file transfer` → upload to `/tmp/upgrade/xxx.img`, enter the `system menu` → `TTYD terminal` → input command: 
 ```shell script
 n1-update.sh
-reboot          #Enter the reboot command to restart.
+reboot
 ```
 
 Note: If used as a bypass gateway, you can add custom firewall rules as needed (Network → Firewall → Custom Rules):
