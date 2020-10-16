@@ -27,7 +27,7 @@ The firmware supports USB hard disk booting. You can also Install the OpenWrt fi
 Install OpenWrt: `Login in to openwrt` → `system menu` → `TTYD terminal` → input command: 
 ```shell script
 #For X96-Max+(S905x3) 1000M
-#Start from usb is to use ***` meson-sm1-x96-max-plus-100m.dtb `***, Will change to ***` meson-sm1-x96-max-plus.dtb `*** after writing emmc.
+#Start from usb is to use meson-sm1-x96-max-plus-100m.dtb, Will change to meson-sm1-x96-max-plus.dtb after writing emmc.
 n1-install.sh x96
 reboot
 
