@@ -9,8 +9,8 @@ You can download the OpwnWrt for S905x3 firmware from [Actions](https://github.c
 
 ## Firmware instructions
 
-- X96-Max+(S905x3) use `openwrt_hk1_*.img`
-- HK1 Box(S905x3) use `openwrt_x96_*.img`
+- `openwrt_hk1_*.img`: For X96-Max+(S905x3) / H96Max-X3-Round(S905x3)
+- `openwrt_x96_*.img`: For HK1-Box(S905x3)
 
 Decompress the firmware and write it to a MicroSD card/TF card. Before starting the USB flash drive for the first time, use the adb tool to connect:
 ```shell script
