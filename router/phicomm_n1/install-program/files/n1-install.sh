@@ -96,22 +96,22 @@ if [ -n "${firmware_dtb}" ]; then
 
         old_n1_dtb="FDT=\/dtb\/amlogic\/meson-gxl-s905d-phicomm-n1.dtb"
         new_n1_dtb="#FDT=\/dtb\/amlogic\/meson-gxl-s905d-phicomm-n1.dtb"
-        sed -i "s/${old_n1_dtb}/${new_n1_dtb}/g" $ins_boot/uEnv.txt
+        sed -i "s/^${old_n1_dtb}/${new_n1_dtb}/g" $ins_boot/uEnv.txt
         echo "dtb_close: meson-gxl-s905d-phicomm-n1.dtb"
         
         old_x96_100dtb="FDT=\/dtb\/amlogic\/meson-sm1-x96-max-plus-100m.dtb"
         new_x96_100dtb="#FDT=\/dtb\/amlogic\/meson-sm1-x96-max-plus-100m.dtb"
-        sed -i "s/${old_x96_100dtb}/${new_x96_100dtb}/g" $ins_boot/uEnv.txt
+        sed -i "s/^${old_x96_100dtb}/${new_x96_100dtb}/g" $ins_boot/uEnv.txt
         echo "dtb_close: meson-sm1-x96-max-plus-100m.dtb"
         
         old_x96_1000dtb="FDT=\/dtb\/amlogic\/meson-sm1-x96-max-plus.dtb"
         new_x96_1000dtb="#FDT=\/dtb\/amlogic\meson-sm1-x96-max-plus.dtb"
-        sed -i "s/${old_x96_1000dtb}/${new_x96_1000dtb}/g" $ins_boot/uEnv.txt
+        sed -i "s/^${old_x96_1000dtb}/${new_x96_1000dtb}/g" $ins_boot/uEnv.txt
         echo "dtb_close: meson-sm1-x96-max-plus.dtb"
 
         old_hk1_dtb="FDT=\/dtb\/amlogic\/meson-sm1-hk1box-vontar-x3.dtb"
         new_hk1_dtb="#FDT=\/dtb\/amlogic\/meson-sm1-hk1box-vontar-x3.dtb"
-        sed -i "s/${old_hk1_dtb}/${new_hk1_dtb}/g" $ins_boot/uEnv.txt
+        sed -i "s/^${old_hk1_dtb}/${new_hk1_dtb}/g" $ins_boot/uEnv.txt
         echo "dtb_close: meson-sm1-hk1box-vontar-x3.dtb"
         
         sync
@@ -120,19 +120,19 @@ if [ -n "${firmware_dtb}" ]; then
     x96)
         old_x96_1000dtb="#FDT=\/dtb\/amlogic\/meson-sm1-x96-max-plus.dtb"
         new_x96_1000dtb="FDT=\/dtb\/amlogic\meson-sm1-x96-max-plus.dtb"
-        sed -i "s/${old_x96_1000dtb}/${new_x96_1000dtb}/g" $ins_boot/uEnv.txt
+        sed -i "s/^${old_x96_1000dtb}/${new_x96_1000dtb}/g" $ins_boot/uEnv.txt
         echo "dtb_open: meson-sm1-x96-max-plus.dtb"
         ;;
     hk1)
         old_hk1_dtb="#FDT=\/dtb\/amlogic\/meson-sm1-hk1box-vontar-x3.dtb"
         new_hk1_dtb="FDT=\/dtb\/amlogic\/meson-sm1-hk1box-vontar-x3.dtb"
-        sed -i "s/${old_hk1_dtb}/${new_hk1_dtb}/g" $ins_boot/uEnv.txt
+        sed -i "s/^${old_hk1_dtb}/${new_hk1_dtb}/g" $ins_boot/uEnv.txt
         echo "dtb_open: meson-sm1-hk1box-vontar-x3.dtb"
         ;;
     n1)
         old_n1_dtb="#FDT=\/dtb\/amlogic\/meson-gxl-s905d-phicomm-n1.dtb"
         new_n1_dtb="FDT=\/dtb\/amlogic\/meson-gxl-s905d-phicomm-n1.dtb"
-        sed -i "s/${old_n1_dtb}/${new_n1_dtb}/g" $ins_boot/uEnv.txt
+        sed -i "s/^${old_n1_dtb}/${new_n1_dtb}/g" $ins_boot/uEnv.txt
         echo "dtb_open: meson-gxl-s905d-phicomm-n1.dtb"
         ;;
     *)
