@@ -1,4 +1,4 @@
-# OpenWrt for S905x3 ( X96 Max Plus, HK1 Box )
+# OpenWrt for S905x3 ( X96-Max+, H96-Max-X3-Round & HK1-Box )
 
 You can download the OpwnWrt for S905x3 firmware from [Actions](https://github.com/ophub/op/actions). From the ` Build OpenWrt for S905x3 `, Such as `openwrt_s905x3_${date}` Unzip to get the `***.img` file. Or download from [Releases](https://github.com/ophub/op/releases). Such as `openwrt_S905x3_${date}`. Then write the IMG file to the USB card/TF card  through software such as [balenaEtcher](https://www.balena.io/etcher/).
 
@@ -9,7 +9,7 @@ You can download the OpwnWrt for S905x3 firmware from [Actions](https://github.c
 
 ## Firmware instructions
 
-- `openwrt_hk1_*.img`: For X96-Max+(S905x3) / H96Max-X3-Round(S905x3)
+- `openwrt_hk1_*.img`: For X96-Max+(S905x3) / H96-Max-X3-Round(S905x3)
 - `openwrt_x96_*.img`: For HK1-Box(S905x3)
 
 Decompress the firmware and write it to a MicroSD card/TF card. Before starting the USB flash drive for the first time, use the adb tool to connect:
@@ -24,7 +24,7 @@ Then quickly insert the prepared USB card/TF card to start the openwrt for s905x
 
 The firmware supports USB hard disk booting. You can also Install the OpenWrt firmware in the USB hard disk into the EMMC partition of S905x3, and start using it from EMMC.
 
-Update the bootloader to support 1000M/s (X96-Max+ / H96Max-X3-Round / HK1-Box universal HK1-box bootloader). you can restore the bootloader, restart it, and run the relevant command again.
+Update the bootloader to support 1000M/s (X96-Max+ / H96-Max-X3-Round / HK1-Box universal HK1-box bootloader). you can restore the bootloader, restart it, and run the relevant command again.
 ```shell script
 dd if=/root/hk1box-bootloader.img of=/dev/mmcblk1 bs=1M
 sync
@@ -33,12 +33,12 @@ reboot
 
 Install OpenWrt: `Login in to openwrt` → `system menu` → `TTYD terminal` → input command: 
 ```shell script
-#For X96-Max+(S905x3) / H96Max-X3-Round(S905x3) 
+#For X96-Max+(S905x3) / H96-Max-X3-Round(S905x3)
 #Start from usb is to use meson-sm1-x96-max-plus-100m.dtb, Will change to meson-sm1-x96-max-plus.dtb after writing emmc.
 n1-install.sh x96
 reboot
 
-#For HK1 Box(S905x3) 1000M
+#For HK1-Box(S905x3)
 n1-install.sh
 reboot
 
