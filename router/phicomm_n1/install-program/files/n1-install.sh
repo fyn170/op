@@ -4,6 +4,9 @@ die() {
     echo -e "\033[1;31mError:\033[0m $1" && exit 1
 }
 
+#Support input optional parameter x96 / hk1, change the .dtb file pointing path when flashing emmc, adapt to s905x3 model.
+firmware_dtb=${1}
+
 emmc=$(lsblk | grep -oE 'mmcblk[0-9]' | sort | uniq)
 sd=$(lsblk | grep -oE 'sd[a-z]' | sort | uniq)
 
@@ -80,9 +83,44 @@ sync
 echo "edit uEnv..."
 uuid=$(blkid ${dev_emmc}p2 | awk '{ print $3 }' | cut -d '"' -f 2)
 if [ "$uuid" ]; then
-    sed -i "s/LABEL=ROOTFS/UUID=$uuid/" $ins_boot/uEnv.txt
+   sed -i "s/LABEL=ROOTFS/UUID=$uuid/" $ins_boot/uEnv.txt
 else
-    sed -i 's/ROOTFS/ROOT_EMMC/' $ins_boot/uEnv.txt
+   sed -i 's/ROOTFS/ROOT_EMMC/' $ins_boot/uEnv.txt
+fi
+
+if [ -n "${firmware_dtb}" ]; then
+    echo "edit uEnv for ${firmware_dtb}."
+    no_firmware=false
+    case "${firmware_dtb}" in
+    x96)
+        old_x96_1000dtb="#FDT=\/dtb\/amlogic\/meson-sm1-x96-max-plus.dtb"
+        new_x96_1000dtb="FDT=\/dtb\/amlogic\meson-sm1-x96-max-plus.dtb"
+        sed -i "s/${old_x96_1000dtb}/${new_x96_1000dtb}/g" $ins_boot/uEnv.txt
+        echo "dtb_open: meson-sm1-x96-max-plus.dtb"
+        ;;
+    hk1)
+        old_hk1_dtb="#FDT=\/dtb\/amlogic\/meson-sm1-hk1box-vontar-x3.dtb"
+        new_hk1_dtb="FDT=\/dtb\/amlogic\/meson-sm1-hk1box-vontar-x3.dtb"
+        sed -i "s/${old_hk1_dtb}/${new_hk1_dtb}/g" $ins_boot/uEnv.txt
+        echo "dtb_open: meson-sm1-hk1box-vontar-x3.dtb"
+        ;;
+    *)
+        echo "Parameter error: ${firmware_dtb}. Can parameters: x96 / hk1"
+        no_firmware=ture
+        ;;
+    esac
+    
+    if [ ${no_firmware} = false ]; then
+        old_n1_dtb="FDT=\/dtb\/amlogic\/meson-gxl-s905d-phicomm-n1.dtb"
+        new_n1_dtb="#FDT=\/dtb\/amlogic\/meson-gxl-s905d-phicomm-n1.dtb"
+        sed -i "s/${old_n1_dtb}/${new_n1_dtb}/g" $ins_boot/uEnv.txt
+        echo "dtb_close: meson-gxl-s905d-phicomm-n1.dtb"
+        
+        old_x96_100dtb="FDT=\/dtb\/amlogic\/meson-sm1-x96-max-plus-100m.dtb"
+        new_x96_100dtb="#FDT=\/dtb\/amlogic\/meson-sm1-x96-max-plus-100m.dtb"
+        sed -i "s/${old_x96_100dtb}/${new_x96_100dtb}/g" $ins_boot/uEnv.txt
+        echo "dtb_close: meson-sm1-x96-max-plus-100m.dtb"
+    fi
 fi
 
 rm -f $ins_boot/s9*
