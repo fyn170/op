@@ -24,14 +24,21 @@ Then quickly insert the prepared USB card/TF card to start the openwrt for s905x
 
 The firmware supports USB hard disk booting. You can also Install the OpenWrt firmware in the USB hard disk into the EMMC partition of S905x3, and start using it from EMMC.
 
+Update the bootloader to support gigabit (X96-Max+/H96Max X3 Round/HK1 Box universal HK1box bootloader). you can restore the bootloader, restart it, and run the relevant command again.
+```shell script
+dd if=/lib/u-boot/hk1box-bootloader.img of=/dev/mmcblk1 bs=1M count=4 conv=fsync
+sync
+reboot
+```
+
 Install OpenWrt: `Login in to openwrt` → `system menu` → `TTYD terminal` → input command: 
 ```shell script
-#For X96-Max+(S905x3) 1000M
-#Start from usb is to use meson-sm1-x96-max-plus-100m.dtb, Will change to meson-sm1-x96-max-plus.dtb after writing emmc.
+#For X96-Max+(S905x3) / H96Max X3 Round(S905x3) 
+#Start from usb is to use meson-sm1-x96-max-plus-100m.dtb (100M/s), Will change to meson-sm1-x96-max-plus.dtb (1000M/s) after writing emmc.
 n1-install.sh x96
 reboot
 
-#For HK1  Box(S905x3) 1000M
+#For HK1 Box(S905x3) 1000M
 n1-install.sh           
 reboot
 
@@ -42,13 +49,6 @@ Upgrading OpenWrt: `Login in to openwrt` → `system menu` → `file transfer` �
 ```shell script
 n1-update.sh
 reboot          #Enter the reboot command to restart.
-```
-
-If the partition fails and cannot be written, you can restore the bootloader, restart it, and run the relevant command again.
-```shell script
-dd if=/lib/u-boot/hk1box-bootloader.img of=/dev/mmcblk1 bs=1M count=4 conv=fsync
-sync
-reboot
 ```
 
 Note: If used as a bypass gateway, you can add custom firewall rules as needed (Network → Firewall → Custom Rules):
