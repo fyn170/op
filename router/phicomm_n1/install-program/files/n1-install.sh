@@ -4,7 +4,7 @@ die() {
     echo -e "\033[1;31mError:\033[0m $1" && exit 1
 }
 
-#Support the input of optional parameters (x96/hk1/n1), When flashing any original firmware into emmc, and adapt the model specified by the parameter. 
+#Support the input of optional parameters (x96/hk1), When flashing any original firmware into emmc, and adapt the model specified by the parameter. 
 #The default is N1 model (no parameters)
 firmware_list="x96 hk1"
 firmware_dtb=${1}
