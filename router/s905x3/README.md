@@ -9,6 +9,8 @@ You can download the OpwnWrt for S905x3 firmware from [Actions](https://github.c
 
 ## Firmware instructions
 
+X96-Max+(S905x3) use `openwrt_hk1_*.img`. HK1 Box(S905x3) use `openwrt_x96_*.img`.
+
 Decompress the firmware and write it to a MicroSD card/TF card. Before starting the USB flash drive for the first time, use the adb tool to connect:
 ```shell script
 adb connect router ip
@@ -23,7 +25,8 @@ The firmware supports USB hard disk booting. You can also Install the OpenWrt fi
 
 Install OpenWrt: `Login in to openwrt` → `system menu` → `TTYD terminal` → input command: 
 ```shell script
-n1-install.sh
+n1-install.sh x96           #For X96-Max+(S905x3) 1000M
+n1-install.sh hk1           #For HK1  Box(S905x3) 1000M
 # Wait for the installation to complete. remove the USB hard disk, unplug/plug in the power again, reboot into EMMC.
 ```
 
