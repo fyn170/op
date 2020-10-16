@@ -5,7 +5,7 @@ die() {
 }
 
 #Support the input of optional parameters (x96/hk1), When flashing any original firmware into emmc, and adapt the model specified by the parameter. 
-#The default is N1 model (no parameters)
+#No parameters is Phicomm-N1 model
 firmware_list="x96 hk1"
 firmware_dtb=${1}
 
@@ -94,15 +94,13 @@ if [ -n "${firmware_dtb}" ]; then
     
     echo "Start edit uEnv.txt for ${firmware_dtb}."
 
+    case "${firmware_dtb}" in
+    x96)
         old_x96_100dtb="FDT=\/dtb\/amlogic\/meson-sm1-x96-max-plus-100m.dtb"
         new_x96_100dtb="#FDT=\/dtb\/amlogic\/meson-sm1-x96-max-plus-100m.dtb"
         sed -i "s/^${old_x96_100dtb}/${new_x96_100dtb}/g" $ins_boot/uEnv.txt
         echo "dtb_close: meson-sm1-x96-max-plus-100m.dtb"
         
-        sync
-
-    case "${firmware_dtb}" in
-    x96)
         old_x96_1000dtb="#FDT=\/dtb\/amlogic\/meson-sm1-x96-max-plus.dtb"
         new_x96_1000dtb="FDT=\/dtb\/amlogic\meson-sm1-x96-max-plus.dtb"
         sed -i "s/^${old_x96_1000dtb}/${new_x96_1000dtb}/g" $ins_boot/uEnv.txt
