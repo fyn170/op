@@ -26,7 +26,7 @@ The firmware supports USB hard disk booting. You can also Install the OpenWrt fi
 
 Update the bootloader to support gigabit (X96-Max+/H96Max X3 Round/HK1 Box universal HK1box bootloader). you can restore the bootloader, restart it, and run the relevant command again.
 ```shell script
-dd if=/lib/u-boot/hk1box-bootloader.img of=/dev/mmcblk1 bs=1M count=4 conv=fsync
+dd if=/root/hk1box-bootloader.img of=/dev/mmcblk1 bs=1M
 sync
 reboot
 ```
