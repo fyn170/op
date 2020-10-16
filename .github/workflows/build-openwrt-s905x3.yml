@@ -97,7 +97,7 @@ jobs:
         overwrite: true
         file_glob: true
         body: |
-          This is OpenWrt firmware for ${{ env.OP_TAG }}
+          This is OpenWrt firmware for s905x3
           * Firmware information
           Default IP: 192.168.1.1
           Default username: root
