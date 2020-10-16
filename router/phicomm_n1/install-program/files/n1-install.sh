@@ -82,7 +82,7 @@ rm -rf /boot/'System Volume Information'
 cp -r /boot/* $ins_boot
 sync
 
-echo "edit uEnv..."
+echo "edit uEnv.txt ..."
 uuid=$(blkid ${dev_emmc}p2 | awk '{ print $3 }' | cut -d '"' -f 2)
 if [ "$uuid" ]; then
    sed -i "s/LABEL=ROOTFS/UUID=$uuid/" $ins_boot/uEnv.txt
@@ -92,7 +92,7 @@ fi
 
 if [ -n "${firmware_dtb}" ]; then
     
-    echo "edit uEnv for ${firmware_dtb}."
+    echo "Start edit uEnv.txt for ${firmware_dtb}."
 
         old_n1_dtb="FDT=\/dtb\/amlogic\/meson-gxl-s905d-phicomm-n1.dtb"
         new_n1_dtb="#FDT=\/dtb\/amlogic\/meson-gxl-s905d-phicomm-n1.dtb"
@@ -141,6 +141,8 @@ if [ -n "${firmware_dtb}" ]; then
     esac
     
     sync
+    
+    echo "End edit uEnv.txt for ${firmware_dtb}."
     
 fi
 
