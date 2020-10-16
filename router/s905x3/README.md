@@ -81,9 +81,9 @@ example: ~/op/router/s905x3/
 #Phicomm N1 (thresh)
 #FDT=/dtb/amlogic/meson-gxl-s905d-phicomm-n1-thresh.dtb
 #
-#X96 Max+ (S905X3 for 100m)
+#X96 Max+ (S905X3 for 100m) [tag: x96]
 FDT=/dtb/amlogic/meson-sm1-x96-max-plus-100m.dtb
-#X96 Max+ (S905X3 for 1000M) [tag: s905x3]
+#X96 Max+ (S905X3 for 1000M)
 #FDT=/dtb/amlogic/meson-sm1-x96-max-plus.dtb
 #
 #HK1 BoX (S905X3 for 1000M) [tag: hk1]
@@ -93,9 +93,9 @@ FDT=/dtb/amlogic/meson-sm1-x96-max-plus-100m.dtb
 Method: Add # in front of the dtb file path of Phicomm N1, and remove the # in front of the firmware you need. 
 
 ## Detailed make compile command
-- `sudo ./make all`: All S905x3 (X96 Max Plus, HK1 Box) OpenWrt firmware according to the default configuration firmware. This command is recommended.
-- `sudo ./make x96`: Build the OpenWrt firmware of X96 Max Plus according to the default configuration.
-- `sudo ./make hk1`: Build the OpenWrt firmware of HK1 Box according to the default configuration.
+- `sudo ./make all`: All S905x3 ( X96-Max+, H96-Max-X3-Round & HK1-Box ) OpenWrt firmware according to the default configuration firmware. This command is recommended.
+- `sudo ./make x96`: Build the OpenWrt firmware of X96-Max+ & H96-Max-X3-Round according to the default configuration.
+- `sudo ./make hk1`: Build the OpenWrt firmware of HK1-Box according to the default configuration.
 
 ## Configuration file function description
 
