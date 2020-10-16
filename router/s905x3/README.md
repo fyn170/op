@@ -18,7 +18,7 @@ adb shell
 su
 reboot update
 ````
-Then quickly insert the prepared USB card/TF card to start the openwrt for s905x3 firmware
+Then quickly insert the prepared USB card/TF card to start the openwrt for s905x3 firmware.
 
 
 The firmware supports USB hard disk booting. You can also Install the OpenWrt firmware in the USB hard disk into the EMMC partition of S905x3, and start using it from EMMC.
@@ -35,6 +35,7 @@ Upgrading OpenWrt: `Login in to openwrt` → `system menu` → `file transfer` �
 n1-update.sh
 reboot          #Enter the reboot command to restart.
 ```
+
 If the partition fails and cannot be written, you can restore the bootloader, restart it, and run the relevant command again.
 ```shell script
 dd if=/root/hk1box-bootloader.img of=/dev/mmcblk1 bs=1M
