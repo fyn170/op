@@ -27,6 +27,8 @@ Install OpenWrt: `Login in to openwrt` → `system menu` → `TTYD terminal` →
 ```shell script
 n1-install.sh x96           #For X96-Max+(S905x3) 1000M
 n1-install.sh hk1           #For HK1  Box(S905x3) 1000M
+
+reboot
 # Wait for the installation to complete. remove the USB hard disk, unplug/plug in the power again, reboot into EMMC.
 ```
 
