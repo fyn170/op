@@ -86,7 +86,7 @@ FDT=/dtb/amlogic/meson-sm1-x96-max-plus-100m.dtb
 #X96-Max+, H96-Max-X3-Round (S905X3 for 1000M)
 #FDT=/dtb/amlogic/meson-sm1-x96-max-plus.dtb
 #
-#HK1-BoX (S905X3 for 1000M) [tag: hk1]
+#HK1-Box (S905X3 for 1000M) [tag: hk1]
 #FDT=/dtb/amlogic/meson-sm1-hk1box-vontar-x3.dtb
 ````
 
