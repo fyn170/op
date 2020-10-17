@@ -14,7 +14,7 @@ You can download the OpwnWrt for S905x3 firmware from [Actions](https://github.c
 
 The firmware supports USB hard disk booting. You can also Install the OpenWrt firmware in the USB hard disk into the EMMC partition of S905x3, and start using it from EMMC.
 
-Update the bootloader to support 1000M/s (X96-Max+ / H96-Max-X3-Round / HK1-Box universal HK1-box bootloader). you can restore the bootloader, restart it, and run the relevant command again.
+If you use the scheme of writing emmc, you first need to Update the bootloader to support 1000M/s (X96-Max+ / H96-Max-X3-Round / HK1-Box universal HK1-box bootloader). you can restore the bootloader, restart it, and run the `Install OpenWrt` command again.
 ```shell script
 dd if=/root/hk1box-bootloader.img of=/dev/mmcblk1 bs=1M
 sync
@@ -27,13 +27,15 @@ Install OpenWrt: `Login in to openwrt` → `system menu` → `TTYD terminal` →
 #Start from usb is to use meson-sm1-x96-max-plus-100m.dtb, Will change to meson-sm1-x96-max-plus.dtb after writing emmc.
 n1-install.sh x96
 reboot
+```
 
+```shell script
 #For HK1-Box(S905x3)
 n1-install.sh
 reboot
-
-# Wait for the installation to complete. remove the USB hard disk, unplug/plug in the power again, reboot into EMMC.
 ```
+
+Wait for the installation to complete. remove the USB hard disk, unplug/plug in the power again, reboot into EMMC.
 
 Upgrading OpenWrt: `Login in to openwrt` → `system menu` → `file transfer` → upload to `/tmp/upgrade/xxx.img`, enter the `system menu` → `TTYD terminal` → input command: 
 ```shell script
