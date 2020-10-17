@@ -12,16 +12,6 @@ You can download the OpwnWrt for S905x3 firmware from [Actions](https://github.c
 - `openwrt_hk1_*.img`: For X96-Max+(S905x3) / H96-Max-X3-Round(S905x3)
 - `openwrt_x96_*.img`: For HK1-Box(S905x3)
 
-Decompress the firmware and write it to a MicroSD card/TF card. Before starting the USB flash drive for the first time, use the adb tool to connect:
-```shell script
-adb connect router ip
-adb shell
-su
-reboot update
-````
-Then quickly insert the prepared USB card/TF card to start the openwrt for s905x3 firmware.
-
-
 The firmware supports USB hard disk booting. You can also Install the OpenWrt firmware in the USB hard disk into the EMMC partition of S905x3, and start using it from EMMC.
 
 Update the bootloader to support 1000M/s (X96-Max+ / H96-Max-X3-Round / HK1-Box universal HK1-box bootloader). you can restore the bootloader, restart it, and run the relevant command again.
