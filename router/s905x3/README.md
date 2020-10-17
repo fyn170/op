@@ -14,7 +14,7 @@ You can download the OpwnWrt for S905x3 firmware from [Actions](https://github.c
 
 Decompress the firmware and write it to a MicroSD card/TF card. Before starting the USB flash drive for the first time, use the adb tool to connect:
 ```shell script
-adb connect router ip
+adb connect 192.168.1.10       #change to box-ip
 adb shell
 su
 reboot update
