@@ -29,7 +29,7 @@
 
 # Modify Flippy's kernel folder & *.img file name
 flippy_folder="flippy"
-flippy_file="N1_Openwrt_R20.9.15_k5.4.69-flippy-45+o.img"
+flippy_file="S905x3_Openwrt_R20.9.15_k5.8.16-flippy-46+.img"
 
 # Default setting ( Don't modify )
 build_tmp_folder="tmp"
