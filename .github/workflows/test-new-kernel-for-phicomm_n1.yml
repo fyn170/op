@@ -9,6 +9,7 @@ name: Build OpenWrt for Phicomm N1
 
 on:
   repository_dispatch:
+    types: run
   release:
     types: published
   push:
