@@ -1,9 +1,9 @@
-#=======================================================
+#========================================================================================================================
 # https://github.com/ophub/op
 # Description: Automatically Build OpenWrt for Phicomm N1
 # Function: Workflows for Build Phicomm N1
 # Cron: min (0 - 59) / hour (0 - 23) / day of month (1 - 31) / month (1 - 12) / day of week (0 - 6)(Sunday - Saturday)
-#=========================================================
+#========================================================================================================================
 
 name: Build OpenWrt for Test Phicomm N1 Kernel
 
@@ -15,13 +15,13 @@ on:
         description: 'SSH connection to Actions'
         required: false
         default: 'false'
-  release:
-    types: published
-  push:
-    branches:
-      - main
-    paths:
-      - '.github/workflows/test-new-kernel-for-phicomm_n1.yml'
+  #release:
+    #types: published
+  #push:
+    #branches:
+      #- main
+    #paths:
+      #- '.github/workflows/test-new-kernel-for-phicomm_n1.yml'
   #schedule:
     #- cron: '0 0 * * 5'
   #watch:
