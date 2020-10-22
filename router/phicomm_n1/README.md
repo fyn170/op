@@ -42,6 +42,11 @@ The software package supports Github Action cloud compilation, and the compiled 
 - `sudo ./make -h`: Display help information and view detailed description of each parameter.
 - `sudo ./make`: If you are familiar with the relevant setting requirements of the phicomm_n1 firmware, you can follow the prompts, such as selecting the firmware you want to make, the kernel version, setting the ROOTFS partition size, etc. If you don’t know these settings, just press Enter.
 
+## Compilation method
+
+- Select ***`Build OpenWrt for fouter`*** on the [Action](https://github.com/ophub/op/actions) page.
+- Click the ***`Run workflow`*** button.
+
 ## Configuration file function description
 
 | Folder/file name | Features |
