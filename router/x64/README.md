@@ -22,7 +22,7 @@ Login in to Synology: Virtual Machine Manager → Image → Add → Upload the .
 ```
 ## Compilation method
 
-- Select ***`Build OpenWrt for fouter`*** on the [Action](https://github.com/ophub/op/actions) page.
+- Select ***`Build OpenWrt for x64`*** on the [Action](https://github.com/ophub/op/actions) page.
 - Click the ***`Run workflow`*** button.
 
 ## Configuration file function description
