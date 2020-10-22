@@ -98,6 +98,11 @@ Method: Add # in front of the dtb file path of Phicomm N1, and remove the # in f
 - `sudo ./make x96`: Build the OpenWrt firmware of X96-Max+ & H96-Max-X3-Round according to the default configuration.
 - `sudo ./make hk1`: Build the OpenWrt firmware of HK1-Box according to the default configuration.
 
+## Compilation method
+
+- Select ***`Build OpenWrt for fouter`*** on the [Action](https://github.com/ophub/op/actions) page.
+- Click the ***`Run workflow`*** button.
+
 ## Configuration file function description
 
 | Folder/file name | Features |
