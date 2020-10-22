@@ -118,20 +118,11 @@ rm -rf $ins_root/*
 echo "copy rootfs..."
 
 cd /
-echo " --> copy bin..."
-tar -cf - bin | (cd $ins_root; tar -xpf -)
-echo " --> copy etc..."
-tar -cf - etc | (cd $ins_root; tar -xpf -)
-echo " --> copy lib..."
-tar -cf - lib | (cd $ins_root; tar -xpf -)
-echo " --> copy root..."
-tar -cf - root | (cd $ins_root; tar -xpf -)
-echo " --> copy sbin..."
-tar -cf - sbin | (cd $ins_root; tar -xpf -)
-echo " --> copy usr..."
-tar -cf - usr | (cd $ins_root; tar -xpf -)
-echo " --> copy www..."
-tar -cf - www | (cd $ins_root; tar -xpf -)
+copy_sys="bin etc lib root sbin usr www"
+for x in $copy_sys; do
+    echo " --> copy $x..."
+    tar -cf - $x | (cd $ins_root; tar -xpf -)
+done
 
 [ -f init ] && cp -f init $ins_root
 
