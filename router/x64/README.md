@@ -20,6 +20,10 @@ Synology's Virtual Machine Manager Install OpenWrt:
 ```text
 Login in to Synology: Virtual Machine Manager → Image → Add → Upload the .img file (openwrt-x86-64-generic-squashfs-combined.img)
 ```
+## Compilation method
+
+- Select ***`Build OpenWrt for fouter`*** on the [Action](https://github.com/ophub/op/actions) page.
+- Click the ***`Run workflow`*** button.
 
 ## Configuration file function description
 
