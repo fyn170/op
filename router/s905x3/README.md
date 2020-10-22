@@ -100,7 +100,7 @@ Method: Add # in front of the dtb file path of Phicomm N1, and remove the # in f
 
 ## Compilation method
 
-- Select ***`Build OpenWrt for fouter`*** on the [Action](https://github.com/ophub/op/actions) page.
+- Select ***`Build OpenWrt for S905x3`*** on the [Action](https://github.com/ophub/op/actions) page.
 - Click the ***`Run workflow`*** button.
 
 ## Configuration file function description
