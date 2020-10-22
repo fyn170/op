@@ -1,12 +1,12 @@
 #!/bin/bash
 
-#===============================================================================================================
+#========================================================================================================================
 # https://github.com/ophub/op
 # Description: Automatically Build OpenWrt firmware for Phicomm N1
 # Function: Use Flippy's Armbian kernel files to build kernel.tar.xz & modules.tar.xz
 # Copyright (C) 2020 Flippy's Armbian kernel for Phicomm N1
 # Copyright (C) 2020 https://github.com/ophub/op
-#===============================================================================================================
+#========================================================================================================================
 #
 # example: ~/op/router/phicomm_n1/build_kernel/
 # ├── flippy
@@ -27,7 +27,7 @@
 #
 # Tips: If run 'sudo ./make_use_kernel.sh' is 'Command not found'. Run: sudo chmod +x make_use_kernel.sh
 #
-#===============================================================================================================
+#========================================================================================================================
 
 
 # Modify Flippy's kernel folder & version
