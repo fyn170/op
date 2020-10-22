@@ -116,7 +116,6 @@ Method: Add # in front of the dtb file path of Phicomm N1, and remove the # in f
 | CONFIG_FILE | Custom .config file name |
 | DIY_P1_SH | Custom diy-part1.sh file name |
 | DIY_P2_SH | Custom diy-part2.sh file name |
-| SSH_ACTIONS | SSH connection Actions function. Default false |
 | UPLOAD_BIN_DIR | Upload the bin directory (all ipk files and firmware). Default false |
 | UPLOAD_FIRMWARE | Upload firmware catalog. Default true |
 | UPLOAD_RELEASE | Upload firmware to release. Default true |
