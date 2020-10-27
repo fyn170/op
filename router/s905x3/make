@@ -186,9 +186,9 @@ write_bootloader() {
 
     cd ../../
     BTLD_BIN="${root_tmp}/root/hk1box-bootloader.img"
-    if [ -f $BTLD_BIN ]; then
+    if [ -f ${BTLD_BIN} ]; then
            mkdir -p ${root_tmp}/lib/u-boot
-           cp $BTLD_BIN ${root_tmp}/lib/u-boot/
+           cp ${BTLD_BIN} ${root_tmp}/lib/u-boot/
            echo_color "yellow" "(5/6) Write bootloader: [ $(ls ${root_tmp}/lib/u-boot/*.img) ] Can be used for TF card startup" "..."
            dd if=$BTLD_BIN of=${lodev} bs=1 count=442 conv=fsync 2>/dev/null
            dd if=$BTLD_BIN of=${lodev} bs=512 skip=1 seek=1 conv=fsync 2>/dev/null
