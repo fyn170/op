@@ -25,7 +25,7 @@ The firmware supports USB hard disk booting. You can also Install the OpenWrt fi
 
 If you use the scheme of writing emmc, you first need to Update the bootloader to support 1000M/s (X96-Max+ / H96-Max-X3-Round / HK1-Box universal HK1-box bootloader). you can restore the bootloader, restart it, and run the `Install OpenWrt` command again.
 ```shell script
-dd if=/root/hk1box-bootloader.img of=/dev/mmcblk2 bs=1M count=4  conv=fsync
+dd if=/root/hk1box-bootloader.img of=/dev/mmcblk2 bs=1M count=4 conv=fsync
 sync
 reboot
 ```
