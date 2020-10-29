@@ -30,7 +30,7 @@ if grep -q $dev_emmc /proc/mounts; then
     umount -f ${dev_emmc}p* 2>/dev/null
 fi
 
-if [ $(blkid | grep -E 'BOOT_EMMC|ROOT_EMMC|DATA' | wc -l) != 3 ]; then
+if [ $(blkid ${dev_emmc}p[1-3] | grep -E 'BOOT_EMMC|ROOT_EMMC|DATA' | wc -l) != 3 ]; then
     # parted -v >/dev/null 2>&1 || die "package parted not found!!"
 
     echo "backup u-boot..."
