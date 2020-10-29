@@ -177,24 +177,27 @@ edit_uenv() {
 
      sync
 
-     echo_color "green" "(4/6) End edit_uenv:" "For: ${firmware_dtb} ..."
+     echo_color "green" "(4/6) End edit_uenv" "For: ${firmware_dtb} ..."
 
 }
 
 #write bootloader
 write_bootloader() {
 
-    cd ../../
-    BTLD_BIN="${root_tmp}/root/hk1box-bootloader.img"
+    cd ../../${root_tmp}
+    BTLD_BIN="root/hk1box-bootloader.img"
     if [ -f ${BTLD_BIN} ]; then
-       mkdir -p ${root_tmp}/lib/u-boot
-       cp ${BTLD_BIN} ${root_tmp}/lib/u-boot/
-       echo_color "yellow" "(5/6) Write bootloader: [ $(ls ${root_tmp}/lib/u-boot/*.img) ] Can be used for TF card startup" "..."
+       mkdir -p lib/u-boot
+       cp ${BTLD_BIN} lib/u-boot/
+       echo_color "yellow" "(5/6) Write bootloader" "[ $(ls lib/u-boot/*.img) ] Can be used for TF card startup."
        dd if=${BTLD_BIN} of=${lodev} bs=1 count=442 conv=fsync 2>/dev/null
        dd if=${BTLD_BIN} of=${lodev} bs=512 skip=1 seek=1 conv=fsync 2>/dev/null
+    else
+       echo_color "red" "(5/6) Error: bootloader does not exist" "..."
     fi
+    cd ../../
 
-    echo_color "green" "(5/6) End write_bootloader:" "[ ${BTLD_BIN} ] has been write complete ..."
+    echo_color "green" "(5/6) End write_bootloader" "[ ${BTLD_BIN} ] has been write complete ..."
 }
 
 #umount & del losetup
