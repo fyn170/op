@@ -48,7 +48,7 @@ echo_color() {
         case "${this_color}" in
         red)
             echo -e " \033[1;31m[ ${2} ]\033[0m ${3}"
-            echo -e "-------------------${1}---------------------"
+            echo -e "--------------------------------------------"
             echo -e "Current path -PWD-: [ ${PWD} ]"
             echo -e "Situation -lsblk-: [ $(lsblk) ]"
             echo -e "Directory file list -ls-: [ $(ls .) ]"
