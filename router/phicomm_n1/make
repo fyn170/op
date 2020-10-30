@@ -13,6 +13,9 @@ armbian_original_path="router/phicomm_n1/armbian"
 openwrt_original_path="router/phicomm_n1/openwrt"
 device="phicomm-n1" # don't modify it
 image_name='$device-v$kernel-openwrt-firmware'
+SKIP_MB=16
+BOOT_MB=512
+ROOTFS_MB=${rootsize}
 
 tag() {
     echo -e " [ \033[1;36m$1\033[0m ]"
@@ -141,13 +144,13 @@ make_image() {
     image="$out_path/$kernel/$(date "+%y.%m.%d-%H%M%S")-$(eval "echo $image_name").img"
 
     [ -d "$out_path/$kernel" ] || mkdir -p "$out_path/$kernel"
-    fallocate -l $((16 + 128 + rootsize))M $image
+    fallocate -l $((SKIP_MB + BOOT_MB + ROOTFS_MB))M $image
 }
 
 format_image() {
-    parted -s $image mklabel msdos
-    parted -s $image mkpart primary ext4 17M 151M
-    parted -s $image mkpart primary ext4 151M 100%
+    parted -s $image mklabel msdos 2>/dev/null
+    parted -s $image mkpart primary ext4 $((SKIP_MB))M $((SKIP_MB + BOOT_MB -1))M 2>/dev/null
+    parted -s $image mkpart primary ext4 $((SKIP_MB + BOOT_MB))M 100% 2>/dev/null
 
     loop_setup $image
     mkfs.vfat -n "BOOT" ${loop}p1 >/dev/null 2>&1
