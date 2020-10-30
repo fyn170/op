@@ -15,7 +15,6 @@ device="phicomm-n1" # don't modify it
 image_name='$device-v$kernel-openwrt-firmware'
 SKIP_MB=16
 BOOT_MB=512
-ROOTFS_MB=${rootsize}
 
 tag() {
     echo -e " [ \033[1;36m$1\033[0m ]"
@@ -144,7 +143,7 @@ make_image() {
     image="$out_path/$kernel/$(date "+%y.%m.%d-%H%M%S")-$(eval "echo $image_name").img"
 
     [ -d "$out_path/$kernel" ] || mkdir -p "$out_path/$kernel"
-    fallocate -l $((SKIP_MB + BOOT_MB + ROOTFS_MB))M $image
+    fallocate -l $((SKIP_MB + BOOT_MB + rootsize))M $image
 }
 
 format_image() {
