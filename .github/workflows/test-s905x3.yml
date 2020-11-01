@@ -54,7 +54,7 @@ jobs:
       id: down
       if: env.UPLOAD_FIRMWARE == 'true' && !cancelled()
       run: |
-        mkdir -p opt && cd opt
+        cd /opt
         curl -s "https://api.github.com/repos/ophub/op/releases" | grep -o "openwrt_.*/openwrt_phicomm_.*\.zip" | head -n 1 > DOWNLOAD_OP_URL
         [ -s DOWNLOAD_OP_URL ] && wget -q https://github.com/ophub/op/releases/download/$(cat DOWNLOAD_OP_URL)
         curl -s "https://api.github.com/repos/ophub/op/releases" | grep -o "flippy-.*/Armbian_.*\.img.xz" | head -n 1 > DOWNLOAD_ARMBIAN_URL
