@@ -24,7 +24,8 @@ The firmware supports USB hard disk booting. You can also Install the OpenWrt fi
 
 - Log in to the system: Connect the computer and the s905x3 box with a network interface → turn off the wireless wifi on the computer → enable the wired connection → manually set the computer ip to the same network segment ip as openwrt, ipaddr such as ***`192.168.1.2`***. The netmask is ***`255.255.255.0`***, and others are not filled in. You can log in to the openwrt system from the browser, Enter OpwnWrt's IP Address: ***`192.168.1.1`***, Account: ***`root`***, Password: ***`password`***, and then log in OpenWrt system.
 
-- restore the bootloader: you first need to Update the bootloader to support 1000M/s (X96-Max+ / H96-Max-X3-Round / HK1-Box universal HK1-box bootloader). you can restore the bootloader, restart it, and run the `Install OpenWrt` command again.
+- Restore the bootloader: You first need to Update the bootloader to support 1000M/s (X96-Max+ / H96-Max-X3-Round / HK1-Box ***`universal hk1box-bootloader.img`***). `Login in to openwrt` → `system menu` → `TTYD terminal` → input command: 
+
 ```shell script
 dd if=/root/hk1box-bootloader.img of=/dev/mmcblk2 bs=1M count=4 conv=fsync
 sync
@@ -33,15 +34,7 @@ reboot
 
 - Install OpenWrt: `Login in to openwrt` → `system menu` → `TTYD terminal` → input command: 
 ```shell script
-#For X96-Max+(S905x3) / H96-Max-X3-Round(S905x3)
-#Start from usb is to use meson-sm1-x96-max-plus-100m.dtb, Will change to meson-sm1-x96-max-plus.dtb after writing emmc.
-n1-install.sh x96
-reboot
-```
-
-```shell script
-#For HK1-Box(S905x3)
-n1-install.sh
+s905x3-install.sh
 reboot
 ```
 
@@ -49,7 +42,7 @@ Wait for the installation to complete. remove the USB hard disk, unplug/plug in 
 
 Upgrading OpenWrt: `Login in to openwrt` → `system menu` → `file transfer` → upload to `/tmp/upgrade/xxx.img`, enter the `system menu` → `TTYD terminal` → input command: 
 ```shell script
-n1-update.sh
+s905x3-update.sh
 reboot
 ```
 
