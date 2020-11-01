@@ -66,6 +66,7 @@ jobs:
         sudo xz -d Armbian*.img.xz
         sudo mv *.img imgs
         sudo unzip -o openwrt_phicomm*.zip
+        sudo chmod +x *
         sudo cp openwrt-armvirt-64-default-rootfs.tar.gz openwrt
         sync
         echo "FILE_DATE=$(date +"%Y.%m.%d")" >> $GITHUB_ENV
@@ -85,7 +86,7 @@ jobs:
         cd ./opt/openwrt
         sudo chmod +x mk_s905x3_opimg.sh
         AML_Version=$(echo ls ../imgs/*.img | grep -oE '[1-9].[0-9]{1,2}.[0-9]+.*\.img' | sed "s/.img//g")
-        sed -i "s/KERNEL_VERSION=.*/KERNEL_VERSION=\"${AML_Version}\"/"  mk_s905x3_opimg.sh
+        sudo sed -i "s/KERNEL_VERSION=.*/KERNEL_VERSION=\"${AML_Version}\"/"  mk_s905x3_opimg.sh
         sudo ./mk_s905x3_opimg.sh
         zip -r openwrt_s905x3_$(date +"%Y.%m.%d").zip tmp/*.img
         echo "FILEPATH=$PWD/$(ls *.zip)" >> $GITHUB_ENV
