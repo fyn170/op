@@ -18,12 +18,12 @@ on:
         default: 'false'
   #release:
     #types: published
-  #push:
-    #branches:
-      #- main
-    #paths:
+  push:
+    branches:
+      - main
+    paths:
       #- 'router/s905x3/.config'
-      #- '.github/workflows/build-openwrt-s905x3.yml'
+      - '.github/workflows/build-openwrt-s905x3.yml'
   schedule:
     - cron: '30 23 * * 0'
   #watch:
