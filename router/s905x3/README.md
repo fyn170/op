@@ -34,7 +34,7 @@ reboot
 
 - Install OpenWrt: `Login in to openwrt` → `system menu` → `TTYD terminal` → input command: 
 ```shell script
-s905x3-install.sh
+s905x3-install.sh    #BUG test, provide later, currently only supports USB boot use
 reboot
 ```
 
@@ -42,7 +42,7 @@ Wait for the installation to complete. remove the USB hard disk, unplug/plug in 
 
 Upgrading OpenWrt: `Login in to openwrt` → `system menu` → `file transfer` → upload to `/tmp/upgrade/xxx.img`, enter the `system menu` → `TTYD terminal` → input command: 
 ```shell script
-s905x3-update.sh
+s905x3-update.sh     #BUG test, provide later, currently only supports USB boot use
 reboot
 ```
 
