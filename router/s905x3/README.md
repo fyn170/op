@@ -12,25 +12,26 @@ You can download the OpwnWrt for S905x3 firmware from [Actions](https://github.c
 - `openwrt_hk1_*.img`: For X96-Max+(S905x3) / H96-Max-X3-Round(S905x3)
 - `openwrt_x96_*.img`: For HK1-Box(S905x3)
 
-Decompress the firmware and write it to a MicroSD card/TF card. Before starting the USB flash drive for the first time, use the adb tool to connect:
-```shell script
-adb connect 192.168.1.10       #change to box-ip
-adb shell
-su
-reboot update
-````
-Then quickly insert the prepared USB card/TF card to start the openwrt for s905x3 firmware.
+## Install into emmc
 
 The firmware supports USB hard disk booting. You can also Install the OpenWrt firmware in the USB hard disk into the EMMC partition of S905x3, and start using it from EMMC.
 
-If you use the scheme of writing emmc, you first need to Update the bootloader to support 1000M/s (X96-Max+ / H96-Max-X3-Round / HK1-Box universal HK1-box bootloader). you can restore the bootloader, restart it, and run the `Install OpenWrt` command again.
+- Open the developer mode: Settings→About this machine→Version number (for example: X96max plus...), click on the version number for 7 times in quick succession, and you will see that the developer mode is turned on.
+
+- Turn on USB debugging: After restarting, enter Settings→System→Advanced options→Developer options again (after entering, confirm that the status is on, and the USB debugging status in the list is also on)
+
+- Boot from U disk: unplug the power → insert the U disk → insert the thimble into the av port (top reset button) → insert the power → release the thimble of the av port → the system will boot from the u disk.
+
+- Log in to the system: connect the computer and the s905x3 box with a network cable → turn off the wireless wifi on the computer → enable the wired connection → manually set the computer ip to the same network segment ip as openwrt, such as 192.168.1.2. The subnet mask is 255.255.255.0, and others are not filled in. You can log in to the openwrt system from the browser, the address is 192.168.1.1
+
+- restore the bootloader: you first need to Update the bootloader to support 1000M/s (X96-Max+ / H96-Max-X3-Round / HK1-Box universal HK1-box bootloader). you can restore the bootloader, restart it, and run the `Install OpenWrt` command again.
 ```shell script
 dd if=/root/hk1box-bootloader.img of=/dev/mmcblk2 bs=1M count=4 conv=fsync
 sync
 reboot
 ```
 
-Install OpenWrt: `Login in to openwrt` → `system menu` → `TTYD terminal` → input command: 
+- Install OpenWrt: `Login in to openwrt` → `system menu` → `TTYD terminal` → input command: 
 ```shell script
 #For X96-Max+(S905x3) / H96-Max-X3-Round(S905x3)
 #Start from usb is to use meson-sm1-x96-max-plus-100m.dtb, Will change to meson-sm1-x96-max-plus.dtb after writing emmc.
@@ -51,7 +52,6 @@ Upgrading OpenWrt: `Login in to openwrt` → `system menu` → `file transfer` �
 n1-update.sh
 reboot
 ```
-
 
 Note: If used as a bypass gateway, you can add custom firewall rules as needed (Network → Firewall → Custom Rules):
 ```shell script
