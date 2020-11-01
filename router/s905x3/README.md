@@ -16,13 +16,13 @@ You can download the OpwnWrt for S905x3 firmware from [Actions](https://github.c
 
 The firmware supports USB hard disk booting. You can also Install the OpenWrt firmware in the USB hard disk into the EMMC partition of S905x3, and start using it from EMMC.
 
-- Open the developer mode: Settings→About this machine→Version number (for example: X96max plus...), click on the version number for 7 times in quick succession, and you will see that the developer mode is turned on.
+- Open the developer mode: Settings → About this machine → Version number (for example: X96max plus...), click on the version number for 7 times in quick succession, and you will see that the developer mode is turned on.
 
-- Turn on USB debugging: After restarting, enter Settings→System→Advanced options→Developer options again (after entering, confirm that the status is on, and the USB debugging status in the list is also on)
+- Turn on USB debugging: After restarting, enter Settings → System → Advanced options → Developer options again (after entering, confirm that the status is on, and the USB debugging status in the list is also on)
 
-- Boot from U disk: unplug the power → insert the U disk → insert the thimble into the av port (top reset button) → insert the power → release the thimble of the av port → the system will boot from the u disk.
+- Boot from U disk: Unplug the power → insert the Usb disk → insert the thimble into the AV port (top reset button) → insert the power → release the thimble of the av port → the system will boot from the Usb disk.
 
-- Log in to the system: connect the computer and the s905x3 box with a network cable → turn off the wireless wifi on the computer → enable the wired connection → manually set the computer ip to the same network segment ip as openwrt, such as 192.168.1.2. The subnet mask is 255.255.255.0, and others are not filled in. You can log in to the openwrt system from the browser, the address is 192.168.1.1
+- Log in to the system: Connect the computer and the s905x3 box with a network interface → turn off the wireless wifi on the computer → enable the wired connection → manually set the computer ip to the same network segment ip as openwrt, ipaddr such as ***`192.168.1.2`***. The netmask is ***`255.255.255.0`***, and others are not filled in. You can log in to the openwrt system from the browser, Enter OpwnWrt's IP Address: ***`192.168.1.1`***, Account: ***`root`***, Password: ***`password`***, and then log in OpenWrt system.
 
 - restore the bootloader: you first need to Update the bootloader to support 1000M/s (X96-Max+ / H96-Max-X3-Round / HK1-Box universal HK1-box bootloader). you can restore the bootloader, restart it, and run the `Install OpenWrt` command again.
 ```shell script
