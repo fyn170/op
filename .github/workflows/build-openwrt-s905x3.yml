@@ -6,7 +6,7 @@
 # sudo ./make parameter: all / x96 / hk1
 #========================================================================================================================
 
-name: Test Build s905x3
+name: Build OpenWrt for S905x3
 
 on:
   repository_dispatch:
@@ -22,9 +22,10 @@ on:
     #branches:
       #- main
     #paths:
-      #- '.github/workflows/test-s905x3.yml'
+      #- '.github/workflows/build-openwrt-s905x3.yml'
+      #- 'router/s905x3/make'
   schedule:
-    - cron: '0 20 * * 0'
+    - cron: '0 23 * * 0'
   #watch:
     #types: started
 
@@ -51,7 +52,7 @@ jobs:
       run: df -hT
  
     - name: download firmware
-      id: down
+      id: download
       if: env.UPLOAD_FIRMWARE == 'true' && !cancelled()
       run: |
         cd /opt
@@ -79,9 +80,9 @@ jobs:
         TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
         TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
       
-    - name: Buid firmware
-      id: buid
-      if: env.UPLOAD_FIRMWARE == 'true' && !cancelled()
+    - name: Build firmware
+      id: build
+      if: steps.download.outputs.status == 'success' && env.UPLOAD_FIRMWARE == 'true' && !cancelled()
       run: |
         cd /opt/openwrt
         sudo chmod +x mk_s905x3_opimg.sh
