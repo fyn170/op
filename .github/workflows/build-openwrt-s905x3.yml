@@ -22,8 +22,8 @@ on:
     #branches:
       #- main
     #paths:
-      #- 'router/phicomm_n1/.config'
-      #- '.github/workflows/build-openwrt-phicomm_n1.yml'
+      #- 'router/s905x3/.config'
+      #- '.github/workflows/build-openwrt-s905x3.yml'
   schedule:
     - cron: '30 23 * * 0'
   #watch:
