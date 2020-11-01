@@ -6,7 +6,7 @@
 # sudo ./make parameter: all / x96 / hk1
 #========================================================================================================================
 
-name: Build OpenWrt for S905x3
+name: Test Build S905x3
 
 on:
   repository_dispatch:
@@ -22,10 +22,10 @@ on:
     #branches:
       #- main
     #paths:
-      #- '.github/workflows/build-openwrt-s905x3.yml'
+      #- '.github/workflows/test-build-openwrt-s905x3.yml'
       #- 'router/s905x3/make'
-  schedule:
-    - cron: '0 23 * * 0'
+  #schedule:
+    #- cron: '0 23 * * 0'
   #watch:
     #types: started
 
