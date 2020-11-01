@@ -88,12 +88,6 @@ jobs:
         sudo chmod +x mk_s905x3_opimg.sh
         AML_Version=$(echo ls ../imgs/*.img | grep -oE '[1-9].[0-9]{1,2}.[0-9]+.*\.img' | sed "s/.img//g")
         sudo sed -i "s/KERNEL_VERSION=.*/KERNEL_VERSION=\"${AML_Version}\"/"  mk_s905x3_opimg.sh
-        sudo echo -e "--------------------------------------------"
-        sudo echo -e "Current path -PWD-: [ ${PWD} ]"
-        sudo echo -e "Situation -lsblk-: [ $(lsblk) ]"
-        sudo echo -e "Directory file list -ls-: [ $(ls .) ]"
-        sudo echo -e "Make script -cat-: [ $(cat mk_s905x3_opimg.sh) ]"
-        sudo echo -e "--------------------------------------------" 
         sudo ./mk_s905x3_opimg.sh
         cd tmp/
         sudo zip -r openwrt_s905x3_$(date +"%Y.%m.%d").zip *.img
