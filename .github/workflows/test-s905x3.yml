@@ -82,7 +82,7 @@ jobs:
       id: buid
       if: env.UPLOAD_FIRMWARE == 'true' && !cancelled()
       run: |
-        cd /opt/openwrt
+        cd ./opt/openwrt
         sudo chmod +x mk_s905x3_opimg.sh
         sudo ./mk_s905x3_opimg.sh
         zip -r openwrt_s905x3_$(date +"%Y.%m.%d").zip tmp/*.img
