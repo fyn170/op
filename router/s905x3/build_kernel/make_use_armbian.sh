@@ -29,7 +29,7 @@
 
 # Modify Flippy's kernel folder & Armbian*.img file name
 flippy_folder=${PWD}/"flippy"
-flippy_file="Armbian_20.10_Aml-s9xxx_buster_5.9.2-flippy-47+.img"
+flippy_file="Armbian_20.10_Aml-s9xxx_buster_5.4.73-flippy-47+o.img"
 
 # Default setting ( Don't modify )
 build_tmp_folder=${PWD}/"build_tmp"
