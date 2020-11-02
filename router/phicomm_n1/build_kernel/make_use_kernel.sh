@@ -31,11 +31,11 @@
 
 
 # Modify Flippy's kernel folder & version
-flippy_folder="flippy"
-flippy_version="5.4.69-flippy-45+o"
+flippy_folder=${PWD}/"flippy"
+flippy_version="5.9.1-flippy-47+"
 
 # Default setting ( Don't modify )
-build_tmp_folder="build_tmp"
+build_tmp_folder=${PWD}/"build_tmp"
 build_boot="boot-${flippy_version}.tar.gz"
 build_dtb="dtb-amlogic-${flippy_version}.tar.gz"
 build_modules="modules-${flippy_version}.tar.gz"
@@ -142,7 +142,7 @@ build_kernel() {
      xz -z kernel.tar
      cp -rf kernel.tar.xz ../../../${build_save_folder}/kernel.tar.xz && sync
 
-     echo_color "green" "(2/4) End build kernel.tar.xz"  "The save path is /${build_save_folder}/kernel.tar.xz ..."
+     echo_color "green" "(2/4) End build_kernel"  "The save path is /${build_save_folder}/kernel.tar.xz ..."
 
 }
 
@@ -183,7 +183,7 @@ build_modules() {
      cp -rf modules.tar.xz ../../${build_save_folder}/modules.tar.xz && sync
 
   cd ../../ && rm -rf ${build_tmp_folder} 2>/dev/null
-     echo_color "green" "(3/4) End build modules.tar.xz"  "The save path is /${build_save_folder}/modules.tar.xz ..."
+     echo_color "green" "(3/4) End build_modules"  "The save path is /${build_save_folder}/modules.tar.xz ..."
 
 }
 
@@ -202,6 +202,6 @@ build_kernel
 build_modules
 copy_kernel_modules
 
-echo_color "purple" "Build completed"  "${build_save_folder}: kernel.tar.xz & modules.tar.xz ..."
+echo_color "purple" "Build completed"  "${build_save_folder} ..."
 # end run the script
 
