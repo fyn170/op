@@ -311,9 +311,9 @@ while [ $i -le $max_try ]; do
 
         echo "edit uEnv.txt ..."
 	
-	if [ "${FDTFILE}" = "meson-sm1-x96-max-plus.dtb" ]; then
+	#if [ "${FDTFILE}" = "meson-sm1-x96-max-plus.dtb" ]; then
            sed -i "s/meson-sm1-x96-max-plus-100m.dtb/${FDTFILE}/g" uEnv.txt
-        fi
+        #fi
 	
         uuid=$(blkid /dev/${EMMC_NAME}p2 | awk '{ print $3 }' | cut -d '"' -f 2)
         echo "uuid is: [ $uuid ]"
