@@ -45,10 +45,10 @@ Wait for the installation to complete. remove the USB hard disk, unplug/plug in 
 Upgrading OpenWrt: `Login in to openwrt` → `system menu` → `file transfer` → upload ***`s905x3-openwrt.img`*** to ***`/tmp/upload/`***, enter the `system menu` → `TTYD terminal` → input command: 
 ```shell script
 cp -f /usr/bin/s905x3-update.sh /mnt/mmcblk2p4
-cp -f /tmp/upload/s905x3-update.sh /mnt/mmcblk2p4
+cp -f /tmp/upload/s905x3-openwrt.img /mnt/mmcblk2p4
 cd /mnt/mmcblk2p4
 chmod 755 s905x3-update.sh
-./s905x3-update.sh  s905x3-openwrt.img
+./s905x3-update.sh s905x3-openwrt.img
 reboot
 ```
 
