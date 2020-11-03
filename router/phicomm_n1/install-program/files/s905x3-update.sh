@@ -2,26 +2,26 @@
 
 # check cmd param
 if [ "$1" == "" ];then
-	echo "用法: $0 xxx.img"
+	echo "Usage: $0 xxx.img"
 	exit 1
 fi
 
 # check image file
 IMG_NAME=$1
 if [ ! -f "$IMG_NAME" ];then
-	echo "$IMG_NAME 不存在!"
+	echo "[ $IMG_NAME ] does not exist!"
 	exit 1
 fi
 
 # find boot partition 
 BOOT_PART_MSG=$(lsblk -l -o NAME,PATH,TYPE,UUID,MOUNTPOINT | awk '$3~/^part$/ && $5 ~ /^\/boot$/ {print $0}')
 if [ "${BOOT_PART_MSG}" == "" ];then
-	echo "Boot 分区不存在，或是没有正确挂载, 因此无法继续升级!"
+	echo "Boot The partition does not exist or is not mounted correctly, so the upgrade cannot be continued!"
 	exit 1
 fi
 
 BR_FLAG=1
-echo -ne "你想要备份旧版本的配置，并将其还原到升级后的系统中吗? y/n [y]\b\b"
+echo -ne "Do you want to backup the configuration of the old version and restore it to the upgraded system? y/n [y]\b\b"
 read yn
 case $yn in
     n*|N*) BR_FLAG=0;;
@@ -43,7 +43,7 @@ case $ROOT_NAME in
   mmcblk2p3) NEW_ROOT_NAME=mmcblk2p2
 	     NEW_ROOT_LABEL=EMMC_ROOTFS1
 	     ;;
-          *) echo "ROOTFS 分区位置不正确, 因此无法继续升级!"
+          *) echo "ROOTFS The partition location is incorrect, so the upgrade cannot continue!"
              exit 1
              ;;
 esac
@@ -51,7 +51,7 @@ esac
 # find new root partition
 NEW_ROOT_PART_MSG=$(lsblk -l -o NAME,PATH,TYPE,UUID,MOUNTPOINT | grep "${NEW_ROOT_NAME}" | awk '$3 ~ /^part$/ && $5 !~ /^\/$/ && $5 !~ /^\/boot$/ {print $0}')
 if [ "${NEW_ROOT_PART_MSG}" == "" ];then
-        echo "新的 ROOTFS 分区不存在, 因此无法继续升级!"
+        echo "The new ROOTFS partition does not exist, so the upgrade cannot continue!"
 	exit 1
 fi
 NEW_ROOT_NAME=$(echo $NEW_ROOT_PART_MSG | awk '{print $1}')
@@ -68,11 +68,11 @@ if [ $? -eq 0 ];then
 		exit 1
 	fi
 else
-	echo "losetup $IMG_FILE failed!"
+	echo "losetup [ $IMG_FILE ] failed!"
 	exit 1
 fi
 WAIT=3
-echo -n "The loopdev is $LOOP_DEV, wait ${WAIT} seconds "
+echo -n "The loopdev is [ $LOOP_DEV ], wait [ ${WAIT} ] seconds "
 while [ $WAIT -ge 1 ];do
 	echo -n "."
 	sleep 1
@@ -84,15 +84,15 @@ echo
 MOUNTED_DEVS=$(lsblk -l -o NAME,PATH,MOUNTPOINT | grep "$LOOP_DEV" | awk '$3 !~ /^$/ {print $2}')
 for dev in $MOUNTED_DEVS;do
 	while : ;do
-		echo -n "卸载 $dev ... "
+		echo -n "umount [ $dev ] ... "
 		umount -f $dev
 		sleep 1
 		mnt=$(lsblk -l -o NAME,PATH,MOUNTPOINT | grep "$dev" | awk '$3 !~ /^$/ {print $2}')
 		if [ "$mnt" == "" ];then
-			echo "成功"
+			echo "success."
 			break
 		else 
-			echo "重试 ..."
+			echo "Retry ..."
 		fi
 	done
 done
@@ -102,53 +102,53 @@ WORK_DIR=$PWD
 P1=${WORK_DIR}/boot
 P2=${WORK_DIR}/root
 mkdir -p $P1 $P2
-echo -n "挂载 ${LOOP_DEV}p1 -> ${P1} ... "
+echo -n "Mount [ ${LOOP_DEV}p1 ] -> ${P1} ... "
 mount -t vfat -o ro ${LOOP_DEV}p1 ${P1}
 if [ $? -ne 0 ];then
-	echo "挂载失败!"
+	echo "Mount failed!"
 	losetup -D
 	exit 1
 else 
-	echo "成功"
+	echo "success."
 fi	
 
-echo -n "挂载 ${LOOP_DEV}p2 -> ${P2} ... "
+echo -n "Mount [ ${LOOP_DEV}p2 ] -> ${P2} ... "
 mount -t btrfs -o ro,compress=zstd ${LOOP_DEV}p2 ${P2}
 if [ $? -ne 0 ];then
-	echo "挂载失败!"
+	echo "Mount failed!"
 	umount -f ${P1}
 	losetup -D
 	exit 1
 else
-	echo "成功"
+	echo "success."
 fi	
 
 #format NEW_ROOT
-echo "卸载 ${NEW_ROOT_MP}"
+echo "umount [ ${NEW_ROOT_MP} ]"
 umount -f "${NEW_ROOT_MP}"
 if [ $? -ne 0 ];then
-	echo "卸载失败, 请重启后再试一次!"
+	echo "Mount failed, Please restart and try again!"
 	umount -f ${P1}
 	umount -f ${P2}
 	losetup -D
 	exit 1
 fi
 
-echo "格式化 ${NEW_ROOT_PATH}"
+echo "Format [ ${NEW_ROOT_PATH} ]"
 NEW_ROOT_UUID=$(uuidgen)
 mkfs.btrfs -f -U ${NEW_ROOT_UUID} -L ${NEW_ROOT_LABEL} -m single ${NEW_ROOT_PATH}
 if [ $? -ne 0 ];then
-	echo "格式化 ${NEW_ROOT_PATH} 失败!"
+	echo "Format [ ${NEW_ROOT_PATH} ] failed!"
 	umount -f ${P1}
 	umount -f ${P2}
 	losetup -D
 	exit 1
 fi
 
-echo "挂载 ${NEW_ROOT_PATH} -> ${NEW_ROOT_MP}"
+echo "Mount [ ${NEW_ROOT_PATH} ] -> [ ${NEW_ROOT_MP} ]"
 mount -t btrfs -o compress=zstd ${NEW_ROOT_PATH} ${NEW_ROOT_MP}
 if [ $? -ne 0 ];then
-	echo "挂载 ${NEW_ROOT_PATH} -> ${NEW_ROOT_MP} 失败!"
+	echo "Mount [ ${NEW_ROOT_PATH} ] -> [ ${NEW_ROOT_MP} ] failed!"
 	umount -f ${P1}
 	umount -f ${P2}
 	losetup -D
@@ -157,37 +157,37 @@ fi
 
 # begin copy rootfs
 cd ${NEW_ROOT_MP}
-echo "开始复制数据， 从 ${P2} 到 ${NEW_ROOT_MP} ..."
+echo "Start copying data， 从 [ ${P2} ] TO [ ${NEW_ROOT_MP} ] ..."
 ENTRYS=$(ls)
 for entry in $ENTRYS;do
 	if [ "$entry" == "lost+found" ];then
 		continue
 	fi
-	echo -n "移除旧的 $entry ... "
+	echo -n "Remove old [ $entry ] ... "
 	rm -rf $entry 
 	if [ $? -eq 0 ];then
-		echo "成功"
+		echo "success."
 	else
-		echo "失败"
+		echo "failed."
 		exit 1
 	fi
 done
 echo
 
-echo -n "创建文件夹 ... "
+echo -n "Create folder ... "
 mkdir -p .reserved bin boot dev etc lib opt mnt overlay proc rom root run sbin sys tmp usr www
 ln -sf lib/ lib64
 ln -sf tmp/ var
-echo "完成"
+echo "success."
 echo
 
 COPY_SRC="root etc bin sbin lib opt usr www"
-echo "复制数据 ... "
+echo "Copy data ... "
 for src in $COPY_SRC;do
-	echo -n "复制 $src ... "
+	echo -n "Copy $src ... "
         (cd ${P2} && tar cf - $src) | tar xf -
         sync
-        echo "完成"
+        echo "success."
 done
 [ -d /mnt/mmcblk2p4/docker ] || mkdir -p /mnt/mmcblk2p4/docker
 rm -rf opt/docker && ln -sf /mnt/mmcblk2p4/docker/ opt/docker
@@ -205,17 +205,17 @@ fi
 BOOTLOADER="./lib/u-boot/hk1box-bootloader.img"
 if [ -f ${BOOTLOADER} ];then
 	if dmesg | grep 'AMedia X96 Max+';then
-		echo "*** 写入 u-boot ... "
+		echo "*** write u-boot ... "
 		# write u-boot
 		dd if=${BOOTLOADER} of=/dev/mmcblk2 bs=1 count=442 conv=fsync
 		dd if=${BOOTLOADER} of=/dev/mmcblk2 bs=512 skip=1 seek=1 conv=fsync
-		echo "*** 完成"
+		echo "*** success."
 	fi
 fi
 
 rm -f /mnt/${NEW_ROOT_NAME}/root/install-to-emmc.sh
 sync
-echo "复制完成"
+echo "Copy complete."
 echo
 
 BACKUP_LIST=$(${P2}/usr/sbin/flippy -p)
@@ -228,7 +228,7 @@ if [ $BR_FLAG -eq 1 ];then
     fi
     mv ./etc/config/qbittorrent ./etc/config/qbittorrent.orig
 
-    echo -n "开始还原从旧系统备份的配置文件 ... "
+    echo -n "Start to restore the configuration file backed up from the old system ... "
     (
       cd /
       eval tar czf ${NEW_ROOT_MP}/.reserved/openwrt_config.tar.gz "${BACKUP_LIST}" 2>/dev/null
@@ -246,11 +246,11 @@ if [ $BR_FLAG -eq 1 ];then
     sed -e "s/option wan_mode 'false'/option wan_mode 'true'/" -i ./etc/config/dockerman 2>/dev/null
     sed -e 's/config setting/config verysync/' -i ./etc/config/verysync
     sync
-    echo "完成"
+    echo "complete."
     echo
 fi
 
-echo "修改配置文件 ... "
+echo "Modify the configuration file ... "
 rm -f "./etc/rc.local.orig" "./usr/bin/mk_newpart.sh" "./etc/part_size"
 rm -rf "./opt/docker" && ln -sf "/mnt/mmcblk2p4/docker" "./opt/docker"
 cat > ./etc/fstab <<EOF
@@ -305,7 +305,7 @@ if [ $BR_FLAG -eq 1 ];then
     #cp ${P2}/etc/config/passwall_rule/chnroute ./etc/config/passwall_rule/ 2>/dev/null
     #cp ${P2}/etc/config/passwall_rule/gfwlist.conf ./etc/config/passwall_rule/ 2>/dev/null
     sync
-    echo "完成"
+    echo "complete."
     echo
 fi
 eval tar czf .reserved/openwrt_config.tar.gz "${BACKUP_LIST}" 2>/dev/null
@@ -335,23 +335,23 @@ chmod 755 ./etc/rc.local*
 
 cd ${WORK_DIR}
  
-echo "开始复制数据， 从 ${P1} 到 /boot ..."
+echo "Start copying data， from [ ${P1} ] to [ /boot ] ..."
 cd /boot
-echo -n "删除旧的 boot 文件 ..."
+echo -n "Delete the old boot file ..."
 cp uEnv.txt /tmp/uEnv.txt
 U_BOOT_EMMC=0
 [ -f u-boot.emmc ] && U_BOOT_EMMC=1
 rm -rf *
-echo "完成"
-echo -n "复制新的 boot 文件 ... " 
+echo "complete."
+echo -n "Copy the new boot file ... "
 (cd ${P1} && tar cf - . ) | tar xf -
 [ $U_BOOT_EMMC -eq 1 ] && cp u-boot.sd u-boot.emmc
 rm -f aml_autoscript* s905_autoscript*
 sync
-echo "完成"
+echo "complete."
 echo
 
-echo -n "更新 boot 参数 ... "
+echo -n "Update boot parameters ... "
 if [ -f /tmp/uEnv.txt ];then
 	lines=$(wc -l < /tmp/uEnv.txt)
 	lines=$(( lines - 1 ))
@@ -371,12 +371,12 @@ EOF
 fi
 
 sync
-echo "完成"
+echo "complete."
 echo
 
 cd $WORK_DIR
 umount -f ${P1} ${P2}
 losetup -D
 rmdir ${P1} ${P2}
-echo "升级已完成, 请重启系统!"
+echo "The upgrade is complete, please restart the system!"
 echo
