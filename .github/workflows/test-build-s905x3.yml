@@ -59,9 +59,9 @@ jobs:
         curl -s "https://api.github.com/repos/ophub/op/releases" | grep -o "openwrt_.*/openwrt_phicomm_.*\.zip" | head -n 1 > DOWNLOAD_OP_URL
         [ -s DOWNLOAD_OP_URL ] && wget -q https://github.com/ophub/op/releases/download/$(cat DOWNLOAD_OP_URL)
         curl -s "https://api.github.com/repos/HoldOnBro/Actions-OpenWrt/releases" | grep -o "Files.*/Armbian_.*._Aml-s9xxx.*\.img.xz" | head -n 1 > DOWNLOAD_ARMBIAN_URL
-        [ -s DOWNLOAD_ARMBIAN_URL ] && wget -q https://github.com/ophub/op/releases/download/$(cat DOWNLOAD_ARMBIAN_URL)
+        [ -s DOWNLOAD_ARMBIAN_URL ] && wget -q https://github.com/HoldOnBro/Actions-OpenWrt/releases/download/$(cat DOWNLOAD_ARMBIAN_URL)
         curl -s "https://api.github.com/repos/HoldOnBro/Actions-OpenWrt/releases" | grep -o "Files.*/mk_openwrt_.*\.tar.gz" | head -n 1 > DOWNLOAD_MK_URL
-        [ -s DOWNLOAD_MK_URL ] && wget -q https://github.com/ophub/op/releases/download/$(cat DOWNLOAD_MK_URL)
+        [ -s DOWNLOAD_MK_URL ] && wget -q https://github.com/HoldOnBro/Actions-OpenWrt/releases/download/$(cat DOWNLOAD_MK_URL)
         sudo tar xvzf mk_openwrt*.tar.gz
         sudo mkdir imgs
         sudo xz -d Armbian*.img.xz
