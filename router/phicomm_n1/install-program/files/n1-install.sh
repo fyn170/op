@@ -156,7 +156,7 @@ macaddr=$(uuidgen | md5sum | sed 's/^\(..\)\(..\)\(..\)\(..\)\(..\).*$/fc:\1:\2:
     )
 }
 
-rm -f usr/bin/n1-install
+rm -f /usr/bin/n1-install.sh
 
 echo "sync..."
 cd /
