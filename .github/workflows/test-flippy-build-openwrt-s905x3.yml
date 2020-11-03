@@ -24,8 +24,8 @@ on:
     #paths:
       #- 'router/s905x3/.config'
       #- '.github/workflows/build-openwrt-s905x3.yml'
-  schedule:
-    - cron: '30 23 * * 0'
+  #schedule:
+    #- cron: '30 23 * * 0'
   #watch:
     #types: started
 
