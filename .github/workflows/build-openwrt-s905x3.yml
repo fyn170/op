@@ -6,7 +6,7 @@
 # sudo ./make parameter: all / x96 / hk1
 #========================================================================================================================
 
-name: Test Build S905x3
+name: Build OpenWrt for S905x3
 
 on:
   repository_dispatch:
