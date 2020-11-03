@@ -1,21 +1,21 @@
 #!/bin/sh
 
 # check cmd param
-if [ "$1" == "" ];then
+if [ "$1" == "" ]; then
 	echo "Usage: $0 xxx.img"
 	exit 1
 fi
 
 # check image file
 IMG_NAME=$1
-if [ ! -f "$IMG_NAME" ];then
+if [ ! -f "$IMG_NAME" ]; then
 	echo "[ $IMG_NAME ] does not exist!"
 	exit 1
 fi
 
 # find boot partition 
 BOOT_PART_MSG=$(lsblk -l -o NAME,PATH,TYPE,UUID,MOUNTPOINT | awk '$3~/^part$/ && $5 ~ /^\/boot$/ {print $0}')
-if [ "${BOOT_PART_MSG}" == "" ];then
+if [ "${BOOT_PART_MSG}" == "" ]; then
 	echo "Boot The partition does not exist or is not mounted correctly, so the upgrade cannot be continued!"
 	exit 1
 fi
@@ -50,7 +50,7 @@ esac
 
 # find new root partition
 NEW_ROOT_PART_MSG=$(lsblk -l -o NAME,PATH,TYPE,UUID,MOUNTPOINT | grep "${NEW_ROOT_NAME}" | awk '$3 ~ /^part$/ && $5 !~ /^\/$/ && $5 !~ /^\/boot$/ {print $0}')
-if [ "${NEW_ROOT_PART_MSG}" == "" ];then
+if [ "${NEW_ROOT_PART_MSG}" == "" ]; then
         echo "The new ROOTFS partition does not exist, so the upgrade cannot continue!"
 	exit 1
 fi
@@ -61,7 +61,7 @@ NEW_ROOT_MP=$(echo $NEW_ROOT_PART_MSG | awk '{print $5}')
 
 # losetup
 losetup -f -P $IMG_NAME
-if [ $? -eq 0 ];then
+if [ $? -eq 0 ]; then
 	LOOP_DEV=$(losetup | grep "$IMG_NAME" | awk '{print $1}')
 	if [ "$LOOP_DEV" == "" ];then
 		echo "loop device not found!"
@@ -73,7 +73,7 @@ else
 fi
 WAIT=3
 echo -n "The loopdev is [ $LOOP_DEV ], wait [ ${WAIT} ] seconds "
-while [ $WAIT -ge 1 ];do
+while [ $WAIT -ge 1 ]; do
 	echo -n "."
 	sleep 1
 	WAIT=$(( WAIT - 1 ))
@@ -82,13 +82,13 @@ echo
 
 # umount loop devices (openwrt will auto mount some partition)
 MOUNTED_DEVS=$(lsblk -l -o NAME,PATH,MOUNTPOINT | grep "$LOOP_DEV" | awk '$3 !~ /^$/ {print $2}')
-for dev in $MOUNTED_DEVS;do
-	while : ;do
+for dev in $MOUNTED_DEVS; do
+	while : ; do
 		echo -n "umount [ $dev ] ... "
 		umount -f $dev
 		sleep 1
 		mnt=$(lsblk -l -o NAME,PATH,MOUNTPOINT | grep "$dev" | awk '$3 !~ /^$/ {print $2}')
-		if [ "$mnt" == "" ];then
+		if [ "$mnt" == "" ]; then
 			echo "success."
 			break
 		else 
@@ -104,7 +104,7 @@ P2=${WORK_DIR}/root
 mkdir -p $P1 $P2
 echo -n "Mount [ ${LOOP_DEV}p1 ] -> ${P1} ... "
 mount -t vfat -o ro ${LOOP_DEV}p1 ${P1}
-if [ $? -ne 0 ];then
+if [ $? -ne 0 ]; then
 	echo "Mount failed!"
 	losetup -D
 	exit 1
@@ -114,7 +114,7 @@ fi
 
 echo -n "Mount [ ${LOOP_DEV}p2 ] -> ${P2} ... "
 mount -t btrfs -o ro,compress=zstd ${LOOP_DEV}p2 ${P2}
-if [ $? -ne 0 ];then
+if [ $? -ne 0 ]; then
 	echo "Mount failed!"
 	umount -f ${P1}
 	losetup -D
@@ -126,7 +126,7 @@ fi
 #format NEW_ROOT
 echo "umount [ ${NEW_ROOT_MP} ]"
 umount -f "${NEW_ROOT_MP}"
-if [ $? -ne 0 ];then
+if [ $? -ne 0 ]; then
 	echo "Mount failed, Please restart and try again!"
 	umount -f ${P1}
 	umount -f ${P2}
@@ -137,7 +137,7 @@ fi
 echo "Format [ ${NEW_ROOT_PATH} ]"
 NEW_ROOT_UUID=$(uuidgen)
 mkfs.btrfs -f -U ${NEW_ROOT_UUID} -L ${NEW_ROOT_LABEL} -m single ${NEW_ROOT_PATH}
-if [ $? -ne 0 ];then
+if [ $? -ne 0 ]; then
 	echo "Format [ ${NEW_ROOT_PATH} ] failed!"
 	umount -f ${P1}
 	umount -f ${P2}
@@ -147,7 +147,7 @@ fi
 
 echo "Mount [ ${NEW_ROOT_PATH} ] -> [ ${NEW_ROOT_MP} ]"
 mount -t btrfs -o compress=zstd ${NEW_ROOT_PATH} ${NEW_ROOT_MP}
-if [ $? -ne 0 ];then
+if [ $? -ne 0 ]; then
 	echo "Mount [ ${NEW_ROOT_PATH} ] -> [ ${NEW_ROOT_MP} ] failed!"
 	umount -f ${P1}
 	umount -f ${P2}
@@ -159,13 +159,13 @@ fi
 cd ${NEW_ROOT_MP}
 echo "Start copying data， 从 [ ${P2} ] TO [ ${NEW_ROOT_MP} ] ..."
 ENTRYS=$(ls)
-for entry in $ENTRYS;do
-	if [ "$entry" == "lost+found" ];then
+for entry in $ENTRYS; do
+	if [ "$entry" == "lost+found" ]; then
 		continue
 	fi
 	echo -n "Remove old [ $entry ] ... "
 	rm -rf $entry 
-	if [ $? -eq 0 ];then
+	if [ $? -eq 0 ]; then
 		echo "success."
 	else
 		echo "failed."
@@ -183,47 +183,47 @@ echo
 
 COPY_SRC="root etc bin sbin lib opt usr www"
 echo "Copy data ... "
-for src in $COPY_SRC;do
-	echo -n "Copy $src ... "
-        (cd ${P2} && tar cf - $src) | tar xf -
-        sync
-        echo "success."
+for src in $COPY_SRC; do
+    echo -n "Copy $src ... "
+    (cd ${P2} && tar cf - $src) | tar xf -
+    sync
+    echo "success."
 done
 [ -d /mnt/mmcblk2p4/docker ] || mkdir -p /mnt/mmcblk2p4/docker
 rm -rf opt/docker && ln -sf /mnt/mmcblk2p4/docker/ opt/docker
 
-if [ -f /mnt/${NEW_ROOT_NAME}/etc/config/AdGuardHome ];then
-	[ -d /mnt/mmcblk2p4/AdGuardHome/data ] || mkdir -p /mnt/mmcblk2p4/AdGuardHome/data
-      	if [ ! -L /usr/bin/AdGuardHome ];then
-		[ -d /usr/bin/AdGuardHome ] && \
-		cp -a /usr/bin/AdGuardHome/* /mnt/mmcblk2p4/AdGuardHome/
+if [ -f /mnt/${NEW_ROOT_NAME}/etc/config/AdGuardHome ]; then
+   [ -d /mnt/mmcblk2p4/AdGuardHome/data ] || mkdir -p /mnt/mmcblk2p4/AdGuardHome/data
+	if [ ! -L /usr/bin/AdGuardHome ]; then
+	   [ -d /usr/bin/AdGuardHome ] && \
+	   cp -a /usr/bin/AdGuardHome/* /mnt/mmcblk2p4/AdGuardHome/
 
 	fi
 	ln -sf /mnt/mmcblk2p4/AdGuardHome /mnt/${NEW_ROOT_NAME}/usr/bin/AdGuardHome
 fi
 
 BOOTLOADER="./lib/u-boot/hk1box-bootloader.img"
-if [ -f ${BOOTLOADER} ];then
-	if dmesg | grep 'AMedia X96 Max+';then
-		echo "*** write u-boot ... "
-		# write u-boot
-		dd if=${BOOTLOADER} of=/dev/mmcblk2 bs=1 count=442 conv=fsync
-		dd if=${BOOTLOADER} of=/dev/mmcblk2 bs=512 skip=1 seek=1 conv=fsync
-		echo "*** success."
-	fi
+if [ -f ${BOOTLOADER} ]; then
+   if dmesg | grep 'AMedia X96 Max+'; then
+	echo "*** write u-boot ... "
+	# write u-boot
+	dd if=${BOOTLOADER} of=/dev/mmcblk2 bs=1 count=442 conv=fsync
+	dd if=${BOOTLOADER} of=/dev/mmcblk2 bs=512 skip=1 seek=1 conv=fsync
+	echo "*** success."
+   fi
 fi
 
-rm -f /mnt/${NEW_ROOT_NAME}/root/install-to-emmc.sh
+rm -f /mnt/${NEW_ROOT_NAME}/root/s905x3-install.sh
 sync
 echo "Copy complete."
 echo
 
 BACKUP_LIST=$(${P2}/usr/sbin/flippy -p)
-if [ $BR_FLAG -eq 1 ];then
+if [ $BR_FLAG -eq 1 ]; then
     # restore old config files
     OLD_RELEASE=$(grep "DISTRIB_REVISION=" /etc/openwrt_release | awk -F "'" '{print $2}'|awk -F 'R' '{print $2}' | awk -F '.' '{printf("%02d%02d%02d\n", $1,$2,$3)}')
     NEW_RELEASE=$(grep "DISTRIB_REVISION=" ./etc/uci-defaults/99-default-settings | awk -F "'" '{print $2}'|awk -F 'R' '{print $2}' | awk -F '.' '{printf("%02d%02d%02d\n", $1,$2,$3)}')
-    if [ ${OLD_RELEASE} -le 200311 ] && [ ${NEW_RELEASE} -ge 200319 ];then
+    if [ ${OLD_RELEASE} -le 200311 ] && [ ${NEW_RELEASE} -ge 200319 ]; then
 	    mv ./etc/config/shadowsocksr ./etc/config/shadowsocksr.${NEW_RELEASE}
     fi
     mv ./etc/config/qbittorrent ./etc/config/qbittorrent.orig
@@ -234,7 +234,7 @@ if [ $BR_FLAG -eq 1 ];then
       eval tar czf ${NEW_ROOT_MP}/.reserved/openwrt_config.tar.gz "${BACKUP_LIST}" 2>/dev/null
     )
     tar xzf ${NEW_ROOT_MP}/.reserved/openwrt_config.tar.gz
-    if [ ${OLD_RELEASE} -le 200311 ] && [ ${NEW_RELEASE} -ge 200319 ];then
+    if [ ${OLD_RELEASE} -le 200311 ] && [ ${NEW_RELEASE} -ge 200319 ]; then
 	    mv ./etc/config/shadowsocksr ./etc/config/shadowsocksr.${OLD_RELEASE}
 	    mv ./etc/config/shadowsocksr.${NEW_RELEASE} ./etc/config/shadowsocksr
     fi
@@ -295,13 +295,13 @@ sed -e 's/ttyS0/tty0/' -i ./etc/inittab
 sss=$(date +%s)
 ddd=$((sss/86400))
 sed -e "s/:0:0:99999:7:::/:${ddd}:0:99999:7:::/" -i ./etc/shadow
-if [ `grep "sshd:x:22:22" ./etc/passwd | wc -l` -eq 0 ];then
+if [ `grep "sshd:x:22:22" ./etc/passwd | wc -l` -eq 0 ]; then
     echo "sshd:x:22:22:sshd:/var/run/sshd:/bin/false" >> ./etc/passwd
     echo "sshd:x:22:sshd" >> ./etc/group
     echo "sshd:x:${ddd}:0:99999:7:::" >> ./etc/shadow
 fi
 
-if [ $BR_FLAG -eq 1 ];then
+if [ $BR_FLAG -eq 1 ]; then
     #cp ${P2}/etc/config/passwall_rule/chnroute ./etc/config/passwall_rule/ 2>/dev/null
     #cp ${P2}/etc/config/passwall_rule/gfwlist.conf ./etc/config/passwall_rule/ 2>/dev/null
     sync
@@ -311,8 +311,8 @@ fi
 eval tar czf .reserved/openwrt_config.tar.gz "${BACKUP_LIST}" 2>/dev/null
 
 rm -f ./etc/part_size ./usr/bin/mk_newpart.sh
-if [ -x ./usr/sbin/balethirq.pl ];then
-    if grep "balethirq.pl" "./etc/rc.local";then
+if [ -x ./usr/sbin/balethirq.pl ]; then
+    if grep "balethirq.pl" "./etc/rc.local"; then
 	echo "balance irq is enabled"
     else
 	echo "enable balance irq"
@@ -322,7 +322,7 @@ fi
 mv ./etc/rc.local ./etc/rc.local.orig
 
 cat > ./etc/rc.local <<EOF
-if [ ! -f /etc/rc.d/*dockerd ];then
+if [ ! -f /etc/rc.d/*dockerd ]; then
 	/etc/init.d/dockerd enable
 	/etc/init.d/dockerd start
 fi
@@ -352,7 +352,7 @@ echo "complete."
 echo
 
 echo -n "Update boot parameters ... "
-if [ -f /tmp/uEnv.txt ];then
+if [ -f /tmp/uEnv.txt ]; then
 	lines=$(wc -l < /tmp/uEnv.txt)
 	lines=$(( lines - 1 ))
 	head -n $lines /tmp/uEnv.txt > uEnv.txt
@@ -378,5 +378,6 @@ cd $WORK_DIR
 umount -f ${P1} ${P2}
 losetup -D
 rmdir ${P1} ${P2}
-echo "The upgrade is complete, please restart the system!"
+echo "The upgrade is complete, please [ restart ] the system!"
 echo
+
