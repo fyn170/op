@@ -9,47 +9,40 @@ ROOT2=1024
 TARGET_SHARED_FSTYPE=f2fs
 
 hasdrives=$(lsblk | grep -oE '(mmcblk[0-9])' | sort | uniq)
-if [ "$hasdrives" = "" ]
-then
+if [ "$hasdrives" = "" ]; then
     echo "No EMMC or SD devices were found in this system!!! "
     exit 1
 fi
 
 avail=$(lsblk | grep -oE '(mmcblk[0-9]|sda[0-9])' | sort | uniq)
-if [ "$avail" = "" ]
-then
+if [ "$avail" = "" ]; then
     echo "The system did not find any available disk devices!!!"
     exit 1
 fi
 
 runfrom=$(lsblk | grep -e '/$' | grep -oE '(mmcblk[0-9]|sda[0-9])')
-if [ "$runfrom" = "" ]
-then
+if [ "$runfrom" = "" ]; then
     echo "Root file system not found!!! "
     exit 1
 fi
 
 emmc=$(echo $avail | sed "s/$runfrom//" | sed "s/sd[a-z][0-9]//g" | sed "s/ //g")
-if [ "$emmc" = "" ]
-then
+if [ "$emmc" = "" ]; then
     echo "No idle EMMC equipment is found, or the system is already running on EMMC equipment!!!"
     exit 1
 fi
 
-if [ "$runfrom" = "$avail" ]
-then
+if [ "$runfrom" = "$avail" ]; then
     echo "Your system is already running on the EMMC device!!! "
     exit 1
 fi
 
-if [ $runfrom = $emmc ]
-then
+if [ $runfrom = $emmc ]; then
     echo "Your system is already running on the EMMC device!!! "
     exit 1
 fi
 
-if [ "$(echo $emmc | grep mmcblk)" = "" ]
-then
+if [ "$(echo $emmc | grep mmcblk)" = "" ]; then
     echo "There seems to be no EMMC device on your system!!! "
     exit 1
 fi
@@ -119,13 +112,13 @@ EOF
 	   ;;
 esac
 
-if [  ! -f "/boot/dtb/amlogic/${FDTFILE}" ];then
+if [  ! -f "/boot/dtb/amlogic/${FDTFILE}" ]; then
     echo "/boot/dtb/amlogic/${FDTFILE} 不存在！"
     exit 1
 fi
 
 # backup old bootloader
-if [ ! -f backup-bootloader.img ];then
+if [ ! -f backup-bootloader.img ]; then
     echo -n "Backup bootloader -> backup-bootloader.img ... "
     dd if=/dev/$EMMC_NAME of=backup-bootloader.img bs=1M count=4 conv=fsync
     echo "Backup bootloader complete."
@@ -137,7 +130,7 @@ swapoff -a
 
 # umount all other mount points
 MOUNTS=$(lsblk -l -o MOUNTPOINT)
-for mnt in $MOUNTS;do
+for mnt in $MOUNTS; do
     if [ "$mnt" == "MOUNTPOINT" ];then
         continue
     fi
@@ -174,7 +167,7 @@ done
 p=$(lsblk -l | grep -e "${EMMC_NAME}p" | wc -l)
 echo "A total of [ $p ] old partitions on EMMC will be deleted"
 >/tmp/fdisk.script
-while [ $p -ge 1 ];do
+while [ $p -ge 1 ]; do
     echo "d" >> /tmp/fdisk.script
     if [ $p -gt 1 ];then
       echo "$p" >> /tmp/fdisk.script
@@ -233,7 +226,7 @@ w
 EOF
 
 fdisk /dev/$EMMC_NAME < /tmp/fdisk.script
-if [ $? -ne 0 ];then
+if [ $? -ne 0 ]; then
     echo "The fdisk partition fails, the backup bootloader will be restored, and then exit."
     dd if=bootloader-backup.bin of=/dev/$EMMC_NAME conf=fsync
     exit 1
@@ -254,7 +247,7 @@ seek=$((start4 / 2048))
 dd if=/dev/zero of=/dev/${EMMC_NAME} bs=1M count=1 seek=$seek conv=fsync
 
 BLDR=/lib/u-boot/hk1box-bootloader.img
-if [ -f "${BLDR}" ];then
+if [ -f "${BLDR}" ]; then
     if echo "${FDTFILE}" | grep meson-sm1-x96-max-plus >/dev/null;then
         echo "Write new bootloader ..."
         dd if=${BLDR} of="/dev/${EMMC_NAME}" conv=fsync bs=1 count=442
@@ -265,7 +258,7 @@ if [ -f "${BLDR}" ];then
 fi
 
 # fix wifi macaddr
-if [ -x /usr/bin/fix_wifi_macaddr.sh ];then
+if [ -x /usr/bin/fix_wifi_macaddr.sh ]; then
     /usr/bin/fix_wifi_macaddr.sh
 fi
 
@@ -300,8 +293,8 @@ while [ $i -le $max_try ]; do
     sleep 2
     mnt=$(lsblk -l -o MOUNTPOINT | grep /mnt/${EMMC_NAME}p1)
 
-    if [ "$mnt" == "" ];then
-        if [ $i -lt $max_try ];then
+    if [ "$mnt" == "" ]; then
+        if [ $i -lt $max_try ]; then
             echo "Not mounted successfully, try again ..."
             i=$((i+1))
         else
@@ -317,6 +310,11 @@ while [ $i -le $max_try ]; do
         sync
 
         echo "edit uEnv.txt ..."
+	
+	if [ "${FDTFILE}" = "meson-sm1-x96-max-plus.dtb" ]; then
+           sed -i "s/meson-sm1-x96-max-plus-100m.dtb/${FDTFILE}/g" uEnv.txt
+        fi
+	
         uuid=$(blkid /dev/${EMMC_NAME}p2 | awk '{ print $3 }' | cut -d '"' -f 2)
         echo "uuid is: [ $uuid ]"
         if [ "$uuid" ]; then
@@ -367,7 +365,6 @@ while [ $i -le $max_try ]; do
             echo -n "copy [ $src ] ... "
             (cd / && tar cf - $src) | tar xf -
             sync
-            echo "complete."
         done
         echo "Copy complete."
 		
@@ -406,11 +403,8 @@ done
 echo "complete."
 
 echo "Create a shared file system: format to [ ext4 ] ... "
-
-	  mkfs.ext4 -F -L EMMC_SHARED  /dev/${EMMC_NAME}p4
-	  mount -t ext4 /dev/${EMMC_NAME}p4 /mnt/${EMMC_NAME}p4
-
-mkdir -p /mnt/${EMMC_NAME}p4/docker /mnt/${EMMC_NAME}p4/AdGuardHome
+mkfs.ext4 -F -L "EMMC_SHARED"  -m 0 /dev/${EMMC_NAME}p4 >/dev/null
+mount -t ext4 /dev/${EMMC_NAME}p4 /mnt/${EMMC_NAME}p4
 echo "complete."
 
 echo "Note: The original bootloader has been exported to /root/backup-bootloader.img, please download and save!"
