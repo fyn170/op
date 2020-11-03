@@ -42,8 +42,10 @@ reboot
 
 Wait for the installation to complete. remove the USB hard disk, unplug/plug in the power again, reboot into EMMC.
 
-Upgrading OpenWrt: `Login in to openwrt` → `system menu` → `file transfer` → upload ***`s905x3-openwrt.img`*** and ***`update-s905x3-openwrt.sh`*** to ***`/mnt/mmcblk2p4/`***, enter the `system menu` → `TTYD terminal` → input command: 
+Upgrading OpenWrt: `Login in to openwrt` → `system menu` → `file transfer` → upload ***`s905x3-openwrt.img`*** to ***`/tmp/upload/`***, enter the `system menu` → `TTYD terminal` → input command: 
 ```shell script
+cp -f /usr/bin/s905x3-update.sh /mnt/mmcblk2p4
+cp -f /tmp/upload/s905x3-update.sh /mnt/mmcblk2p4
 cd /mnt/mmcblk2p4
 chmod 755 s905x3-update.sh
 ./s905x3-update.sh  s905x3-openwrt.img
