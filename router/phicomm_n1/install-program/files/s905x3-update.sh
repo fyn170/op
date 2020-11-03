@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 
 # check cmd param
 if [ "$1" == "" ];then
