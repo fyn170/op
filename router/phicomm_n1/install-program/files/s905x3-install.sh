@@ -308,7 +308,7 @@ while [ $i -le $max_try ]; do
         (cd /boot && tar cf - .) | tar xf -
         sync
 
-        echo "edit uEnv.txt ..."
+        echo "Edit uEnv.txt ..."
         cat > uEnv.txt <<EOF
 LINUX=/zImage
 INITRD=/uInitrd
@@ -326,7 +326,7 @@ EOF
 
         rm -f s905_autoscript* aml_autoscript*
         if [ $U_BOOT_EXT -eq 1 ]; then
-           [ -f "u-boot.sd" ] && cp u-boot.sd u-boot.emmc
+           [ -f u-boot.sd ] && cp u-boot.sd u-boot.emmc
         fi
         sync
         echo "complete."
