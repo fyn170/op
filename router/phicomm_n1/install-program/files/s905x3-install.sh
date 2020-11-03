@@ -113,7 +113,7 @@ EOF
 esac
 
 if [  ! -f "/boot/dtb/amlogic/${FDTFILE}" ]; then
-    echo "/boot/dtb/amlogic/${FDTFILE} 不存在！"
+    echo "/boot/dtb/amlogic/${FDTFILE} does not exist！"
     exit 1
 fi
 
@@ -125,38 +125,37 @@ if [ ! -f backup-bootloader.img ]; then
     echo
 fi
 
-# swapoff -a
 swapoff -a
 
 # umount all other mount points
 MOUNTS=$(lsblk -l -o MOUNTPOINT)
 for mnt in $MOUNTS; do
-    if [ "$mnt" == "MOUNTPOINT" ];then
+    if [ "$mnt" == "MOUNTPOINT" ]; then
         continue
     fi
 
-    if [ "$mnt" == "" ];then
+    if [ "$mnt" == "" ]; then
         continue
     fi
 
-    if [ "$mnt" == "/" ];then
+    if [ "$mnt" == "/" ]; then
         continue
     fi
 
-    if [ "$mnt" == "/boot" ];then
+    if [ "$mnt" == "/boot" ]; then
         continue
     fi
 
-    if [ "$mnt" == "[SWAP]" ];then
+    if [ "$mnt" == "[SWAP]" ]; then
         echo "swapoff -a"
         swapoff -a
         continue
     fi
 
-    if echo $mnt | grep $EMMC_NAME;then
+    if echo $mnt | grep $EMMC_NAME; then
         echo "umount -f $mnt"
         umount -f $mnt
-        if [ $? -ne 0 ];then
+        if [ $? -ne 0 ]; then
             echo "$mnt Cannot be uninstalled, the installation process is aborted."
             exit 1
         fi
@@ -248,7 +247,7 @@ dd if=/dev/zero of=/dev/${EMMC_NAME} bs=1M count=1 seek=$seek conv=fsync
 
 BLDR=/lib/u-boot/hk1box-bootloader.img
 if [ -f "${BLDR}" ]; then
-    if echo "${FDTFILE}" | grep meson-sm1-x96-max-plus >/dev/null;then
+    if echo "${FDTFILE}" | grep meson-sm1-x96-max-plus >/dev/null; then
         echo "Write new bootloader ..."
         dd if=${BLDR} of="/dev/${EMMC_NAME}" conv=fsync bs=1 count=442
         dd if=${BLDR} of="/dev/${EMMC_NAME}" conv=fsync bs=512 skip=1 seek=1
@@ -311,21 +310,21 @@ while [ $i -le $max_try ]; do
 
         echo "edit uEnv.txt ..."
 	
-	#if [ "${FDTFILE}" = "meson-sm1-x96-max-plus.dtb" ]; then
+	if [ "${FDTFILE}" = "meson-sm1-x96-max-plus.dtb" ]; then
            sed -i "s/meson-sm1-x96-max-plus-100m.dtb/${FDTFILE}/g" uEnv.txt
-        #fi
+        fi
 	
         uuid=$(blkid /dev/${EMMC_NAME}p2 | awk '{ print $3 }' | cut -d '"' -f 2)
         echo "uuid is: [ $uuid ]"
         if [ "$uuid" ]; then
-            sed -i "s/LABEL=ROOTFS/UUID=$uuid/" uEnv.txt
+           sed -i "s/LABEL=ROOTFS/UUID=$uuid/" uEnv.txt
         else
-            sed -i 's/ROOTFS/EMMC_ROOTFS1/' uEnv.txt
+           sed -i 's/ROOTFS/EMMC_ROOTFS1/' uEnv.txt
         fi
 
         rm -f s905_autoscript* aml_autoscript*
-        if  [ $U_BOOT_EXT -eq 1 ];then
-            [ -f "u-boot.sd" ] && cp u-boot.sd u-boot.emmc
+        if [ $U_BOOT_EXT -eq 1 ]; then
+           [ -f "u-boot.sd" ] && cp u-boot.sd u-boot.emmc
         fi
         sync
         echo "complete."
@@ -342,8 +341,8 @@ while [ $i -le $max_try ]; do
     mount -t ext4 /dev/${EMMC_NAME}p2 /mnt/${EMMC_NAME}p2 2>/dev/null
     sleep 2
     mnt=$(lsblk -l -o MOUNTPOINT | grep /mnt/${EMMC_NAME}p2)
-    if [ "$mnt" == "" ];then
-        if [ $i -lt $max_try ];then
+    if [ "$mnt" == "" ]; then
+        if [ $i -lt $max_try ]; then
             echo "Not mounted successfully, try again ..."
             i=$((i+1))
         else
@@ -361,7 +360,7 @@ while [ $i -le $max_try ]; do
 		
         COPY_SRC="root etc bin sbin lib opt usr www"
         echo "Copy data ... "
-        for src in $COPY_SRC;do
+        for src in $COPY_SRC; do
             echo -n "copy [ $src ] ... "
             (cd / && tar cf - $src) | tar xf -
             sync
@@ -394,7 +393,6 @@ while [ $i -le $max_try ]; do
             )
         }
 
-
         cd /
         umount -f /mnt/${EMMC_NAME}p2
         break
@@ -407,8 +405,8 @@ mkfs.ext4 -F -L "EMMC_SHARED"  -m 0 /dev/${EMMC_NAME}p4 >/dev/null
 mount -t ext4 /dev/${EMMC_NAME}p4 /mnt/${EMMC_NAME}p4
 echo "complete."
 
-echo "Note: The original bootloader has been exported to /root/backup-bootloader.img, please download and save!"
-echo "All steps have been completed, please restart the system!"
+echo "Note: The original bootloader has been exported to [ /root/backup-bootloader.img ], please download and save!"
+echo "Install completed, please [ reboot ] the system!"
 sync
 exit 0
 
