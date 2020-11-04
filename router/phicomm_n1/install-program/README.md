@@ -21,6 +21,7 @@ cd /
 n1-update.sh
 reboot
 ```
+
 If the partition fails and cannot be written, you can restore the bootloader, restart it, and run the relevant command again.
 ```shell script
 dd if=/root/u-boot-2015-phicomm-n1.bin of=/dev/mmcblk1
