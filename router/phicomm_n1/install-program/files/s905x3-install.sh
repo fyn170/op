@@ -76,7 +76,7 @@ Please select S905x3 box model:
 0. Other
 --------------------------------------
 EOF
-echo -ne "please choose: "
+echo "Please choose:"
 read boxtype
 case $boxtype in 
     1) FDTFILE="meson-sm1-x96-max-plus.dtb"
@@ -103,7 +103,7 @@ case $boxtype in
 Please enter the dtb file name, for example: $FDTFILE
 The custom dtb file may not work, please choose carefully！
 EOF
-	   echo -ne "dtb File name (do not include the path): "
+	   echo "dtb File name [ do not include the path ]:"
           read CUST_FDTFILE
 	   FDTFILE=$CUST_FDTFILE
 	   ;;
@@ -119,7 +119,7 @@ fi
 
 # backup old bootloader
 if [ ! -f backup-bootloader.img ]; then
-    echo -n "Backup bootloader -> backup-bootloader.img ... "
+    echo "Backup bootloader -> backup-bootloader.img ... "
     dd if=/dev/$EMMC_NAME of=backup-bootloader.img bs=1M count=4 conv=fsync
     echo "Backup bootloader complete."
     echo
@@ -168,7 +168,7 @@ echo "A total of [ $p ] old partitions on EMMC will be deleted"
 >/tmp/fdisk.script
 while [ $p -ge 1 ]; do
     echo "d" >> /tmp/fdisk.script
-    if [ $p -gt 1 ];then
+    if [ $p -gt 1 ]; then
       echo "$p" >> /tmp/fdisk.script
     fi
     p=$((p-1))
@@ -302,7 +302,7 @@ while [ $i -le $max_try ]; do
         fi
     else
         echo "Successfully mounted."
-        echo -n "copy boot ..."
+        echo "copy boot ..."
         cd /mnt/${EMMC_NAME}p1
         rm -rf /boot/'System Volume Information/'
         (cd /boot && tar cf - .) | tar xf -
@@ -314,7 +314,7 @@ LINUX=/zImage
 INITRD=/uInitrd
 FDT=/dtb/amlogic/${FDTFILE}
 APPEND=root=LABEL=ROOTFS console=ttyAML0,115200n8 console=tty0 no_console_suspend consoleblank=0 fsck.fix=yes fsck.repair=yes net.ifnames=0 cgroup_enable=cpuset cgroup_memory=1 cgroup_enable=memory swapaccount=1
-EOF	
+EOF
 	
         uuid=$(blkid /dev/${EMMC_NAME}p2 | awk '{ print $3 }' | cut -d '"' -f 2)
         echo "uuid is: [ $uuid ]"
@@ -353,7 +353,7 @@ while [ $i -le $max_try ]; do
         fi
     else
         echo "Successfully mounted"
-        echo -n "Create folder ... "
+        echo "Create folder ... "
         cd /mnt/${EMMC_NAME}p2
         mkdir -p bin boot dev etc lib opt mnt overlay proc rom root run sbin sys tmp usr www
         ln -sf lib/ lib64
@@ -363,13 +363,13 @@ while [ $i -le $max_try ]; do
         COPY_SRC="root etc bin sbin lib opt usr www"
         echo "Copy data ... "
         for src in $COPY_SRC; do
-            echo -n "copy [ $src ] ... "
+            echo "copy [ $src ] ..."
             (cd / && tar cf - $src) | tar xf -
             sync
         done
         echo "Copy complete."
 		
-        echo -n "Edit configuration file ... "
+        echo "Edit configuration file ..."
 
         cd /mnt/${EMMC_NAME}p2/etc/rc.d
         ln -sf ../init.d/dockerd S99dockerd
