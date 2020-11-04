@@ -73,16 +73,36 @@ example: ~/op/router/s905x3/
 ```shell script
 #Phicomm-N1
 #FDT=/dtb/amlogic/meson-gxl-s905d-phicomm-n1.dtb
-#Phicomm-N1 (thresh)
-#FDT=/dtb/amlogic/meson-gxl-s905d-phicomm-n1-thresh.dtb
-#
-#X96-Max+ & H96-Max-X3-Round (100m) [tag: x96]
+
+# X96 Max+ [tag: x96] ( S905X3 Network: 100m / TF card: 30Mhz / CPU: 2124Mhz ) 
+#The default DTB when the USB flash drive is started, almost compatible with all S905x3 boxes.
 FDT=/dtb/amlogic/meson-sm1-x96-max-plus-100m.dtb
-#X96-Max+ & H96-Max-X3-Round (1000m)
+
+# X96 Max+ ( S905X3 Network: 1000M / TF card: 30Mhz / CPU: 2124Mhz )
 #FDT=/dtb/amlogic/meson-sm1-x96-max-plus.dtb
-#
-#HK1-Box [tag: hk1]
+
+# X96 Max+ ( S905X3 Network: 1000M / TF card: 30Mhz / CPU: 2244Mhz )
+#FDT=/dtb/amlogic/meson-sm1-x96-max-plus-oc.dtb
+
+# HK1 BoX [tag: hk1] ( S905X3 Network: 1000M / TF card: 25Mhz / CPU: 2124Mhz )
 #FDT=/dtb/amlogic/meson-sm1-hk1box-vontar-x3.dtb
+
+# HK1 BoX ( S905X3 Network: 1000M / TF card: 25Mhz / CPU: 2184Mhz )
+#FDT=/dtb/amlogic/meson-sm1-hk1box-vontar-x3-oc.dtb
+
+# H96 Max X3 ( S905X3 Network: 1000M / TF card: 50Mhz / CPU: 2124Mhz )
+#FDT=/dtb/amlogic/meson-sm1-h96-max-x3.dtb
+
+# H96 Max X3 ( S905X3 Network: 1000M / TF card: 50Mhz / CPU: 2208Mhz )
+#FDT=/dtb/amlogic/meson-sm1-h96-max-x3-oc.dtb
+
+# X96 Max ( S905X2 Network: 1000M / TF card: 50Mhz / CPU: 1944Mhz )
+#Applicable to most S905x2, 4G memory Gigabit network card boxes.
+#FDT=/dtb/amlogic/meson-g12a-x96-max.dtb
+
+# X96 Max ( S905X2 Network: 100M / TF card: 50Mhz / CPU: 1944Mhz )
+#Applicable to most S905x2, 2G memory 100M network card boxes.
+#FDT=/dtb/amlogic/meson-g12a-x96-max-rmii.dtb
 ````
 
 Method: Add # in front of the dtb file path of Phicomm N1, and remove the # in front of the firmware you need. 
