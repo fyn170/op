@@ -9,8 +9,8 @@ You can download the OpwnWrt for S905x3 firmware from [Actions](https://github.c
 
 ## Firmware instructions
 
-- `openwrt_hk1_*.img`: For X96-Max+(S905x3) / H96-Max-X3-Round(S905x3)
-- `openwrt_x96_*.img`: For HK1-Box(S905x3)
+- `openwrt_x96_*.img`: Almost compatible with all S905x3 boxes to boot from USB hard disk, you can choose different box types when installing into EMMC.
+- `openwrt_hk1_*.img`: For HK1-Box(S905x3).
 
 ## Install into emmc
 
