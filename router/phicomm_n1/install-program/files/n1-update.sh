@@ -86,7 +86,7 @@ macaddr=$(uuidgen | md5sum | sed 's/^\(..\)\(..\)\(..\)\(..\)\(..\).*$/fc:\1:\2:
     )
 }
 
-rm -f ${mnt_loop}p2/usr/bin/n1-install
+rm -f ${mnt_loop}p2/usr/bin/n1-install.sh
 tune2fs -L "ROOT_EMMC" ${loop}p2 >/dev/null
 
 echo -e "
