@@ -110,9 +110,9 @@ Method: Add # in front of the dtb file path of Phicomm N1, and remove the # in f
 ## Detailed make compile command
 
 ```shell script
-- `sudo ./make x96` #Build the OpenWrt firmware of S905X3-BOXES. Almost compatible with all S905x3 boxes to boot from USB hard disk, you can choose different box types when installing into EMMC. This command is recommended.
-- `sudo ./make hk1` #Build the OpenWrt firmware of HK1-Box according to the default configuration.
-- `sudo ./make all` #Build All S905x3 ( X96-Max+, H96-Max-X3-Round & HK1-Box ) OpenWrt firmware according to the default configuration firmware. 
+sudo ./make x96  #Build the OpenWrt firmware of S905X3-BOXES. Almost compatible with all S905x3 boxes to boot from USB hard disk, you can choose different box types when installing into EMMC. This command is recommended.
+sudo ./make hk1  #Build the OpenWrt firmware of HK1-Box according to the default configuration.
+sudo ./make all  #Build All S905x3 ( X96-Max+, H96-Max-X3-Round & HK1-Box ) OpenWrt firmware according to the default configuration firmware. 
 ````
 
 ## Compilation method
