@@ -14,7 +14,8 @@ n1-install.sh
 
 Upgrading OpenWrt: `Login in to openwrt` → `system menu` → `file transfer` → upload ***`phicomm-n1-openwrt.zip`*** to ***`/tmp/upload/`***`, enter the `system menu` → `TTYD terminal` → input command: 
 ```shell script
-cd /tmp/upload/
+mv -f /tmp/upload/phicomm-n1-openwrt.zip  /opt
+cd /opt
 unzip phicomm-n1-openwrt.zip     #Unzip the [ phicomm-n1-openwrt.zip ] file to get [ phicomm-n1-openwrt.img ]
 cd /
 n1-update.sh
