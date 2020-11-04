@@ -24,7 +24,7 @@ The firmware supports USB hard disk booting. You can also Install the OpenWrt fi
 
 - Log in to the system: Connect the computer and the s905x3 box with a network interface → turn off the wireless wifi on the computer → enable the wired connection → manually set the computer ip to the same network segment ip as openwrt, ipaddr such as ***`192.168.1.2`***. The netmask is ***`255.255.255.0`***, and others are not filled in. You can log in to the openwrt system from the browser, Enter OpwnWrt's IP Address: ***`192.168.1.1`***, Account: ***`root`***, Password: ***`password`***, and then log in OpenWrt system.
 
-- Tips：When booting from USB, the network card is 100M, and it will automatically become Gigabit after writing into EMMC.
+- Tips: When booting from USB, the network card is 100M, and it will automatically become Gigabit after writing into EMMC.
 
 - Install OpenWrt: `Login in to openwrt` → `system menu` → `TTYD terminal` → input command: 
 ```shell script
