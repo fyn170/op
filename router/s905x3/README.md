@@ -108,10 +108,9 @@ FDT=/dtb/amlogic/meson-sm1-x96-max-plus-100m.dtb
 Method: Add # in front of the dtb file path of Phicomm N1, and remove the # in front of the firmware you need. 
 
 ## Detailed make compile command
-- `sudo ./make all`: All S905x3 ( X96-Max+, H96-Max-X3-Round & HK1-Box ) OpenWrt firmware according to the default configuration firmware. This command is recommended.
-- `sudo ./make x96`: Build the OpenWrt firmware of X96-Max+ & H96-Max-X3-Round according to the default configuration.
+- `sudo ./make x96`: Build the OpenWrt firmware of S905X3-BOXES. Almost compatible with all S905x3 boxes to boot from USB hard disk, you can choose different box types when installing into EMMC. This command is recommended.
 - `sudo ./make hk1`: Build the OpenWrt firmware of HK1-Box according to the default configuration.
-
+- `sudo ./make all`: Build All S905x3 ( X96-Max+, H96-Max-X3-Round & HK1-Box ) OpenWrt firmware according to the default configuration firmware. 
 ## Compilation method
 
 - Select ***`Build OpenWrt for S905x3`*** on the [Action](https://github.com/ophub/op/actions) page.
