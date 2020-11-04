@@ -68,7 +68,7 @@ example: ~/op/router/s905x3/
  └── make
  ```
 
-## /boot/uEnv.txt:
+## /boot/uEnv.txt FDT FILES
 
 ```shell script
 #Phicomm-N1
