@@ -24,14 +24,6 @@ The firmware supports USB hard disk booting. You can also Install the OpenWrt fi
 
 - Log in to the system: Connect the computer and the s905x3 box with a network interface → turn off the wireless wifi on the computer → enable the wired connection → manually set the computer ip to the same network segment ip as openwrt, ipaddr such as ***`192.168.1.2`***. The netmask is ***`255.255.255.0`***, and others are not filled in. You can log in to the openwrt system from the browser, Enter OpwnWrt's IP Address: ***`192.168.1.1`***, Account: ***`root`***, Password: ***`password`***, and then log in OpenWrt system.
 
-- Restore the bootloader: You first need to Update the bootloader to support 1000M/s (X96-Max+ / H96-Max-X3-Round / HK1-Box ***`universal hk1box-bootloader.img`***). `Login in to openwrt` → `system menu` → `TTYD terminal` → input command: 
-
-```shell script
-dd if=/root/hk1box-bootloader.img of=/dev/mmcblk2 bs=1M count=4 conv=fsync
-sync
-reboot
-```
-
 - Install OpenWrt: `Login in to openwrt` → `system menu` → `TTYD terminal` → input command: 
 ```shell script
 cd /root
