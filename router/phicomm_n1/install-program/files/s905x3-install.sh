@@ -1,8 +1,8 @@
 #!/bin/sh
 #===================================================================================
 # https://github.com/ophub/op
-# Description: Install the openwrt system to the emmc storage for s905x3-box
-# Function: Install to emmc script for s905x3-box
+# Description: Automatically Build OpenWrt for s905x3-box
+# Function: Install the openwrt system to the emmc storage for s905x3-box
 # Copyright (C) 2020 Flippy
 # Copyright (C) 2020 https://github.com/ophub/op
 #===================================================================================
