@@ -1,4 +1,11 @@
 #!/bin/sh
+#========================================================================================================================
+# https://github.com/ophub/op
+# Description: Automatically Build OpenWrt for PHICOMM N1
+# Function: Install to emmc script for PHICOMM N1
+# Copyright (C) 2020 Flippy
+# Copyright (C) 2020 https://github.com/ophub/op
+#========================================================================================================================
 
 # check cmd param
 if  [ "$1" == "" ]; then
