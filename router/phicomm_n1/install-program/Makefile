@@ -22,7 +22,7 @@ define Package/$(PKG_NAME)
 endef
 
 define Package/$(PKG_NAME)/description
-	Install the openwrt system to the emmc storage for phicomm-n1 and s905x3-box.
+	Install and Upgrading the openwrt system to the emmc storage for phicomm-n1 and s905x3-box
 endef
 
 define Build/Prepare
