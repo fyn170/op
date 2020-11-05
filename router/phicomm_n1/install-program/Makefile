@@ -1,8 +1,9 @@
 #========================================================================================================================
 # https://github.com/ophub/op
-# Description: Automatically Build OpenWrt for PHICOMM N1
-# Function: Install to emmc script for PHICOMM N1
+# Description: Automatically Build OpenWrt for phicomm-n1 and s905x3-box
+# Function: Install and Upgrading the openwrt system to the emmc storage for phicomm-n1 and s905x3-box
 # Copyright (C) 2020 https://github.com/tuanqing/mknop
+# Copyright (C) 2020 Flippy
 # Copyright (C) 2020 https://github.com/ophub/op
 #========================================================================================================================
 
