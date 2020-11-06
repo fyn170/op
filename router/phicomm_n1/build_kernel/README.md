@@ -10,21 +10,6 @@ The first method:
 ```shell script
 Example: ~/op/router/phicomm_n1/build-n1-kernel/
  ├── flippy
- │   ├── boot-5.4.63-flippy-43+o.tar.gz
- │   ├── dtb-amlogic-5.4.63-flippy-43+o.tar.gz
- │   └── modules-5.4.63-flippy-43+o.tar.gz
- └── make_use_kernel.sh
-```
-
-put ***`boot-${flippy_version}.tar.gz, dtb-amlogic-${flippy_version}.tar.gz & modules-${flippy_version}.tar.gz`*** the three files into the ***`${flippy_folder}`*** folder, Modify ${flippy_version} to kernel version. E.g: ***`flippy_version="5.9.1-flippy-47+"`***. then run the script:
-```shell script
-sudo ./make_use_kernel.sh
-```
-
-The second method: 
-```shell script
-Example: ~/op/router/phicomm_n1/build-n1-kernel/
- ├── flippy
  │   ├── Armbian_20.10_Aml-s9xxx_buster_5.9.2-flippy-47+.img
  │   ├── OR: N1_Openwrt_R20.10.20_k5.4.73-flippy-47+o.img
  │   └── OR: S905x3_Openwrt_R20.10.20_k5.9.2-flippy-47+.img
@@ -34,6 +19,21 @@ Example: ~/op/router/phicomm_n1/build-n1-kernel/
 Put the ***`Flippy’s kernel file`*** E.g: ***`Armbian_20.10_Aml-s9xxx_buster_5.9.2-flippy-47+.img`*** file into the ***`${flippy_folder}`*** folder, Modify ${flippy_file} to kernel file name. E.g: ***`flippy_file="Armbian_20.10_Aml-s9xxx_buster_5.9.2-flippy-47+.img"`***. then run the script:
 ```shell script
 sudo ./make_use_img.sh
+```
+
+The second method: 
+```shell script
+Example: ~/op/router/phicomm_n1/build-n1-kernel/
+ ├── flippy
+ │   ├── boot-5.4.63-flippy-43+o.tar.gz
+ │   ├── dtb-amlogic-5.4.63-flippy-43+o.tar.gz
+ │   └── modules-5.4.63-flippy-43+o.tar.gz
+ └── make_use_kernel.sh
+```
+
+put ***`boot-${flippy_version}.tar.gz, dtb-amlogic-${flippy_version}.tar.gz & modules-${flippy_version}.tar.gz`*** the three files into the ***`${flippy_folder}`*** folder, Modify ${flippy_version} to kernel version. E.g: ***`flippy_version="5.9.1-flippy-47+"`***. then run the script:
+```shell script
+sudo ./make_use_kernel.sh
 ```
 
 The generated files ***` kernel.tar.gz & modules.tar.gz `*** will be directly placed in the kernel directory of this github: ***` ~/op/router/phicomm_n1/armbian/phicomm-n1/kernel/${build_save_folder} `***
