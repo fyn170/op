@@ -17,11 +17,13 @@
 # 01. Log in to the home directory of the local Ubuntu system
 # 02. git clone https://github.com/ophub/op.git
 # 03. cd ~/op/router/phicomm_n1/build_kernel/
-# 04. Put Flippy's ${flippy_file} file into ${flippy_folder}
-# 05. Run: sudo ./make_use_img.sh
-# 06. The generated files path: ~/op/router/phicomm_n1/armbian/phicomm-n1/kernel/${build_save_folder}
-# 07. git push to your github
-# 08. Github.com Build openwrt: ~/op/.github/workflows/build-openwrt-phicomm_n1.yml
+# 04. Prepare Flippy's ${flippy_file}, support: Armbian_*_Aml-s9xxx_buster*.img, N1_Openwrt*.img, S905x3_Openwrt*.img
+# 05. Put Flippy's ${flippy_file} file into ${flippy_folder}
+# 05. Modify ${flippy_file} to kernel file name. E.g: flippy_file="Armbian_20.10_Aml-s9xxx_buster_5.8.16-flippy-46+.img"
+# 06. Run: sudo ./make_use_img.sh
+# 07. The generated files path: ~/op/router/phicomm_n1/armbian/phicomm-n1/kernel/${build_save_folder}
+# 08. git push to your github
+# 09. Github.com Build openwrt: ~/op/.github/workflows/build-openwrt-phicomm_n1.yml
 #
 # Tips: If run 'sudo ./make_use_img.sh' is 'Command not found'. Run: sudo chmod +x make_use_img.sh
 #
