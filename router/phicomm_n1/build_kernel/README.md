@@ -4,7 +4,7 @@ If you use Phicomm N1 to install OpenWrt, you must know ‘Flippy’. He provide
 
 ## Usage
 
-You can install Flippy’s OpenWrt firmware and use it. If you want to define some plug-ins and make your own dedicated op firmware, you can use this script to generate a kernel package adapted to this github source code. You have two ways to get the kernel, one is to use the kernel file provided by Flippy to synthesize ***`(boot-${flippy_version}.tar.gz, dtb-amlogic-${flippy_version}.tar.gz & modules-${flippy_version}.tar.gz)`***, another way is to use the ***`Flippy’s Openwrt firmware`*** file provided by him to extract. The operation of these two methods is as follows:
+You can install Flippy’s OpenWrt firmware and use it. If you want to define some plug-ins and make your own dedicated op firmware, you can use this script to generate a kernel package adapted to this github source code. You have two ways to get the kernel, one is to use the kernel file provided by Flippy to synthesize ***`(boot-${flippy_version}.tar.gz, dtb-amlogic-${flippy_version}.tar.gz & modules-${flippy_version}.tar.gz)`***, another way is to use the ***`Flippy’s kernel file`*** file provided by him to extract. The operation of these two methods is as follows:
 
 The first method: 
 ```shell script
