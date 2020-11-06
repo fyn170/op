@@ -16,7 +16,7 @@ Example: ~/op/router/phicomm_n1/build-n1-kernel/
  └── make_use_kernel.sh
 ```
 
-put ***`boot-${flippy_version}.tar.gz, dtb-amlogic-${flippy_version}.tar.gz & modules-${flippy_version}.tar.gz`*** the three files into the ***`${flippy_folder}`*** folder, run the script:
+put ***`boot-${flippy_version}.tar.gz, dtb-amlogic-${flippy_version}.tar.gz & modules-${flippy_version}.tar.gz`*** the three files into the ***`${flippy_folder}`*** folder, Modify ${flippy_version} to kernel version. E.g: ***`flippy_version="5.9.1-flippy-47+"`***. then run the script:
 ```shell script
 sudo ./make_use_kernel.sh
 ```
@@ -25,11 +25,13 @@ The second method:
 ```shell script
 Example: ~/op/router/phicomm_n1/build-n1-kernel/
  ├── flippy
- │   └── N1_Openwrt_R20.8.27_k5.4.63-flippy-43+o.img
+ │   ├── Armbian_20.10_Aml-s9xxx_buster_5.9.2-flippy-47+.img
+ │   ├── OR: N1_Openwrt_R20.10.20_k5.4.73-flippy-47+o.img
+ │   └── OR: S905x3_Openwrt_R20.10.20_k5.9.2-flippy-47+.img
  └── make_use_img.sh
 ```
 
-Put the ***`Flippy’s OpenWrt firmware`*** E.g: N1_Openwrt_R20.8.27_k5.4.63-flippy-43+o.img file into the ***`${flippy_folder}`*** folder, run the script:
+Put the ***`Flippy’s kernel file`*** E.g: ***`Armbian_20.10_Aml-s9xxx_buster_5.9.2-flippy-47+.img`*** file into the ***`${flippy_folder}`*** folder, Modify ${flippy_file} to kernel file name. E.g: ***`flippy_file="Armbian_20.10_Aml-s9xxx_buster_5.9.2-flippy-47+.img"`***. then run the script:
 ```shell script
 sudo ./make_use_img.sh
 ```
