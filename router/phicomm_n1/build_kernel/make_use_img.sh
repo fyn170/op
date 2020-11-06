@@ -29,7 +29,7 @@
 
 # Modify Flippy's kernel folder & *.img file name
 flippy_folder=${PWD}/"flippy"
-flippy_file="N1_Openwrt_R20.9.15_k5.4.72-flippy-46+o.img"
+flippy_file="Armbian_20.10_Aml-s9xxx_buster_5.8.16-flippy-46+.img"
 
 # Default setting ( Don't modify )
 build_tmp_folder=${PWD}/"build_tmp"
