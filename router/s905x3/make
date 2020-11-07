@@ -7,7 +7,7 @@
 # Copyright (C) 2020 https://github.com/ophub/op
 #========================================================================================================================
 #
-# example: ~/op/router/s905x3/
+# Path: ~/op/router/s905x3/
 # ├── flippy
 # │   ├── phicomm_n1_firmware_01.img
 # │   ├── phicomm_n1_firmware_02.img
