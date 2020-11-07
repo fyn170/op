@@ -236,6 +236,6 @@ build_kernel
 build_modules
 copy_kernel_modules
 
-echo_color "purple" "Build completed"  "${build_save_folder} ..."
+echo_color "purple" "Build completed"  "${build_save_folder} ... "
 # end run the script
 
