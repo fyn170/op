@@ -22,6 +22,7 @@
 # 04. Prepare Flippy's ${build_boot}, ${build_dtb} & ${build_modules} three files. 
 # 05. Put this three files into ${flippy_folder}
 # 06. Modify ${flippy_version} to kernel version. E.g: flippy_version="5.9.1-flippy-47+"
+#     If the files of ${flippy_version} is not found, Will search for other files in the ${flippy_folder} directory.
 # 07. Run: sudo ./make_use_kernel.sh
 # 08. The generated files path: ~/op/router/phicomm_n1/armbian/phicomm-n1/kernel/${build_save_folder}
 # 09. git push to your github
@@ -82,18 +83,47 @@ echo_color() {
 # Check files
 check_build_files() {
 
-  if  (test ! -f ${flippy_folder}/${build_boot} || test ! -f ${flippy_folder}/${build_dtb} || test ! -f ${flippy_folder}/${build_modules}); then
-    echo_color "red" "(1/4) Error: Files does not exist"  "\n \
-    Please check if the following three files exist: \n \
-    01. ${flippy_folder}/${build_boot} \n \
-    02. ${flippy_folder}/${build_dtb} \n \
-    03. ${flippy_folder}/${build_modules} "
-  else
-    # begin run the script
+    if   [ -f "${flippy_folder}/${build_boot}" -a -f "${flippy_folder}/${build_dtb}" -a -f "${flippy_folder}/${build_modules}" ]; then
+
+        echo_color "blue" "(1/7) The specified file exists." "USE: ${build_boot} and other files to start compiling ..."
+
+    elif [ $( ls ${flippy_folder}/*.tar.gz -l | grep "^-" | wc -l ) -ge 3 ]; then
+
+        unset flippy_version && unset build_save_folder && unset build_boot && unset build_dtb && unset build_modules
+
+        if  [ -f ${flippy_folder}/boot-*.tar.gz ]; then
+            build_boot=$( ls ${flippy_folder}/boot-*.tar.gz ) && build_boot=${build_boot##*/}
+            flippy_version=${build_boot/boot-/} && flippy_version=${flippy_version/.tar.gz/}
+            build_save_folder=${flippy_version%-flippy*}
+        else
+            echo_color "red" "(1/7) Error: Have no boot-*.tar.gz file found in the ${flippy_folder} directory." "..."
+        fi
+
+        if  [ -f ${flippy_folder}/dtb-amlogic-${flippy_version}.tar.gz ]; then
+            build_dtb=$( ls ${flippy_folder}/dtb-amlogic-${flippy_version}.tar.gz ) && build_dtb=${build_dtb##*/}
+        else
+            echo_color "red" "(1/7) Error: Have no dtb-amlogic-*.tar.gz file found in the ${flippy_folder} directory." "..."
+        fi
+
+        if  [ -f ${flippy_folder}/modules-${flippy_version}.tar.gz ]; then
+            build_modules=$( ls ${flippy_folder}/modules-${flippy_version}.tar.gz ) && build_modules=${build_modules##*/}
+        else
+            echo_color "red" "(1/7) Error: Have no modules-*.tar.gz file found in the ${flippy_folder} directory." "..."
+        fi
+
+        echo_color "yellow" "(1/7) Unset flippy_version, build_save_folder, build_boot, build_dtb and build_modules."  "\n \
+        Try to using this files to building the kernel: \n \
+        flippy_version: ${flippy_version} \n \
+        build_save_folder: ${build_save_folder} \n \
+        build_boot: ${build_boot} \n \
+        build_dtb: ${build_dtb} \n \
+        build_modules: ${build_modules}"
+
+    fi
+
+     # begin run the script
     echo_color "purple" "Start building"  "${build_save_folder}: kernel.tar.xz & modules.tar.xz ..."
     echo_color "green" "(1/4) End check_build_files"  "..."
-  fi
-
 }
 
 # build kernel.tar.xz

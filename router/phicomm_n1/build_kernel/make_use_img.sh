@@ -86,7 +86,7 @@ check_build_files() {
           unset flippy_file
           flippy_file=$( ls ${flippy_folder}/*.img )
           flippy_file=${flippy_file##*/}
-          echo_color "blue" "(1/7) Unset flippy_file is [ ${flippy_file} ]"  "\n \
+          echo_color "yellow" "(1/7) Unset flippy_file is [ ${flippy_file} ]"  "\n \
           Try to extract the kernel using this file."
       else
           echo_color "red" "(1/7) Error: Please put the compiled files in the [ ${flippy_folder} ] directory." "..."
