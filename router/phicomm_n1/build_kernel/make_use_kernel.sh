@@ -121,7 +121,7 @@ check_build_files() {
 
     fi
 
-     # begin run the script
+    # begin run the script
     echo_color "purple" "Start building"  "${build_save_folder}: kernel.tar.xz & modules.tar.xz ..."
     echo_color "green" "(1/4) End check_build_files"  "..."
 }
