@@ -87,12 +87,12 @@ check_build_files() {
 
         echo_color "blue" "(1/7) The specified file exists." "USE: ${build_boot} and other files to start compiling ..."
 
-    elif [ $( ls ${flippy_folder}/*.tar.gz -l | grep "^-" | wc -l ) -ge 3 ]; then
+    elif [ $( ls ${flippy_folder}/*.tar.gz -l 2>/dev/null | grep "^-" | wc -l ) -ge 3 ]; then
 
         unset flippy_version && unset build_save_folder && unset build_boot && unset build_dtb && unset build_modules
 
-        if  [ -f ${flippy_folder}/boot-*.tar.gz ]; then
-            build_boot=$( ls ${flippy_folder}/boot-*.tar.gz ) && build_boot=${build_boot##*/}
+        if  [ $( ls ${flippy_folder}/boot-*.tar.gz -l 2>/dev/null | grep "^-" | wc -l ) -ge 1 ]; then
+            build_boot=$( ls ${flippy_folder}/boot-*.tar.gz | head -n 1 ) && build_boot=${build_boot##*/}
             flippy_version=${build_boot/boot-/} && flippy_version=${flippy_version/.tar.gz/}
             build_save_folder=${flippy_version%-flippy*}
         else
@@ -100,13 +100,13 @@ check_build_files() {
         fi
 
         if  [ -f ${flippy_folder}/dtb-amlogic-${flippy_version}.tar.gz ]; then
-            build_dtb=$( ls ${flippy_folder}/dtb-amlogic-${flippy_version}.tar.gz ) && build_dtb=${build_dtb##*/}
+            build_dtb="dtb-amlogic-${flippy_version}.tar.gz"
         else
             echo_color "red" "(1/7) Error: Have no dtb-amlogic-*.tar.gz file found in the ${flippy_folder} directory." "..."
         fi
 
         if  [ -f ${flippy_folder}/modules-${flippy_version}.tar.gz ]; then
-            build_modules=$( ls ${flippy_folder}/modules-${flippy_version}.tar.gz ) && build_modules=${build_modules##*/}
+            build_modules="modules-${flippy_version}.tar.gz"
         else
             echo_color "red" "(1/7) Error: Have no modules-*.tar.gz file found in the ${flippy_folder} directory." "..."
         fi
@@ -236,6 +236,6 @@ build_kernel
 build_modules
 copy_kernel_modules
 
-echo_color "purple" "Build completed"  "${build_save_folder} ... "
+echo_color "purple" "Build completed"  "${build_save_folder} ..."
 # end run the script
 

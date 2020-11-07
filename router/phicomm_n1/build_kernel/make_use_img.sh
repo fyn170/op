@@ -18,6 +18,7 @@
 # 02. git clone https://github.com/ophub/op.git
 # 03. cd ~/op/router/phicomm_n1/build_kernel/
 # 04. Prepare Flippy's ${flippy_file}, support: Armbian_*_Aml-s9xxx_buster*.img, N1_Openwrt*.img, S905x3_Openwrt*.img
+#     Support to put the original Armbian_*_Aml-s9xxx_buster*.img.xz file into the directory and use it directly.
 # 05. Put Flippy's ${flippy_file} file into ${flippy_folder}
 # 06. Modify ${flippy_file} to kernel file name. E.g: flippy_file="Armbian_20.10_Aml-s9xxx_buster_5.8.16-flippy-46+.img"
 #     If the file of ${flippy_file} is not found, Will search for other *.img files in the ${flippy_folder} directory.
@@ -82,9 +83,18 @@ check_build_files() {
 
       if  [ -f ${flippy_folder}/${flippy_file} ]; then
           echo_color "blue" "(1/7) The specified file exists." "USE: ${flippy_file} ..."
-      elif  [ -f ${flippy_folder}/*.img ]; then
+      elif [ $( ls ${flippy_folder}/*.img -l 2>/dev/null | grep "^-" | wc -l ) -ge 1 ]; then
           unset flippy_file
-          flippy_file=$( ls ${flippy_folder}/*.img )
+          flippy_file=$( ls ${flippy_folder}/*.img | head -n 1 )
+          flippy_file=${flippy_file##*/}
+          echo_color "yellow" "(1/7) Unset flippy_file is [ ${flippy_file} ]"  "\n \
+          Try to extract the kernel using this file."
+      elif [ $( ls ${flippy_folder}/*.img.xz -l 2>/dev/null | grep "^-" | wc -l ) -ge 1 ]; then
+          xz_file=$( ls ${flippy_folder}/*.img.xz | head -n 1 )
+          xz_file=${xz_file##*/}
+          cd ${flippy_folder} && xz -d ${xz_file} && cd ../
+          unset flippy_file
+          flippy_file=$( ls ${flippy_folder}/*.img | head -n 1 )
           flippy_file=${flippy_file##*/}
           echo_color "yellow" "(1/7) Unset flippy_file is [ ${flippy_file} ]"  "\n \
           Try to extract the kernel using this file."
