@@ -2,16 +2,18 @@
 
 #========================================================================================================================
 # https://github.com/ophub/op
-# Description: Automatically Build OpenWrt firmware for Phicomm N1
-# Function: Use Flippy's OpenWrt firmware for Phicomm N1 to build kernel.tar.xz & modules.tar.xz
-# Copyright (C) 2020 Flippy's OpenWrt firmware for Phicomm N1
+# Description: Automatically Build OpenWrt firmware for Phicomm-N1 & S905x3-Boxs
+# Function: Use Flippy's OpenWrt firmware for Phicomm-N1 & S905x3-Boxs to build kernel.tar.xz & modules.tar.xz
+# Copyright (C) 2020 Flippy's OpenWrt firmware for Phicomm-N1 & S905x3-Boxs
 # Copyright (C) 2020 https://github.com/ophub/op
 #========================================================================================================================
 #
-# example: ~/op/router/phicomm_n1/build_kernel/
+# Path: ~/op/router/phicomm_n1/build-kernel/
 # ├── flippy
-# │   └── N1_Openwrt_R20.8.27_k5.4.63-flippy-43+o.img
-# └── make_use_img.sh
+# │   ├── Armbian_20.10_Aml-s9xxx_buster_5.9.2-flippy-47+.img
+# │   ├── OR: N1_Openwrt_R20.10.20_k5.4.73-flippy-47+o.img
+# │   └── OR: S905x3_Openwrt_R20.10.20_k5.9.2-flippy-47+.img
+# └── make
 #
 # Usage: Use Ubuntu 18 LTS 64-bit
 # 01. Log in to the home directory of the local Ubuntu system
@@ -20,12 +22,13 @@
 # 04. Prepare Flippy's ${flippy_file}, support: Armbian_*_Aml-s9xxx_buster*.img, N1_Openwrt*.img, S905x3_Openwrt*.img
 # 05. Put Flippy's ${flippy_file} file into ${flippy_folder}
 # 06. Modify ${flippy_file} to kernel file name. E.g: flippy_file="Armbian_20.10_Aml-s9xxx_buster_5.8.16-flippy-46+.img"
-# 07. Run: sudo ./make_use_img.sh
+#     If ${flippy_file} does not exist, the script will try to find other *.img files in the ${flippy_file} folder
+# 07. Run: sudo ./make
 # 08. The generated files path: ~/op/router/phicomm_n1/armbian/phicomm-n1/kernel/${build_save_folder}
 # 09. git push to your github
 # 10. Github.com Build openwrt: ~/op/.github/workflows/build-openwrt-phicomm_n1.yml
 #
-# Tips: If run 'sudo ./make_use_img.sh' is 'Command not found'. Run: sudo chmod +x make_use_img.sh
+# Tips: If run 'sudo ./make' is 'Command not found'. Run: sudo chmod +x make
 #
 #========================================================================================================================
 
