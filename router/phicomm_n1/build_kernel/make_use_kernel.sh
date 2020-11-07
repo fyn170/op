@@ -119,6 +119,8 @@ check_build_files() {
         build_dtb: ${build_dtb} \n \
         build_modules: ${build_modules}"
 
+    else
+        echo_color "red" "(1/7) Error: Please put the compiled files in the [ ${flippy_folder} ] directory." "..."
     fi
 
     # begin run the script
