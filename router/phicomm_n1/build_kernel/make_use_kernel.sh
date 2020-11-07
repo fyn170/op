@@ -109,7 +109,7 @@ build_kernel() {
 
   cd ${build_tmp_folder}/kernel
 
-     echo_color "yellow" "Start Unzip ${build_boot}"  "..."
+     echo_color "blue" "Start Unzip ${build_boot}"  "..."
      if [ "${build_boot##*.}"c = "gz"c ]; then
         tar -xzf ${build_boot}
      elif [ "${build_boot##*.}"c = "xz"c ]; then
@@ -125,7 +125,7 @@ build_kernel() {
      [ -f vmlinuz-${flippy_version} ] && cp -f vmlinuz* Temp_kernel/zImage || echo_color "red" "(2/4) vmlinuz* does not exist" "..."
      sync
 
-     echo_color "yellow" "Start Unzip ${build_dtb}"  "..."
+     echo_color "blue" "Start Unzip ${build_dtb}"  "..."
      if [ "${build_dtb##*.}"c = "gz"c ]; then
         tar -xzf ${build_dtb}
      elif [ "${build_dtb##*.}"c = "xz"c ]; then
@@ -134,12 +134,12 @@ build_kernel() {
         echo_color "red" "(2/4) Error build_kernel"  "The suffix of ${build_dtb} must be .tar.gz or .tar.xz ..."
      fi
 
-     echo_color "yellow" "(2/4) Start Copy ${build_dtb} one files"  "..."
+     echo_color "blue" "(2/4) Start Copy ${build_dtb} one files"  "..."
      [ -f meson-gxl-s905d-phicomm-n1.dtb ] && cp -rf *.dtb Temp_kernel/dtb/amlogic/ || echo_color "red" "(2/4) *phicomm-n1.dtb does not exist" "..."
      sync
 
   cd Temp_kernel
-     echo_color "yellow" "(2/4) Start zip kernel.tar.xz"  "..."
+     echo_color "blue" "(2/4) Start zip kernel.tar.xz"  "..."
      tar -cf kernel.tar *
      xz -z kernel.tar
      cp -rf kernel.tar.xz ../../../${build_save_folder}/kernel.tar.xz && sync
@@ -159,7 +159,7 @@ build_modules() {
 
   cd ${build_tmp_folder}/modules/lib/modules
 
-     echo_color "yellow" "(3/4) Start Unzip ${build_modules}"  "..."
+     echo_color "blue" "(3/4) Start Unzip ${build_modules}"  "..."
      if [ "${build_modules##*.}"c = "gz"c ]; then
         tar -xzf ${build_modules}
      elif [ "${build_modules##*.}"c = "xz"c ]; then
@@ -176,10 +176,10 @@ build_modules() {
              x=$(($x+1))
          fi
      done
-     echo_color "yellow" "(3/4) Have [ ${x} ] files make ko link"  "..."
+     echo_color "blue" "(3/4) Have [ ${x} ] files make ko link"  "..."
 
   cd ../ && rm -rf ${build_modules} && cd ../../
-     echo_color "yellow" "(3/4) Start zip modules.tar.xz"  "..."
+     echo_color "blue" "(3/4) Start zip modules.tar.xz"  "..."
      tar -cf modules.tar *
      xz -z modules.tar
      cp -rf modules.tar.xz ../../${build_save_folder}/modules.tar.xz && sync
