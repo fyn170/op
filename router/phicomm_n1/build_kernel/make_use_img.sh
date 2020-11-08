@@ -2,9 +2,9 @@
 
 #========================================================================================================================
 # https://github.com/ophub/op
-# Description: Automatically Build OpenWrt firmware for Phicomm N1
+# Description: Automatically Build OpenWrt firmware for Phicomm-N1 & S905x3-Boxs
 # Function: Use Flippy's OpenWrt firmware for Phicomm N1 to build kernel.tar.xz & modules.tar.xz
-# Copyright (C) 2020 Flippy's OpenWrt firmware for Phicomm N1
+# Copyright (C) 2020 Flippy's Core files for Phicomm-N1 & S905x3-Boxs
 # Copyright (C) 2020 https://github.com/ophub/op
 #========================================================================================================================
 #
@@ -140,28 +140,41 @@ copy_boot_root() {
 
    cd ${kernel_tmp}/dtb/amlogic
    if [ ! -f "meson-gxl-s905d-phicomm-n1.dtb" ]; then
-      echo_color "red" "(3/7) The phicomm-n1 .dtb files is Missing!" "..."
+      cp -f ../../../../../armbian/dtb-amlogic/meson-gxl-s905d-phicomm-n1.dtb .
+      echo_color "yellow" "(3/7) The phicomm-n1 .dtb files is Missing. Has been copied from the dtb library!" "..."
    fi
 
    if [ ! -f "meson-sm1-x96-max-plus-100m.dtb" -a ! -f "meson-sm1-x96-max-plus.dtb" ]; then
-      echo_color "red" "(3/7) The X96 [1].dtb core files is Missing!" "..."
+      cp -f ../../../../../armbian/dtb-amlogic/meson-sm1-x96-max-plus-100m.dtb .
+      cp -f ../../../../../armbian/dtb-amlogic/meson-sm1-x96-max-plus.dtb .
+      echo_color "yellow" "(3/7) The X96 [1].dtb core files is Missing. Has been copied from the dtb library!" "..."
    fi
 
    if [ ! -f "meson-g12a-x96-max.dtb" -a ! -f "meson-g12a-x96-max-rmii.dtb" -a ! -f "meson-sm1-x96-max-plus-oc.dtb" ]; then
-      echo_color "yellow" "(3/7) Some X96 [4,5,6].dtb files is Missing!" "..."
+      cp -f ../../../../../armbian/dtb-amlogic/meson-g12a-x96-max.dtb .
+      cp -f ../../../../../armbian/dtb-amlogic/meson-g12a-x96-max-rmii.dtb .
+      cp -f ../../../../../armbian/dtb-amlogic/meson-sm1-x96-max-plus-oc.dtb .
+      echo_color "yellow" "(3/7) Some X96 [4,5,6].dtb files is Missing. Has been copied from the dtb library!" "..."
    fi
 
    if [ ! -f "meson-sm1-hk1box-vontar-x3.dtb" -a ! -f "meson-sm1-hk1box-vontar-x3-oc.dtb" ]; then
-      echo_color "yellow" "(3/7) Some HX1 [2,7].dtb files is Missing!" "..."
+      cp -f ../../../../../armbian/dtb-amlogic/meson-sm1-hk1box-vontar-x3.dtb .
+      cp -f ../../../../../armbian/dtb-amlogic/meson-sm1-hk1box-vontar-x3-oc.dtb .
+      echo_color "yellow" "(3/7) Some HX1 [2,7].dtb files is Missing. Has been copied from the dtb library!" "..."
    fi
 
    if [ ! -f "meson-sm1-h96-max-x3.dtb" -a ! -f "meson-sm1-h96-max-x3-oc.dtb" ]; then
-      echo_color "yellow" "(3/7) Some H96 [3,8].dtb files is Missing!" "..."
+      cp -f ../../../../../armbian/dtb-amlogic/meson-sm1-h96-max-x3.dtb .
+      cp -f ../../../../../armbian/dtb-amlogic/meson-sm1-h96-max-x3-oc.dtb .
+      echo_color "yellow" "(3/7) Some H96 [3,8].dtb files is Missing. Has been copied from the dtb library!" "..."
    fi
 
    if [ ! -f "meson-gxm-octopus-planet.dtb" ]; then
-      echo_color "yellow" "(3/7) The octopus-planet [9].dtb files is Missing!" "..."
+      cp -f ../../../../../armbian/dtb-amlogic/meson-gxm-octopus-planet.dtb .
+      echo_color "yellow" "(3/7) The octopus-planet [9].dtb files is Missing. Has been copied from the dtb library!" "..."
    fi
+
+   sync
 
    echo_color "green" "(3/7) End copy_boot_root"  "..."
 
