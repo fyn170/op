@@ -87,7 +87,7 @@ update_kernel_dtb() {
                 cp -rf ../../../armbian/dtb-amlogic/* tmp_kernel/dtb/amlogic/ && sync && cd tmp_kernel
                 tar -cf kernel.tar *
                 xz -z kernel.tar
-                mv -f kernel.tar.xz ../kernel.tar.xz && cd ../ && rm -rf tmp_kernel && cd ../
+                mv -f kernel.tar.xz ../kernel.tar.xz && sync && cd ../ && rm -rf tmp_kernel && cd ../
                 echo_color "blue" "(${current_kernel}/${total_kernel}) ${kernel_version}"  "The *.dtb files update complete."
                 current_kernel=$(($current_kernel + 1))
 
