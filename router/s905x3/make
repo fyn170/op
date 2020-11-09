@@ -1,167 +1,228 @@
 #!/bin/bash
-
 #========================================================================================================================
 # https://github.com/ophub/op
-# Description: Use Phicomm N1 firmware to build s905x3 related firmware (x96 hk1)
-# Function: Use Phicomm N1 firmware to build s905x3 related firmware
+# Description: Automatically Build OpenWrt for PHICOMM-N1 & S905X3-BOXS
+# Function: Use armbian kernel to build openwrt for PHICOMM-N1 & S905X3-BOXS
+# Copyright (C) 2020 https://github.com/tuanqing/mknop
 # Copyright (C) 2020 https://github.com/ophub/op
 #========================================================================================================================
-#
-# Path: ~/op/router/s905x3/
-# ├── flippy
-# │   ├── phicomm_n1_firmware_01.img
-# │   ├── phicomm_n1_firmware_02.img
-# │   ├── phicomm_n1_firmware_more.img
-# │   │
-# │   └── or phicomm_n1_firmware.zip
-# │
-# └── make
-#
-# Usage: Use Ubuntu 18 LTS 64-bit
-# 01. Log in to the home directory of the local Ubuntu system
-# 02. git clone https://github.com/ophub/op.git
-# 03. cd ~/op/router/s905x3/
-# 04. Put phicomm_n1_firmware file into ${flippy_folder} (Support putting multiple *.img files into compiling together)
-# 05. Run: sudo ./make all (make parameter: all / x96 / hk1)
-# 06. The generated files path: ~/op/router/s905x3/${build_save_folder}
-# 07. git push to your github
-# 08. Github.com Build openwrt: ~/op/.github/workflows/build-openwrt-s905x3.yml
-#
-# Tips: If run 'sudo ./make all' is 'Command not found'. run: 'sudo chmod +x make'
-#
-#========================================================================================================================
 
-# Default setting ( Don't modify )
-flippy_folder="flippy"
-build_tmp_folder="tmp"
-boot_tmp=${build_tmp_folder}/boot
-root_tmp=${build_tmp_folder}/root
-build_save_folder="out"
-firmware_list=("x96" "hk1")
-convert_firmware=${1}
+tmp_path="router/s905x3/tmp"
+out_path="router/s905x3/out"
+armbian_path="router/phicomm_n1/armbian"
+openwrt_path="router/s905x3/openwrt"
+device="phicomm-n1" # don't modify it
+image_name='v$kernel-openwrt'
+build_openwrt=("n1" "x96" "hk1")
+make_path=${PWD}
+SKIP_MB=16
+BOOT_MB=256
+ROOT_MB=1024
 
-get_tree_status=$(dpkg --get-selections | grep unzip)
-[ $? = 0 ] || sudo apt install unzip
+tag() {
+    echo -e " [ \033[1;36m$1\033[0m ]"
+}
 
-# echo color codes
-echo_color() {
+process() {
+    echo -e " [ \033[1;32m$build\033[0m - \033[1;32m$kernel\033[0m ] $1"
+}
 
-    this_color=${1}
-        case "${this_color}" in
-        red)
-            echo -e " \033[1;31m[ ${2} ]\033[0m ${3}"
-            echo -e "--------------------------------------------"
-            echo -e "Current path -PWD-: [ ${PWD} ]"
-            echo -e "Situation -lsblk-: [ $(lsblk) ]"
-            echo -e "Directory file list -ls-: [ $(ls .) ]"
-            echo -e "--------------------------------------------"
-            exit 1
+die() {
+    error "$1" && exit 1
+}
+
+error() {
+    echo -e " [ \033[1;31mError\033[0m ] $1"
+}
+
+loop_setup() {
+    loop=$(losetup -P -f --show "$1")
+    [ $loop ] || die "you used a lower version Linux, 
+ please update the util-linux package or upgrade your system."
+}
+
+cleanup() {
+    for x in $(grep $(pwd) /proc/mounts | grep -oE "loop[0-9]{1,2}" | sort | uniq); do
+        umount -f /dev/${x}p[1-2] 2>/dev/null
+        losetup -d "/dev/$x" 2>/dev/null
+    done
+    rm -rf $tmp_path
+}
+
+extract_openwrt() {
+    cd ${make_path}
+    local firmware="$openwrt_path/$firmware"
+    local suffix="${firmware##*.}"
+    mount="$tmp_path/mount"
+    root_comm="$tmp_path/root_comm"
+
+    mkdir -p $mount $root_comm
+    while true; do
+        case "$suffix" in
+        tar)
+            tar -xf $firmware -C $root_comm
+            break
             ;;
-        green)
-            echo -e " \033[1;32m[ ${2} ]\033[0m ${3}"
+        gz)
+            if ls $firmware | grep -q ".tar.gz$"; then
+                tar -xzf $firmware -C $root_comm
+                break
+            else
+                tmp_firmware="$tmp_path/${firmware##*/}"
+                tmp_firmware=${tmp_firmware%.*}
+                gzip -d $firmware -c > $tmp_firmware
+                firmware=$tmp_firmware
+                suffix=${firmware##*.}
+            fi
             ;;
-        yellow)
-            echo -e " \033[1;33m[ ${2} ]\033[0m ${3}"
+        img)
+            loop_setup $firmware
+            if ! mount -r ${loop}p2 $mount; then
+                if ! mount -r ${loop}p1 $mount; then
+                    die "mount ${loop} failed!"
+                fi
+            fi
+            cp -rf $mount/* $root_comm && sync
+            umount -f $mount
+            losetup -d $loop
+            break
             ;;
-        blue)
-            echo -e " \033[1;34m[ ${2} ]\033[0m ${3}"
-            ;;
-        purple)
-            echo -e " \033[1;35m[ ${2} ]\033[0m ${3}"
+        ext4)
+            if ! mount -r -o loop $firmware $mount; then
+                die "mount $firmware failed!"
+            fi
+            cp -rf $mount/* $root_comm && sync
+            umount -f $mount
+            break
             ;;
         *)
-            echo -e " \033[1;30m[ ${2} ]\033[0m ${3}"
+            die "unsupported firmware format, this script only supports 
+ rootfs.tar[.gz], ext4-factory.img[.gz], root.ext4[.gz] six formats."
             ;;
         esac
+    done
 
+    rm -rf $root_comm/lib/modules/*/
 }
 
-# Check *.zip files
-check_zip_file() {
+extract_armbian() {
+    cd ${make_path}
+    build_op=${1}
+    kernel_dir="$armbian_path/$device/kernel/$kernel"
+    root_dir="$armbian_path/$device/root"
+    root="$tmp_path/$kernel/$build_op/root"
+    boot="$tmp_path/$kernel/$build_op/boot"
 
-    if  [  ! -f ${flippy_folder}/*.zip ]; then
-        echo_color "red" "(1/6) Error: *${flippy_folder}/*.zip Files does not exist."  "\n \
-        Support the use of *.img and *.zip files"
-    else
-        cd ${flippy_folder} && unzip -o *.zip && sync
-        openwrt_zip_name=$( ls *.zip )
-        for kernel_folder in $( ls -d */ | head -c-2 ); do
-            kernel_version=${kernel_folder%/*}
-            cd ${kernel_version} && gzip -df *.img.gz && mv -f *.img ../${kernel_version}.img && sync && cd ../
-            echo_color "blue" "(1/6) Get the kernel: ${kernel_version}" "..."
-        done
+    mkdir -p $root $boot
 
-        rm -rf $( find ${PWD}/* -type d ) 2>/dev/null
-        rm -rf $( find ${PWD}/* -type f ! -name "*.img" ) 2>/dev/null
+    tar -xJf "$armbian_path/boot-common.tar.xz" -C $boot
+    tar -xJf "$kernel_dir/kernel.tar.xz" -C $boot
+    tar -xJf "$armbian_path/firmware.tar.xz" -C $root
+    tar -xJf "$kernel_dir/modules.tar.xz" -C $root
 
-        echo_color "green" "(1/6) End check_zip_files" "Use [ ${openwrt_zip_name} ] Convert to [ ${convert_firmware} ]..."
-    fi
-    cd ../
-
+    cp -rf $root_comm/* $root
+    [ $(ls $root_dir | wc -w) != 0 ] && cp -r $root_dir/* $root
+    sync
 }
 
-# Check *.img files
-check_build_files() {
+utils() {
+    (
+        cd $root
+        # add other operations below
 
-    flippy_file=${1}
-    if  [  ! -f ${flippy_folder}/${flippy_file} ]; then
-        echo_color "red" "(2/6) Error: Files does not exist"  "\n \
-        Please check if the following one files exist: \n \
-        ${flippy_folder}/${flippy_file} "
-    else
-        echo_color "green" "(2/6) End check_build_files" "Use [ ${flippy_file} ] Convert to [ ${convert_firmware} ]..."
-    fi
-
-}
-
-#losetup & mount ${flippy_file}
-losetup_mount_img() {
-
-     [ -d ${build_tmp_folder} ] && rm -rf ${build_tmp_folder} 2>/dev/null
-     mkdir -p ${boot_tmp} ${root_tmp}
-
-     cp -f ${flippy_folder}/${flippy_file}  ${flippy_folder}/make_${flippy_file} && sync
-     chmod -R 777 ${flippy_folder} ${build_tmp_folder}
-
-     lodev=$(losetup -P -f --show ${flippy_folder}/make_${flippy_file})
-     [ $lodev ] || echo_color "red" "(3/6) losetup make_${flippy_file} failed!" "..."
-     mount ${lodev}p1 ${boot_tmp}
-     [ $lodev ] || echo_color "red" "(3/6) mount ${lodev}p1 failed!" "..."
-     mount ${lodev}p2 ${root_tmp}
-     [ $lodev ] || echo_color "red" "(3/6) mount ${lodev}p2 failed!" "..."
-
-     echo_color "green" "(3/6) End losetup_mount_img" "make_${flippy_file} losetup to ${lodev} ..."
-
-}
-
-#edit uEnv.txt from ${boot_tmp}
-edit_uenv() {
-
-  cd ${boot_tmp}
-
-        if [  ! -f "uEnv.txt" ]; then
-           echo_color "red" "(4/6) Error: uEnv.txt Files does not exist"  "\n \
-           Please check if the following one files exist: \n \
-           ${boot_tmp}/uEnv.txt"
+        echo 'pwm_meson' > etc/modules.d/pwm-meson
+        if ! grep -q 'ulimit -n' etc/init.d/boot; then
+            sed -i '/kmodloader/i \\tulimit -n 51200\n' etc/init.d/boot
         fi
-        
+        if ! grep -q '/tmp/upgrade' etc/init.d/boot; then
+            sed -i '/mkdir -p \/tmp\/.uci/a \\tmkdir -p \/tmp\/upgrade' etc/init.d/boot
+        fi
+        sed -i 's/ttyAMA0/ttyAML0/' etc/inittab
+        sed -i 's/ttyS0/tty0/' etc/inittab
+
+        mkdir -p boot run opt
+        chown -R 0:0 ./
+    )
+}
+
+make_image() {
+    build_op=${1}
+    image="$out_path/$kernel/${build_op}-$(eval "echo $image_name")_$(date +"%Y.%m.%d").img"
+    rm -f $image
+    sync
+
+    [ -d "$out_path/$kernel" ] || mkdir -p "$out_path/$kernel"
+    fallocate -l $((SKIP_MB + BOOT_MB + rootsize))M $image
+}
+
+format_image() {
+    build_op=${1}
+
+    parted -s $image mklabel msdos 2>/dev/null
+    parted -s $image mkpart primary ext4 $((SKIP_MB))M $((SKIP_MB + BOOT_MB -1))M 2>/dev/null
+    parted -s $image mkpart primary ext4 $((SKIP_MB + BOOT_MB))M 100% 2>/dev/null
+
+    loop_setup $image
+    mkfs.vfat -n "BOOT" ${loop}p1 >/dev/null 2>&1
+    mke2fs -F -q -t ext4 -L "ROOTFS" -m 0 ${loop}p2 >/dev/null 2>&1
+
+    #Write the specified bootloader
+    if [ "$build_op" != "n1" ]; then
+        BTLD_BIN="$root/root/hk1box-bootloader.img"
+        if [ -f ${BTLD_BIN} ]; then
+           mkdir -p $root/lib/u-boot
+           cp -f ${BTLD_BIN} $root/lib/u-boot/
+           #echo "Write bootloader for $build_op: [ $( ls $root/lib/u-boot/*.img 2>/dev/null ) ]."
+           dd if=${BTLD_BIN} of=${lodev} bs=1 count=442 conv=fsync 2>/dev/null
+           dd if=${BTLD_BIN} of=${lodev} bs=512 skip=1 seek=1 conv=fsync 2>/dev/null
+        else
+           die "bootloader does not exist."
+        fi
+    fi
+}
+
+copy2image() {
+    build_op=${1}
+    set -e
+
+    local bootfs="$mount/$kernel/$build_op/bootfs"
+    local rootfs="$mount/$kernel/$build_op/rootfs"
+
+    mkdir -p $bootfs $rootfs
+    if ! mount ${loop}p1 $bootfs; then
+        die "mount ${loop}p1 failed!"
+    fi
+    if ! mount ${loop}p2 $rootfs; then
+        die "mount ${loop}p2 failed!"
+    fi
+
+    cp -rf $boot/* $bootfs
+    cp -rf $root/* $rootfs
+    sync
+
+    #Write the specified uEnv.txt
+    if [ "$build_op" != "n1" ]; then
+        cd ${bootfs}
+        if [  ! -f "uEnv.txt" ]; then
+           die "Error: uEnv.txt Files does not exist"
+        fi
+
         no_firmware=false
-        firmware_dtb=${1}
-        case "${firmware_dtb}" in
+        case "${build_op}" in
         x96)
             old_x96_dtb="#FDT=\/dtb\/amlogic\/meson-sm1-x96-max-plus-100m.dtb"
             new_x96_dtb="FDT=\/dtb\/amlogic\/meson-sm1-x96-max-plus-100m.dtb"
             sed -i "s/^${old_x96_dtb}/${new_x96_dtb}/g" uEnv.txt
-            echo_color "blue" "(4/6) x96: Convert completed" "..."
+            #echo "x96 - ${kernel}: Convert completed"
             ;;
         hk1)
             old_hk1_dtb="#FDT=\/dtb\/amlogic\/meson-sm1-hk1box-vontar-x3.dtb"
             new_hk1_dtb="FDT=\/dtb\/amlogic\/meson-sm1-hk1box-vontar-x3.dtb"
             sed -i "s/^${old_hk1_dtb}/${new_hk1_dtb}/g" uEnv.txt
-            echo_color "blue" "(4/6) hk1: Convert completed" "..."
+            #echo "hk1 - ${kernel}: Convert completed"
             ;;
         *)
-            echo_color "red" "(4/6) Have no this firmware: ${convert_firmware}"  "Please select from this list: [ ${firmware_list[@]} ]"
+            die "Have no this firmware: [ ${build_op} - ${kernel} ]"
             no_firmware=ture
             ;;
         esac
@@ -170,92 +231,271 @@ edit_uenv() {
             old_n1_dtb="FDT=\/dtb\/amlogic\/meson-gxl-s905d-phicomm-n1.dtb"
             new_n1_dtb="#FDT=\/dtb\/amlogic\/meson-gxl-s905d-phicomm-n1.dtb"
             sed -i "s/^${old_n1_dtb}/${new_n1_dtb}/g" uEnv.txt
-            echo_color "blue" "(4/6) old-phicomm-n1: dtb have close" "..."
+            #echo "old-phicomm-n1: dtb have close"
         else
-            echo_color "red" "(4/6) Error: Did not match the appropriate type" "..."
+            die "Did not match the appropriate type"
         fi
 
-     sync
-
-     echo_color "green" "(4/6) End edit_uenv" "For: ${firmware_dtb} ..."
-
-}
-
-#write bootloader
-write_bootloader() {
-
-    cd ../../${root_tmp}
-    BTLD_BIN="root/hk1box-bootloader.img"
-    if [ -f ${BTLD_BIN} ]; then
-       mkdir -p lib/u-boot
-       cp ${BTLD_BIN} lib/u-boot/
-       echo_color "blue" "(5/6) Write bootloader" "[ $(ls lib/u-boot/*.img) ] Can be used for TF card startup."
-       dd if=${BTLD_BIN} of=${lodev} bs=1 count=442 conv=fsync 2>/dev/null
-       dd if=${BTLD_BIN} of=${lodev} bs=512 skip=1 seek=1 conv=fsync 2>/dev/null
-    else
-       echo_color "red" "(5/6) Error: bootloader does not exist" "..."
+        sync
+        cd ${make_path}
     fi
-    cd ../../
 
-    echo_color "green" "(5/6) End write_bootloader" "[ ${BTLD_BIN} ] has been write complete ..."
+    umount -f $bootfs 2>/dev/null
+    umount -f $rootfs 2>/dev/null
+    losetup -d $loop 2>/dev/null
 }
 
-#umount & del losetup
-umount_ulosetup() {
+get_firmwares() {
+    firmwares=()
+    i=0
+    IFS=$'\n'
 
-     umount -f ${boot_tmp} 2>/dev/null
-     umount -f ${root_tmp} 2>/dev/null
-     losetup -d ${lodev} 2>/dev/null
-     [ $? = 0 ] || echo_color "red" "(6/6) umount ${lodev} failed!" "..."
-     
-     [ -d ${build_save_folder} ] || mkdir -p ${build_save_folder}
-     openwrt_filename=openwrt_${firmware_dtb}_${flippy_file%.*}_$(date +"%Y.%m.%d").img
-     cp -f ${flippy_folder}/make_${flippy_file} ${build_save_folder}/${openwrt_filename}
-     chmod -R 777 ${build_save_folder}
-     echo_color "blue" "(6/6) Convert to ${build_save_folder}/${openwrt_filename}" "..."
-     
-     sync
-
-     rm -rf  ${build_tmp_folder}  ${flippy_folder}/make_${flippy_file}  2>/dev/null
-
-  echo_color "green" "(6/6) End umount_ulosetup"  "Del: ${lodev} ..."
-
+    [ -d "$openwrt_path" ] && {
+        for x in $(ls $openwrt_path); do
+            firmwares[i++]=$x
+        done
+    }
 }
 
-#Parameter validity check
-if [[ ! -n "${convert_firmware}" ]]; then echo_color "red" "(0/6) Parameter is empty!" "..."; fi
-if [[ ! "${firmware_list[@]}"  =~ "${convert_firmware}" ]] &&  [[ ! "${convert_firmware}" = "all" ]]; then echo_color "red" "(0/6) Parameter error" "..."; fi
+get_kernels() {
+    kernels=()
+    i=0
+    IFS=$'\n'
 
-# begin run the script
-echo_color "purple" "Start convert"  "..."
-[ $( ls $flippy_folder/*.zip | wc -l ) -gt 0 ] && check_zip_file || echo_color "green" "(1/6) End check_zip_file" "Have no *.zip Files..."
+    local kernel_root="$armbian_path/$device/kernel"
+    [ -d $kernel_root ] && {
+        work=$(pwd)
+        cd $kernel_root
+        for x in $(ls ./); do
+            [[ -f "$x/kernel.tar.xz" && -f "$x/modules.tar.xz" ]] && kernels[i++]=$x
+        done
+        cd $work
+    }
+}
 
-# Use Phicomm N1 firmware (*.img) to build s905x3 related firmware (x96 hk1)
-[ $( ls $flippy_folder/*.img | wc -l ) -eq 0 ] && echo_color "red" "(0/6) Error: *.img Files does not exist!" || {
-    for kernel in $( ls $flippy_folder/*.img ); do
-        if [ ${convert_firmware} = "all" ];then
-              for x in ${firmware_list[@]}; do
-              {
-                   check_build_files ${kernel#*/}
-                   losetup_mount_img
-                   edit_uenv ${x}
-                   write_bootloader
-                   umount_ulosetup
-              }
-              done
+show_kernels() {
+    if [ ${#kernels[*]} = 0 ]; then
+        die "no file in kernel directory!"
+    else
+        show_list "${kernels[*]}" "kernel"
+    fi
+}
+
+show_list() {
+    echo " $2: "
+    i=0
+    for x in $1; do
+        echo " ($((++i))) $x"
+    done
+}
+
+choose_firmware() {
+    show_list "${firmwares[*]}" "firmware"
+    choose_files ${#firmwares[*]} "firmware"
+    firmware=${firmwares[opt]}
+    tag $firmware && echo
+}
+
+choose_kernel() {
+    show_kernels
+    choose_files ${#kernels[*]} "kernel"
+    kernel=${kernels[opt]}
+    tag $kernel && echo
+}
+
+choose_files() {
+    local len=$1
+
+    if [ "$len" = 1 ]; then
+        opt=0
+    else
+        i=0
+        while true; do
+            echo && read -p " select $2 above, and press Enter to select the first one: " opt
+            [ $opt ] || opt=1
+            if [[ "$opt" -ge 1 && "$opt" -le "$len" ]]; then
+                let opt--
+                break
+            else
+                ((i++ >= 2)) && exit 1
+                error "wrong type, try again!"
+                sleep 1s
+            fi
+        done
+    fi
+}
+
+set_rootsize() {
+    i=0
+    rootsize=
+
+    while true; do
+        read -p " input the rootfs partition size, defaults to 1024m, do not less than 256m
+ if you don't know what this means, press Enter to keep default: " rootsize
+        [ $rootsize ] || rootsize=1024
+        if [[ "$rootsize" -ge 256 ]]; then
+            tag $rootsize && echo
+            break
         else
-              {
-                   check_build_files ${kernel#*/}
-                   losetup_mount_img
-                   edit_uenv ${convert_firmware}
-                   write_bootloader
-                   umount_ulosetup
-              }
+            ((i++ >= 2)) && exit 1
+            error "wrong type, try again!\n"
+            sleep 1s
         fi
     done
 }
 
-rm -rf  ${flippy_folder}/*  2>/dev/null
-echo_color "purple" "Convert completed"  "..."
-# end run the script
+usage() {
+    cat <<EOF
+Usage:
+    make [option]
+
+Options:
+    -c, --clean          clean up the output and temporary directories
+
+    -d, --default        the kernel version is "all", and the rootfs partition size is "1024m"
+
+    -b, --build=BUILD    Specify multiple cores, use "_" to connect
+       , -b all          Compile all types of openwrt
+       , -b n1           Specify a single openwrt for compilation
+       , -b n1_x96_hk1   Specify multiple openwrt, use "_" to connect
+
+    -k=VERSION           set the kernel version, which must be in the "kernel" directory
+       , -k all          build all the kernel version
+       , -k latest       build the latest kernel version
+       , -k 5.4.6        Specify a single kernel for compilation
+       , -k 5.4.6_5.9.0  Specify multiple cores, use "_" to connect
+
+    --kernel             show all kernel version in "kernel" directory
+
+    -s, --size=SIZE      set the rootfs partition size, do not less than 256m
+
+    -h, --help           display this help
+
+EOF
+}
+
+##
+[ $(id -u) = 0 ] || die "please run this script as root!"
+echo -e " Welcome to phicomm-n1 openwrt image tools!\n"
+
+cleanup
+get_firmwares
+get_kernels
+
+while [ "$1" ]; do
+    case "$1" in
+    -h | --help)
+        usage && exit
+        ;;
+    -c | --clean)
+        cleanup
+        rm -rf $out_path
+        echo " clean up ok!" && exit
+        ;;
+
+    -d | --default)
+        : ${rootsize:=$ROOT_MB}
+        : ${firmware:="${firmwares[0]}"}
+        : ${kernel:="all"}
+        : ${build:="all"}
+        ;;
+    -b | --build)
+        build=$2
+        if   [ "$build" = "all" ]; then
+             shift
+        elif [ -n "$build" ]; then
+             unset build_openwrt
+             oldIFS=$IFS
+             IFS=_
+             build_openwrt=($build)
+             IFS=$oldIFS
+             unset build
+             : ${build:="all"}
+        else
+             die "invalid build [ $2 ]!"
+        fi
+        shift
+        ;;
+    -k)
+        kernel=$2
+        if   [ "$kernel" = "all" ]; then
+             shift
+        elif [ "$kernel" = "latest" ]; then
+             kernel="${kernels[-1]}"
+             shift
+        elif [ -n "$kernel" ]; then
+             oldIFS=$IFS
+             IFS=_
+             kernels=($kernel)
+             IFS=$oldIFS
+             unset kernel
+             : ${kernel:="all"}
+             shift
+        else
+             die "invalid kernel [ $2 ]!"
+        fi
+        ;;
+    --kernel)
+        show_kernels && exit
+        ;;
+    -s | --size)
+        rootsize=$2
+        if [[ "$rootsize" -ge 256 ]]; then
+            shift
+        else
+            die "invalid size [ $2 ]!"
+        fi
+        ;;
+    *)
+        die "invalid option [ $1 ]!"
+        ;;
+    esac
+    shift
+done
+
+if [ ${#firmwares[*]} = 0 ]; then
+    die "no file in openwrt directory!"
+fi
+
+if [ ${#kernels[*]} = 0 ]; then
+    die "no file in kernel directory!"
+fi
+
+[ $firmware ] && echo " firmware   ==>   $firmware"
+[ $rootsize ] && echo " rootsize   ==>   $rootsize"
+
+[ $firmware ] || [ $kernel ] || [ $rootsize ] && echo
+
+[ $firmware ] || choose_firmware
+[ $kernel ] || choose_kernel
+[ $rootsize ] || set_rootsize
+
+[ $kernel != "all" ] && kernels=("$kernel")
+[ $build != "all" ] && build_openwrt=("$build")
+
+extract_openwrt
+
+for b in ${build_openwrt[*]}; do
+    for x in ${kernels[*]}; do
+        {
+            kernel=$x
+            build=$b
+            process "extract armbian files "
+            extract_armbian ${b}
+            utils
+            process "make openwrt image "
+            make_image ${b}
+            process "format openwrt image "
+            format_image ${b}
+            process "copy files to image "
+            copy2image ${b}
+            process "generate success "
+        } &
+    done
+done
+
+wait
+
+cleanup
+chmod -R 777 $out_path
 
