@@ -44,9 +44,9 @@ The software package supports Github Action cloud compilation, and the compiled 
 3. Enter the /op root directory. Enter the phicomm_n1 directory and run `sudo ./router/phicomm_n1/make -d` to complete the compilation. The generated openwrt firmware supporting Phicomm N1 is in the `out` directory under the root directory.
 
 ## Detailed make compile command
-- `sudo ./make -d -b n1_x96 -k 5.4.75_5.9.5`: recommend. Use the default configuration, specify multiple cores, and multiple firmware for compilation. use "_" to connect.
+- `sudo ./make -d -b n1 -k 5.9.5`: recommend. Use the default configuration, specify a kernel and a firmware for compilation.
+- `sudo ./make -d -b n1_x96 -k 5.4.75_5.9.5`: Use the default configuration, specify multiple cores, and multiple firmware for compilation. use "_" to connect.
 - `sudo ./make -d`: Compile all kernel versions of openwrt with the default configuration.
-- `sudo ./make -d -b n1 -k 5.9.2`: Use the default configuration, specify a kernel and a firmware for compilation.
 - `sudo ./make -d -b n1 -k 5.9.2 -s 1024`: Use the default configuration, specify a kernel, a firmware, and set the partition size for compilation.
 - `sudo ./make -d -b n1_x96`: Use the default configuration, specify multiple firmware, use "_" to connect. compile all kernels.
 - `sudo ./make -d -k 5.4.73_5.9.2`: Use the default configuration. Specify multiple cores, use "_" to connect.
