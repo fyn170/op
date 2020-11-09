@@ -9,7 +9,7 @@
 
 tmp_path="router/phicomm_n1/tmp"
 out_path="router/phicomm_n1/out"
-armbian_path="router/phicomm_n1/armbian"
+armbian_path="router/phicomm_n1/armbian" # don't modify it
 openwrt_path="router/phicomm_n1/openwrt"
 device="phicomm-n1" # don't modify it
 image_name='v$kernel-openwrt'
