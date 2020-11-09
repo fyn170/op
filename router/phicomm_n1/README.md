@@ -1,6 +1,4 @@
-# OpenWrt for Phicomm-N1 & S905x3-Boxs
-
-- [View S905x3 description](https://github.com/ophub/op/tree/main/router/s905x3)
+# OpenWrt for Phicomm-N1
 
 You can download the OpwnWrt for Phicomm N1 firmware from [Actions](https://github.com/ophub/op/actions). From the ` Build OpenWrt for Phicomm N1 `, Such as `***-phicomm-n1-v5.4.50-openwrt-firmware or other kernel versions.` Unzip to get the `***.img` file. Or download from [Releases](https://github.com/ophub/op/releases). Such as `OpenWrt_Phicomm_N1_${date}`. Then write the IMG file to the USB hard disk through software such as [balenaEtcher](https://www.balena.io/etcher/).
 
@@ -54,6 +52,8 @@ The software package supports Github Action cloud compilation, and the compiled 
 - `sudo ./make -d -s 1024 -k 5.7.15`: Use the default configuration and set the partition size to 1024m, and only compile the openwrt firmware with the kernel version 5.7.15.
 - `sudo ./make -h`: Display help information and view detailed description of each parameter.
 - `sudo ./make`: If you are familiar with the relevant setting requirements of the phicomm_n1 firmware, you can follow the prompts, such as selecting the firmware you want to make, the kernel version, setting the ROOTFS partition size, etc. If you don’t know these settings, just press Enter.
+
+- The difference between s905x3 and phicomm-n1 is the dtb file specified in /boot/uEnv.txt. This script supports compiling make -d -b n1_x96 together. It is recommended that you understand the description of both firmwares. [View S905x3 description](https://github.com/ophub/op/tree/main/router/s905x3)
 
 ## Compilation method
 
