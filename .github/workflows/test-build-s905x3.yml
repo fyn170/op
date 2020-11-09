@@ -66,7 +66,7 @@ jobs:
       if: steps.download.outputs.status == 'success' && env.UPLOAD_FIRMWARE == 'true' && !cancelled()
       run: |
         sudo chmod +x ${{ env.OPENWRT_PATH }}/make
-        sudo ${{ env.OPENWRT_PATH }}/make -d -b x96_hk1 -k 5.8.16_5.4.69
+        sudo ${{ env.OPENWRT_PATH }}/make -d -b x96 -k 5.8.16_5.4.69
         cd ${{ env.OPENWRT_PATH }}/out
         for x in $(ls .); do
           cd $x && gzip *.img && cd ../
