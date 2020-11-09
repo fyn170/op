@@ -17,11 +17,11 @@ on:
         default: 'false'
   #release:
     #types: published
-  push:
-    branches:
-      - main
-    paths:
-      - '.github/workflows/test-build-s905x3.yml'
+  #push:
+    #branches:
+      #- main
+    #paths:
+      #- '.github/workflows/test-build-s905x3.yml'
   #schedule:
     #- cron: '0 0 * * 5'
   #watch:
