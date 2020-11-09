@@ -1,5 +1,6 @@
-# OpenWrt for Phicomm-N1
+# OpenWrt for Phicomm-N1 & S905x3-Boxs
 
+- [View S905x3 description](https://github.com/ophub/op/tree/main/router/s905x3)
 
 You can download the OpwnWrt for Phicomm N1 firmware from [Actions](https://github.com/ophub/op/actions). From the ` Build OpenWrt for Phicomm N1 `, Such as `***-phicomm-n1-v5.4.50-openwrt-firmware or other kernel versions.` Unzip to get the `***.img` file. Or download from [Releases](https://github.com/ophub/op/releases). Such as `OpenWrt_Phicomm_N1_${date}`. Then write the IMG file to the USB hard disk through software such as [balenaEtcher](https://www.balena.io/etcher/).
 
