@@ -1,8 +1,8 @@
 #!/bin/bash
 #========================================================================================================================
 # https://github.com/ophub/op
-# Description: Automatically Build OpenWrt for PHICOMM N1
-# Function: Use armbian kernel to build openwrt for PHICOMM N1
+# Description: Automatically Build OpenWrt for PHICOMM-N1 & S905X3-BOXS
+# Function: Use armbian kernel to build openwrt for PHICOMM-N1 & S905X3-BOXS
 # Copyright (C) 2020 https://github.com/tuanqing/mknop
 # Copyright (C) 2020 https://github.com/ophub/op
 #========================================================================================================================
@@ -12,16 +12,19 @@ out_path="router/phicomm_n1/out"
 armbian_path="router/phicomm_n1/armbian"
 openwrt_path="router/phicomm_n1/openwrt"
 device="phicomm-n1" # don't modify it
-image_name='$device-v$kernel-openwrt'
+image_name='v$kernel-openwrt'
+build_openwrt=("n1" "x96" "hk1")
+make_path=${PWD}
 SKIP_MB=16
 BOOT_MB=256
+ROOT_MB=1024
 
 tag() {
     echo -e " [ \033[1;36m$1\033[0m ]"
 }
 
 process() {
-    echo -e " [ \033[1;32m$kernel\033[0m ] $1"
+    echo -e " [ \033[1;32m$build\033[0m - \033[1;32m$kernel\033[0m ] $1"
 }
 
 die() {
@@ -47,6 +50,7 @@ cleanup() {
 }
 
 extract_openwrt() {
+    cd ${make_path}
     local firmware="$openwrt_path/$firmware"
     local suffix="${firmware##*.}"
     mount="$tmp_path/mount"
@@ -78,7 +82,7 @@ extract_openwrt() {
                     die "mount ${loop} failed!"
                 fi
             fi
-            cp -r $mount/* $root_comm && sync
+            cp -rf $mount/* $root_comm && sync
             umount -f $mount
             losetup -d $loop
             break
@@ -87,7 +91,7 @@ extract_openwrt() {
             if ! mount -r -o loop $firmware $mount; then
                 die "mount $firmware failed!"
             fi
-            cp -r $mount/* $root_comm && sync
+            cp -rf $mount/* $root_comm && sync
             umount -f $mount
             break
             ;;
@@ -102,10 +106,12 @@ extract_openwrt() {
 }
 
 extract_armbian() {
+    cd ${make_path}
+    build_op=${1}
     kernel_dir="$armbian_path/$device/kernel/$kernel"
     root_dir="$armbian_path/$device/root"
-    root="$tmp_path/$kernel/root"
-    boot="$tmp_path/$kernel/boot"
+    root="$tmp_path/$kernel/$build_op/root"
+    boot="$tmp_path/$kernel/$build_op/boot"
 
     mkdir -p $root $boot
 
@@ -114,7 +120,7 @@ extract_armbian() {
     tar -xJf "$armbian_path/firmware.tar.xz" -C $root
     tar -xJf "$kernel_dir/modules.tar.xz" -C $root
 
-    cp -r $root_comm/* $root
+    cp -rf $root_comm/* $root
     [ $(ls $root_dir | wc -w) != 0 ] && cp -r $root_dir/* $root
     sync
 }
@@ -140,13 +146,18 @@ utils() {
 }
 
 make_image() {
-    image="$out_path/$kernel/$(eval "echo $image_name")_$(date +"%Y.%m.%d").img"
+    build_op=${1}
+    image="$out_path/$kernel/${build_op}-$(eval "echo $image_name")_$(date +"%Y.%m.%d").img"
+    rm -f $image
+    sync
 
     [ -d "$out_path/$kernel" ] || mkdir -p "$out_path/$kernel"
     fallocate -l $((SKIP_MB + BOOT_MB + rootsize))M $image
 }
 
 format_image() {
+    build_op=${1}
+
     parted -s $image mklabel msdos 2>/dev/null
     parted -s $image mkpart primary ext4 $((SKIP_MB))M $((SKIP_MB + BOOT_MB -1))M 2>/dev/null
     parted -s $image mkpart primary ext4 $((SKIP_MB + BOOT_MB))M 100% 2>/dev/null
@@ -154,13 +165,28 @@ format_image() {
     loop_setup $image
     mkfs.vfat -n "BOOT" ${loop}p1 >/dev/null 2>&1
     mke2fs -F -q -t ext4 -L "ROOTFS" -m 0 ${loop}p2 >/dev/null 2>&1
+
+    #Write the specified bootloader
+    if [ "$build_op" != "n1" ]; then
+        BTLD_BIN="$root/root/hk1box-bootloader.img"
+        if [ -f ${BTLD_BIN} ]; then
+           mkdir -p $root/lib/u-boot
+           cp -f ${BTLD_BIN} $root/lib/u-boot/
+           #echo "Write bootloader for $build_op: [ $( ls $root/lib/u-boot/*.img 2>/dev/null ) ]."
+           dd if=${BTLD_BIN} of=${lodev} bs=1 count=442 conv=fsync 2>/dev/null
+           dd if=${BTLD_BIN} of=${lodev} bs=512 skip=1 seek=1 conv=fsync 2>/dev/null
+        else
+           die "bootloader does not exist."
+        fi
+    fi
 }
 
 copy2image() {
+    build_op=${1}
     set -e
 
-    local bootfs="$mount/$kernel/bootfs"
-    local rootfs="$mount/$kernel/rootfs"
+    local bootfs="$mount/$kernel/$build_op/bootfs"
+    local rootfs="$mount/$kernel/$build_op/rootfs"
 
     mkdir -p $bootfs $rootfs
     if ! mount ${loop}p1 $bootfs; then
@@ -170,12 +196,53 @@ copy2image() {
         die "mount ${loop}p2 failed!"
     fi
 
-    cp -r $boot/* $bootfs
-    cp -r $root/* $rootfs
+    cp -rf $boot/* $bootfs
+    cp -rf $root/* $rootfs
     sync
 
-    umount -f $bootfs $rootfs
-    losetup -d $loop
+    #Write the specified uEnv.txt
+    if [ "$build_op" != "n1" ]; then
+        cd ${bootfs}
+        if [  ! -f "uEnv.txt" ]; then
+           die "Error: uEnv.txt Files does not exist"
+        fi
+
+        no_firmware=false
+        case "${build_op}" in
+        x96)
+            old_x96_dtb="#FDT=\/dtb\/amlogic\/meson-sm1-x96-max-plus-100m.dtb"
+            new_x96_dtb="FDT=\/dtb\/amlogic\/meson-sm1-x96-max-plus-100m.dtb"
+            sed -i "s/^${old_x96_dtb}/${new_x96_dtb}/g" uEnv.txt
+            #echo "x96 - ${kernel}: Convert completed"
+            ;;
+        hk1)
+            old_hk1_dtb="#FDT=\/dtb\/amlogic\/meson-sm1-hk1box-vontar-x3.dtb"
+            new_hk1_dtb="FDT=\/dtb\/amlogic\/meson-sm1-hk1box-vontar-x3.dtb"
+            sed -i "s/^${old_hk1_dtb}/${new_hk1_dtb}/g" uEnv.txt
+            #echo "hk1 - ${kernel}: Convert completed"
+            ;;
+        *)
+            die "Have no this firmware: [ ${build_op} - ${kernel} ]"
+            no_firmware=ture
+            ;;
+        esac
+
+        if [ ${no_firmware} = false ]; then
+            old_n1_dtb="FDT=\/dtb\/amlogic\/meson-gxl-s905d-phicomm-n1.dtb"
+            new_n1_dtb="#FDT=\/dtb\/amlogic\/meson-gxl-s905d-phicomm-n1.dtb"
+            sed -i "s/^${old_n1_dtb}/${new_n1_dtb}/g" uEnv.txt
+            #echo "old-phicomm-n1: dtb have close"
+        else
+            die "Did not match the appropriate type"
+        fi
+
+        sync
+        cd ${make_path}
+    fi
+
+    umount -f $bootfs 2>/dev/null
+    umount -f $rootfs 2>/dev/null
+    losetup -d $loop 2>/dev/null
 }
 
 get_firmwares() {
@@ -283,21 +350,26 @@ Usage:
     make [option]
 
 Options:
-    -c, --clean       clean up the output and temporary directories
+    -c, --clean          clean up the output and temporary directories
 
-    -d, --default     the kernel version is "all", and the rootfs partition size is "1024m"
+    -d, --default        the kernel version is "all", and the rootfs partition size is "1024m"
 
-    -u, --use=USE     Specify multiple cores, use "_" to connect
+    -b, --build=BUILD    Specify multiple cores, use "_" to connect
+       , -b all          Compile all types of openwrt
+       , -b n1           Specify a single openwrt for compilation
+       , -b n1_x96_hk1   Specify multiple openwrt, use "_" to connect
 
-    -k=VERSION        set the kernel version, which must be in the "kernel" directory
-       , -k all       build all the kernel version
-       , -k latest    build the latest kernel version
+    -k=VERSION           set the kernel version, which must be in the "kernel" directory
+       , -k all          build all the kernel version
+       , -k latest       build the latest kernel version
+       , -k 5.4.6        Specify a single kernel for compilation
+       , -k 5.4.6_5.9.0  Specify multiple cores, use "_" to connect
 
-    --kernel          show all kernel version in "kernel" directory
+    --kernel             show all kernel version in "kernel" directory
 
-    -s, --size=SIZE   set the rootfs partition size, do not less than 256m
+    -s, --size=SIZE      set the rootfs partition size, do not less than 256m
 
-    -h, --help        display this help
+    -h, --help           display this help
 
 EOF
 }
@@ -320,32 +392,47 @@ while [ "$1" ]; do
         rm -rf $out_path
         echo " clean up ok!" && exit
         ;;
+
     -d | --default)
-        : ${rootsize:=1024}
+        : ${rootsize:=$ROOT_MB}
         : ${firmware:="${firmwares[0]}"}
         : ${kernel:="all"}
+        : ${build:="all"}
         ;;
-    -u | --use)
-        use_kernel=$2
-        oldIFS=$IFS
-        IFS=_
-        kernels=($use_kernel)
-        IFS=$oldIFS
-        : ${rootsize:=1024}
-        : ${firmware:="${firmwares[0]}"}
-        : ${kernel:="all"}
+    -b | --build)
+        build=$2
+        if   [ "$build" = "all" ]; then
+             shift
+        elif [ -n "$build" ]; then
+             unset build_openwrt
+             oldIFS=$IFS
+             IFS=_
+             build_openwrt=($build)
+             IFS=$oldIFS
+             unset build
+             : ${build:="all"}
+        else
+             die "invalid build [ $2 ]!"
+        fi
         shift
         ;;
     -k)
         kernel=$2
-        kernel_dir="$armbian_path/$device/kernel/$kernel"
-        if [[ "$kernel" = "all" || -f "$kernel_dir/kernel.tar.xz" ]]; then
-            shift
+        if   [ "$kernel" = "all" ]; then
+             shift
         elif [ "$kernel" = "latest" ]; then
-            kernel="${kernels[-1]}"
-            shift
+             kernel="${kernels[-1]}"
+             shift
+        elif [ -n "$kernel" ]; then
+             oldIFS=$IFS
+             IFS=_
+             kernels=($kernel)
+             IFS=$oldIFS
+             unset kernel
+             : ${kernel:="all"}
+             shift
         else
-            die "invalid kernel [ $2 ]!!"
+             die "invalid kernel [ $2 ]!"
         fi
         ;;
     --kernel)
@@ -356,11 +443,11 @@ while [ "$1" ]; do
         if [[ "$rootsize" -ge 256 ]]; then
             shift
         else
-            die "invalid size [ $2 ]!!"
+            die "invalid size [ $2 ]!"
         fi
         ;;
     *)
-        die "invalid option [ $1 ]!!"
+        die "invalid option [ $1 ]!"
         ;;
     esac
     shift
@@ -369,13 +456,14 @@ done
 if [ ${#firmwares[*]} = 0 ]; then
     die "no file in openwrt directory!"
 fi
+
 if [ ${#kernels[*]} = 0 ]; then
     die "no file in kernel directory!"
 fi
 
 [ $firmware ] && echo " firmware   ==>   $firmware"
-[ $kernel ] && echo " kernel     ==>   $kernel"
 [ $rootsize ] && echo " rootsize   ==>   $rootsize"
+
 [ $firmware ] || [ $kernel ] || [ $rootsize ] && echo
 
 [ $firmware ] || choose_firmware
@@ -383,24 +471,27 @@ fi
 [ $rootsize ] || set_rootsize
 
 [ $kernel != "all" ] && kernels=("$kernel")
+[ $build != "all" ] && build_openwrt=("$build")
 
-process "extract openwrt files "
 extract_openwrt
 
-for x in ${kernels[*]}; do
-    {
-        kernel=$x
-        process "extract armbian files "
-        extract_armbian
-        utils
-        process "make openwrt image "
-        make_image
-        process "format openwrt image "
-        format_image
-        process "copy files to image "
-        copy2image
-        process "generate success "
-    } &
+for b in ${build_openwrt[*]}; do
+    for x in ${kernels[*]}; do
+        {
+            kernel=$x
+            build=$b
+            process "extract armbian files "
+            extract_armbian ${b}
+            utils
+            process "make openwrt image "
+            make_image ${b}
+            process "format openwrt image "
+            format_image ${b}
+            process "copy files to image "
+            copy2image ${b}
+            process "generate success "
+        } &
+    done
 done
 
 wait
