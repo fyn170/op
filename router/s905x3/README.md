@@ -1,5 +1,7 @@
 # OpenWrt for S905x3 ( X96-Max+, H96-Max-X3-Round & HK1-Box )
 
+- [View Phicomm-N1 description](https://github.com/ophub/op/tree/main/router/phicomm_n1)
+
 You can download the OpwnWrt for S905x3 firmware from [Actions](https://github.com/ophub/op/actions). From the ` Build OpenWrt for S905x3 `, Such as `openwrt_s905x3_${date}` Unzip to get the `***.img` file. Or download from [Releases](https://github.com/ophub/op/releases). Such as `openwrt_S905x3_${date}`. Then write the IMG file to the USB card/TF card  through software such as [balenaEtcher](https://www.balena.io/etcher/).
 
 ## Firmware instructions
