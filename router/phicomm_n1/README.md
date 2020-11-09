@@ -53,7 +53,7 @@ The software package supports Github Action cloud compilation, and the compiled 
 - `sudo ./make -h`: Display help information and view detailed description of each parameter.
 - `sudo ./make`: If you are familiar with the relevant setting requirements of the phicomm_n1 firmware, you can follow the prompts, such as selecting the firmware you want to make, the kernel version, setting the ROOTFS partition size, etc. If you don’t know these settings, just press Enter.
 
-- The difference between s905x3 and phicomm-n1 is the dtb file specified in /boot/uEnv.txt. This script supports compiling make -d -b n1_x96 together. It is recommended that you understand the description of both firmwares. [View S905x3 description](https://github.com/ophub/op/tree/main/router/s905x3)
+- The difference between `s905x3` and `phicomm-n1` is the dtb file specified in `/boot/uEnv.txt`. This script supports compiling `make -d -b n1_x96` together. It is recommended that you understand the description of both firmwares. [View S905x3 description](https://github.com/ophub/op/tree/main/router/s905x3)
 
 ## Compilation method
 
