@@ -1,7 +1,5 @@
 # OpenWrt for S905x3 ( X96-Max+, H96-Max-X3-Round & HK1-Box )
 
-- [View Phicomm-N1 description](https://github.com/ophub/op/tree/main/router/phicomm_n1)
-
 You can download the OpwnWrt for S905x3 firmware from [Actions](https://github.com/ophub/op/actions). From the ` Build OpenWrt for S905x3 `, Such as `openwrt_s905x3_${date}` Unzip to get the `***.img` file. Or download from [Releases](https://github.com/ophub/op/releases). Such as `openwrt_S905x3_${date}`. Then write the IMG file to the USB card/TF card  through software such as [balenaEtcher](https://www.balena.io/etcher/).
 
 ## Firmware instructions
@@ -71,6 +69,7 @@ The software package supports Github Action cloud compilation, and the compiled 
 - `sudo ./make -h`: Display help information and view detailed description of each parameter.
 - `sudo ./make`: If you are familiar with the relevant setting requirements of the phicomm_n1 firmware, you can follow the prompts, such as selecting the firmware you want to make, the kernel version, setting the ROOTFS partition size, etc. If you don’t know these settings, just press Enter.
 
+- The difference between `s905x3` and `phicomm-n1` is the dtb file specified in `/boot/uEnv.txt`. This script supports compiling `make -d -b n1_x96` together. It is recommended that you understand the description of both firmwares. [View Phicomm-N1 description](https://github.com/ophub/op/tree/main/router/phicomm_n1)
 
 ## Compilation method
 
