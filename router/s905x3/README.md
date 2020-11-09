@@ -1,16 +1,13 @@
 # OpenWrt for S905x3 ( X96-Max+, H96-Max-X3-Round & HK1-Box )
 
+- [View S905x3 description](https://github.com/ophub/op/tree/main/router/s905x3)
+
 You can download the OpwnWrt for S905x3 firmware from [Actions](https://github.com/ophub/op/actions). From the ` Build OpenWrt for S905x3 `, Such as `openwrt_s905x3_${date}` Unzip to get the `***.img` file. Or download from [Releases](https://github.com/ophub/op/releases). Such as `openwrt_S905x3_${date}`. Then write the IMG file to the USB card/TF card  through software such as [balenaEtcher](https://www.balena.io/etcher/).
-
-## Compilation instructions
-1. Online automatic compilation: The script will regularly use the latest OpenWrt for phicomm-n1 firmware and modify ***` /boot/uEnv.txt `*** to build a compatible S905x3 series router.
-2. Local manual compilation: First put the phicomm-n1 firmware into the ***` flippy `*** folder, and then run `sudo ./make ${firmware_key}`, the generated file is in the ***` out `*** directory.
-
 
 ## Firmware instructions
 
-- `openwrt_x96_*.img`: Almost compatible with all S905x3 boxes to boot from USB hard disk, you can choose different box types when installing into EMMC.
-- `openwrt_hk1_*.img`: For HK1-Box(S905x3).
+- `x96-v*-openwrt_*.img`: Almost compatible with all S905x3 boxes to boot from USB hard disk, you can choose different box types when installing into EMMC.
+- `hk1-v*-openwrt_*.img`: For HK1-Box(S905x3).
 
 ## Install into emmc
 
@@ -53,84 +50,32 @@ iptables -t nat -I POSTROUTING -o eth0 -j MASQUERADE        #If the interface is
 iptables -t nat -I POSTROUTING -o br-lan -j MASQUERADE      #If the interface is br-lan bridged.
 ```
 
-## Support firmware
-
-Put phicomm_n1_firmware file into ${flippy_folder}. Support putting multiple phicomm_n1_firmware_*.img or phicomm_n1_firmware_*.zip files into compiling together.
-
-```shell script
-Path: ~/op/router/s905x3/
- ├── flippy
- │   ├── phicomm_n1_firmware_01.img
- │   ├── phicomm_n1_firmware_02.img
- │   ├── phicomm_n1_firmware_more.img
- │   │
- │   └── or phicomm_n1_firmware.zip
- │
- └── make
- ```
-
-## /boot/uEnv.txt FDT FILES
-
-```shell script
-#Phicomm-N1
-#FDT=/dtb/amlogic/meson-gxl-s905d-phicomm-n1.dtb
-
-# X96 Max+ [tag: x96] ( S905X3 Network: 100m / TF card: 30Mhz / CPU: 2124Mhz ) 
-#The default DTB when the USB flash drive is started, almost compatible with all S905x3 boxes.
-FDT=/dtb/amlogic/meson-sm1-x96-max-plus-100m.dtb
-
-# X96 Max+ ( S905X3 Network: 1000M / TF card: 30Mhz / CPU: 2124Mhz )
-#FDT=/dtb/amlogic/meson-sm1-x96-max-plus.dtb
-
-# X96 Max+ ( S905X3 Network: 1000M / TF card: 30Mhz / CPU: 2244Mhz )
-#FDT=/dtb/amlogic/meson-sm1-x96-max-plus-oc.dtb
-
-# HK1 BoX [tag: hk1] ( S905X3 Network: 1000M / TF card: 25Mhz / CPU: 2124Mhz )
-#FDT=/dtb/amlogic/meson-sm1-hk1box-vontar-x3.dtb
-
-# HK1 BoX ( S905X3 Network: 1000M / TF card: 25Mhz / CPU: 2184Mhz )
-#FDT=/dtb/amlogic/meson-sm1-hk1box-vontar-x3-oc.dtb
-
-# H96 Max X3 ( S905X3 Network: 1000M / TF card: 50Mhz / CPU: 2124Mhz )
-#FDT=/dtb/amlogic/meson-sm1-h96-max-x3.dtb
-
-# H96 Max X3 ( S905X3 Network: 1000M / TF card: 50Mhz / CPU: 2208Mhz )
-#FDT=/dtb/amlogic/meson-sm1-h96-max-x3-oc.dtb
-
-# X96 Max ( S905X2 Network: 1000M / TF card: 50Mhz / CPU: 1944Mhz )
-#Applicable to most S905x2, 4G memory Gigabit network card boxes.
-#FDT=/dtb/amlogic/meson-g12a-x96-max.dtb
-
-# X96 Max ( S905X2 Network: 100M / TF card: 50Mhz / CPU: 1944Mhz )
-#Applicable to most S905x2, 2G memory 100M network card boxes.
-#FDT=/dtb/amlogic/meson-g12a-x96-max-rmii.dtb
-
-# octopus-planet ( S905X3 Network: 1000M / TF card: 30Mhz / CPU: 2124Mhz )
-#FDT=/dtb/amlogic/meson-gxm-octopus-planet.dtb
-````
-
-Method: Add # in front of the dtb file path of Phicomm N1, and remove the # in front of the firmware you need. 
+## Local compilation instructions
+The software package supports Github Action cloud compilation, and the compiled firmware can be downloaded directly in [Action](https://github.com/ophub/op/actions) and [Releases](https://github.com/ophub/op/releases). You can also compile locally:
+1. Clone the warehouse to the local. `git clone https://github.com/ophub/op`
+2. Create an `openwrt` folder in the local `op/router/phicomm_n1` directory, and upload the compiled openwrt firmware of the ARM kernel to the openwrt directory.
+3. Enter the `/op` root directory. Enter the phicomm_n1 directory and run `sudo ./router/phicomm_n1/make -d` to complete the compilation. The generated openwrt firmware supporting Phicomm N1 is in the `out` directory under the root directory.
 
 ## Detailed make compile command
 
-```shell script
-sudo ./make x96  #Almost compatible with all S905x3 boxes to boot from USB hard disk, Choose box types when installing into EMMC.
-sudo ./make hk1  #Build the OpenWrt firmware of HK1-Box according to the default configuration.
-sudo ./make all  #Build All S905x3 OpenWrt firmware according to the default configuration firmware. 
-````
+***s905x3 shares the armbian kernel of phicomm n1, and the relevant file directory is `~/op/tree/main/router/phicomm_n1/armbian`. You can compile s905x3 together when compiling phicomm n1 or separately.***
+
+- `sudo ./make -d -b n1_x96 -k 5.4.75_5.9.5`: recommend. Use the default configuration, specify multiple cores, and multiple firmware for compilation. use "_" to connect.
+- `sudo ./make -d`: Compile all kernel versions of openwrt with the default configuration.
+- `sudo ./make -d -b n1 -k 5.9.2`: Use the default configuration, specify a kernel and a firmware for compilation.
+- `sudo ./make -d -b n1 -k 5.9.2 -s 1024`: Use the default configuration, specify a kernel, a firmware, and set the partition size for compilation.
+- `sudo ./make -d -b n1_x96`: Use the default configuration, specify multiple firmware, use "_" to connect. compile all kernels.
+- `sudo ./make -d -k 5.4.73_5.9.2`: Use the default configuration. Specify multiple cores, use "_" to connect.
+- `sudo ./make -d -k latest`: Use the default configuration to compile the latest kernel version of the openwrt firmware.
+- `sudo ./make -d -s 1024 -k 5.7.15`: Use the default configuration and set the partition size to 1024m, and only compile the openwrt firmware with the kernel version 5.7.15.
+- `sudo ./make -h`: Display help information and view detailed description of each parameter.
+- `sudo ./make`: If you are familiar with the relevant setting requirements of the phicomm_n1 firmware, you can follow the prompts, such as selecting the firmware you want to make, the kernel version, setting the ROOTFS partition size, etc. If you don’t know these settings, just press Enter.
+
 
 ## Compilation method
 
 - Select ***`Build OpenWrt for S905x3`*** on the [Action](https://github.com/ophub/op/actions) page.
 - Click the ***`Run workflow`*** button.
-
-## Configuration file function description
-
-| Folder/file name | Features |
-| ---- | ---- |
-| flippy | Store Phicomm-N1 firmware, support multiple .img to compile together. Support the Phicomm-N1 firmware zip file generated by this github to be directly put in for compilation. |
-| make | s905x3 OpenWrt firmware build script. |
-
 
 ## .github/workflow/build-openwrt-s905x3.yml related environment variable description
 
