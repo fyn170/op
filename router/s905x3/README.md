@@ -51,14 +51,15 @@ iptables -t nat -I POSTROUTING -o br-lan -j MASQUERADE      #If the interface is
 ## Local compilation instructions
 The software package supports Github Action cloud compilation, and the compiled firmware can be downloaded directly in [Action](https://github.com/ophub/op/actions) and [Releases](https://github.com/ophub/op/releases). You can also compile locally:
 1. Clone the warehouse to the local. `git clone https://github.com/ophub/op`
-2. Create an `openwrt` folder in the local `op/router/phicomm_n1` directory, and upload the compiled openwrt firmware of the ARM kernel to the openwrt directory.
-3. Enter the `/op` root directory. Enter the phicomm_n1 directory and run `sudo ./router/phicomm_n1/make -d` to complete the compilation. The generated openwrt firmware supporting Phicomm N1 is in the `out` directory under the root directory.
+2. Create an `openwrt` folder in the local `op/router/s905x3` directory, and upload the compiled openwrt firmware of the ARM kernel to the openwrt directory.
+3. Enter the `/op` root directory. Enter the phicomm_n1 directory and run `sudo ./router/s905x3/make -d` to complete the compilation. The generated openwrt firmware supporting Phicomm N1 is in the `out` directory under the root directory.
 
 ## Detailed make compile command
 
-***s905x3 shares the armbian kernel of phicomm n1, and the relevant file directory is `~/op/tree/main/router/phicomm_n1/armbian`. You can compile s905x3 together when compiling phicomm n1 or separately.***
+***s905x3 shares the armbian kernel of phicomm n1, and the relevant file directory is `~/op/tree/main/router/phicomm_n1/armbian/`. You can compile s905x3 together when compiling phicomm n1 or separately.***
 
-- `sudo ./make -d -b n1_x96 -k 5.4.75_5.9.5`: recommend. Use the default configuration, specify multiple cores, and multiple firmware for compilation. use "_" to connect.
+- `sudo ./make -d -b x96 -k 5.9.2`: recommend. Use the default configuration, specify a kernel and a firmware for compilation.
+- `sudo ./make -d -b x96_n1 -k 5.4.75_5.9.5`: Use the default configuration, specify multiple cores, and multiple firmware for compilation. use "_" to connect.
 - `sudo ./make -d`: Compile all kernel versions of openwrt with the default configuration.
 - `sudo ./make -d -b x96 -k 5.9.2`: Use the default configuration, specify a kernel and a firmware for compilation.
 - `sudo ./make -d -b x96 -k 5.9.2 -s 1024`: Use the default configuration, specify a kernel, a firmware, and set the partition size for compilation.
