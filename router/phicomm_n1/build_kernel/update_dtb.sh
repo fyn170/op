@@ -34,9 +34,9 @@ echo_color() {
         red)
             echo -e " \033[1;31m[ ${2} ]\033[0m ${3}"
             echo -e "--------------------------------------------"
-            echo -e "Current path -PWD-: [ ${PWD} ]"
-            echo -e "Situation -lsblk-: [ $(lsblk) ]"
-            echo -e "Directory file list -ls-: [ $(ls .) ]"
+            echo -e "Current path -PWD-:-----------------\n${PWD}"
+            echo -e "Situation -lsblk-:----------------\n$(lsblk)"
+            echo -e "Directory file list -ls-:----------\n$(ls .)"
             echo -e "--------------------------------------------"
             exit 1
             ;;

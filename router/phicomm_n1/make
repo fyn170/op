@@ -13,7 +13,7 @@ armbian_path="router/phicomm_n1/armbian" # don't modify it
 openwrt_path="router/phicomm_n1/openwrt"
 device="phicomm-n1" # don't modify it
 image_name='v$kernel-openwrt'
-build_openwrt=("n1" "x96" "hk1")
+build_openwrt=("n1" "x96" "hk1" "h96" "octopus")
 make_path=${PWD}
 SKIP_MB=16
 BOOT_MB=256
@@ -207,34 +207,28 @@ copy2image() {
            die "Error: uEnv.txt Files does not exist"
         fi
 
-        no_firmware=false
+        n1_fdt_dtb="meson-gxl-s905d-phicomm-n1.dtb"
         case "${build_op}" in
         x96)
-            old_x96_dtb="#FDT=\/dtb\/amlogic\/meson-sm1-x96-max-plus-100m.dtb"
-            new_x96_dtb="FDT=\/dtb\/amlogic\/meson-sm1-x96-max-plus-100m.dtb"
-            sed -i "s/^${old_x96_dtb}/${new_x96_dtb}/g" uEnv.txt
-            #echo "x96 - ${kernel}: Convert completed"
+            new_fdt_dtb="meson-sm1-x96-max-plus-100m.dtb"
+            sed -i "s/${n1_fdt_dtb}/${new_fdt_dtb}/g" uEnv.txt
             ;;
         hk1)
-            old_hk1_dtb="#FDT=\/dtb\/amlogic\/meson-sm1-hk1box-vontar-x3.dtb"
-            new_hk1_dtb="FDT=\/dtb\/amlogic\/meson-sm1-hk1box-vontar-x3.dtb"
-            sed -i "s/^${old_hk1_dtb}/${new_hk1_dtb}/g" uEnv.txt
-            #echo "hk1 - ${kernel}: Convert completed"
+            new_fdt_dtb="meson-sm1-hk1box-vontar-x3.dtb"
+            sed -i "s/${n1_fdt_dtb}/${new_fdt_dtb}/g" uEnv.txt
+            ;;
+        h96)
+            new_fdt_dtb="meson-sm1-h96-max-x3.dtb"
+            sed -i "s/${n1_fdt_dtb}/${new_fdt_dtb}/g" uEnv.txt
+            ;;
+        octopus)
+            new_fdt_dtb="meson-gxm-octopus-planet.dtb"
+            sed -i "s/${n1_fdt_dtb}/${new_fdt_dtb}/g" uEnv.txt
             ;;
         *)
             die "Have no this firmware: [ ${build_op} - ${kernel} ]"
-            no_firmware=ture
             ;;
         esac
-
-        if [ ${no_firmware} = false ]; then
-            old_n1_dtb="FDT=\/dtb\/amlogic\/meson-gxl-s905d-phicomm-n1.dtb"
-            new_n1_dtb="#FDT=\/dtb\/amlogic\/meson-gxl-s905d-phicomm-n1.dtb"
-            sed -i "s/^${old_n1_dtb}/${new_n1_dtb}/g" uEnv.txt
-            #echo "old-phicomm-n1: dtb have close"
-        else
-            die "Did not match the appropriate type"
-        fi
 
         sync
         cd ${make_path}
