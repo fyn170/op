@@ -10,13 +10,13 @@ The first method:
 ```shell script
 Example: ~/op/router/phicomm_n1/build-kernel/
  ├── flippy
- │   ├── Armbian_20.10_Aml-s9xxx_buster_5.9.2-flippy-47+.img
- │   ├── OR: N1_Openwrt_R20.10.20_k5.4.73-flippy-47+o.img
- │   └── OR: S905x3_Openwrt_R20.10.20_k5.9.2-flippy-47+.img
+ │   ├── N1_Openwrt*.img                   # Recommend Use Flippy's N1_Openwrt.img files
+ │   ├── OR: S905x3_Openwrt*.img           # Use Flippy's S905x3_Openwrt*.img files
+ │   └── OR: Armbian*Aml-s9xxx*.img        # Use Flippy's Armbian*.img files
  └── make_use_img.sh
 ```
 
-Put the ***`Flippy’s kernel file`*** E.g: ***`Armbian_20.10_Aml-s9xxx_buster_5.9.2-flippy-47+.img`*** file into the ***`${flippy_folder}`*** folder, Modify ${flippy_file} to kernel file name. E.g: ***`flippy_file="Armbian_20.10_Aml-s9xxx_buster_5.9.2-flippy-47+.img"`***. then run the script:
+Put the ***`Flippy’s kernel file`*** E.g: ***`N1_Openwrt*.img`*** file into the ***`${flippy_folder}`*** folder, Modify ${flippy_file} to kernel file name. E.g: ***`flippy_file="N1_Openwrt_R20.10.20_k5.9.5-flippy-48+.img"`***. then run the script:
 ```shell script
 sudo ./make_use_img.sh
 ```
@@ -25,13 +25,13 @@ The second method:
 ```shell script
 Example: ~/op/router/phicomm_n1/build-kernel/
  ├── flippy
- │   ├── boot-5.4.63-flippy-43+o.tar.gz
- │   ├── dtb-amlogic-5.4.63-flippy-43+o.tar.gz
- │   └── modules-5.4.63-flippy-43+o.tar.gz
+ │   ├── boot-5.9.5-flippy-48+.tar.gz
+ │   ├── dtb-amlogic-5.9.5-flippy-48+.tar.gz
+ │   └── modules-5.9.5-flippy-48+.tar.gz
  └── make_use_kernel.sh
 ```
 
-put ***`boot-${flippy_version}.tar.gz, dtb-amlogic-${flippy_version}.tar.gz & modules-${flippy_version}.tar.gz`*** the three files into the ***`${flippy_folder}`*** folder, Modify ${flippy_version} to kernel version. E.g: ***`flippy_version="5.9.1-flippy-47+"`***. then run the script:
+put ***`boot-${flippy_version}.tar.gz, dtb-amlogic-${flippy_version}.tar.gz & modules-${flippy_version}.tar.gz`*** the three files into the ***`${flippy_folder}`*** folder, Modify ${flippy_version} to kernel version. E.g: ***`flippy_version="5.9.5-flippy-48+"`***. then run the script:
 ```shell script
 sudo ./make_use_kernel.sh
 ```
