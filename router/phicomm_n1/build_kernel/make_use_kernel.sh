@@ -10,9 +10,9 @@
 #
 # example: ~/op/router/phicomm_n1/build_kernel/
 # ├── flippy
-# │   ├── boot-5.4.63-flippy-43+o.tar.gz
-# │   ├── dtb-amlogic-5.4.63-flippy-43+o.tar.gz
-# │   └── modules-5.4.63-flippy-43+o.tar.gz
+# │   ├── boot-5.9.5-flippy-48+.tar.gz
+# │   ├── dtb-amlogic-5.9.5-flippy-48+.tar.gz
+# │   └── modules-5.9.5-flippy-48+.tar.gz
 # └── make_use_kernel.sh
 #
 # Usage: Use Ubuntu 18 LTS 64-bit
@@ -21,7 +21,7 @@
 # 03. cd ~/op/router/phicomm_n1/build_kernel/
 # 04. Prepare Flippy's ${build_boot}, ${build_dtb} & ${build_modules} three files. 
 # 05. Put this three files into ${flippy_folder}
-# 06. Modify ${flippy_version} to kernel version. E.g: flippy_version="5.9.1-flippy-47+"
+# 06. Modify ${flippy_version} to kernel version. E.g: flippy_version="5.9.5-flippy-48+"
 #     If the files of ${flippy_version} is not found, Will search for other files in the ${flippy_folder} directory.
 # 07. Run: sudo ./make_use_kernel.sh
 # 08. The generated files path: ~/op/router/phicomm_n1/armbian/phicomm-n1/kernel/${build_save_folder}
