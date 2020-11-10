@@ -58,7 +58,7 @@ You can refer to the [dtb library](https://github.com/ophub/op/tree/main/router/
 | 7 | HK1-Box | Beta | S905x3: NETWORK: 1000M / TF: 25Mtz / CPU: 2184Mtz | meson-sm1-hk1box-vontar-x3-oc.dtb |
 | 8 | H96-Max-X3 | Beta | S905x3: NETWORK: 1000M / TF: 50Mtz / CPU: 2208Mtz | meson-sm1-h96-max-x3-oc.dtb |
 | 9 | Octopus-Planet | Standard | S905x3: NETWORK: 1000M / TF: 30Mtz / CPU: 2124Mtz | meson-gxm-octopus-planet.dtb |
-| 0 | Other | - | Enter the dtb file name | YOUR DTB NAME |
+| 0 | Other | - | - | Enter the dtb file name |
 
 Note: If used as a bypass gateway, you can add custom firewall rules as needed (Network → Firewall → Custom Rules):
 ```shell script
