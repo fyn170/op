@@ -58,8 +58,6 @@ The software package supports Github Action cloud compilation, and the compiled 
 
 ***s905x3 shares the armbian kernel of phicomm n1, and the relevant file directory is `~/op/tree/main/router/phicomm_n1/armbian/`. You can compile s905x3 together when compiling phicomm n1 or separately.***
 
-The difference between `s905x3` and `phicomm-n1` is the dtb file specified in `/boot/uEnv.txt`. This script supports compiling `make -d -b n1_x96` together. It is recommended that you understand the description of both firmwares. [View Phicomm-N1 description](https://github.com/ophub/op/tree/main/router/phicomm_n1)
-
 - `sudo ./make -d -b x96 -k 5.9.2`: recommend. Use the default configuration, specify a kernel and a firmware for compilation.
 - `sudo ./make -d -b x96_n1 -k 5.4.75_5.9.5`: Use the default configuration, specify multiple cores, and multiple firmware for compilation. use "_" to connect.
 - `sudo ./make -d`: Compile all kernel versions of openwrt with the default configuration.
@@ -79,6 +77,7 @@ The difference between `s905x3` and `phicomm-n1` is the dtb file specified in `/
 | -s | Size | Specify the size of the root partition in MB. The default is 1024, and the specified size must be greater than 256. Such as `-s 1024` |
 | -h | help | View full documentation. |
 
+The difference between `s905x3` and `phicomm-n1` is the dtb file specified in `/boot/uEnv.txt`. This script supports compiling `make -d -b n1_x96` together. It is recommended that you understand the description of both firmwares. [View Phicomm-N1 description](https://github.com/ophub/op/tree/main/router/phicomm_n1)
 
 ## Compilation method
 
