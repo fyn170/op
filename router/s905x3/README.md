@@ -43,7 +43,7 @@ chmod 755 s905x3-update.sh
 reboot
 ```
 
-## Option description when installing into emmc.
+## Option description when installing into emmc
 
 You can refer to the [dtb library](https://github.com/ophub/op/tree/main/router/phicomm_n1/armbian/dtb-amlogic) when you customize the file name.
 
