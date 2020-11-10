@@ -72,7 +72,7 @@ The software package supports Github Action cloud compilation, and the compiled 
 | Parameter | Types | Description |
 | ---- | ---- | ---- |
 | -d | Defaults | Compile all cores and all firmware types. |
-| -b | Firmware | Specify the firmware type. Write the firmware name individually, such as `-b n1` . Multiple firmware use `_` connect such as `-b n1_x96` |
+| -b | Firmware | Specify the firmware type. Write the firmware name individually, such as `-b x96` . Multiple firmware use `_` connect such as `-b x96_hk1` . The model represented by the relevant variable： `n1` is phicomm-n1, `x96` is X96-Max+, `hk1` is HK1-Box, `h96` is H96-Max-X3, `octopus` is Octopus-Planet. |
 | -k | Kernel | Specify the kernel type. Write the kernel name individually such as `-k 5.4.50` . Multiple cores use `_` connection such as `-k 5.4.50_5.9.5` |
 | -s | Size | Specify the size of the root partition in MB. The default is 1024, and the specified size must be greater than 256. Such as `-s 1024` |
 | -h | help | View full documentation. |
