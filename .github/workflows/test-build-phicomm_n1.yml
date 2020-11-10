@@ -69,7 +69,7 @@ jobs:
         sudo ${{ env.OPENWRT_PATH }}/make -d -b n1 -k 5.4.66_5.7.15
         cd ${{ env.OPENWRT_PATH }}/out
         for x in $(ls .); do
-          cd $x && xz -z *.img && cd ../
+          cd $x && gzip *.img && cd ../
         done
         cp -rf ../openwrt/* .
         zip -r openwrt_phicomm_n1_test_${{ env.FILE_DATE }}.zip *
