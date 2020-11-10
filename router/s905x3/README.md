@@ -54,7 +54,7 @@ iptables -t nat -I POSTROUTING -o br-lan -j MASQUERADE      #If the interface is
 You can refer to the [dtb library](https://github.com/ophub/op/tree/main/router/phicomm_n1/armbian/dtb-amlogic) when you customize the file name.
 
 | Serial | Box | Description | DTB |
-| ---- | ---- | ---- | ---- | ---- |
+| ---- | ---- | ---- | ---- |
 | 1 | X96-Max+ | S905x3: NETWORK: 1000M / TF: 30Mtz / CPU: 2124Mtz | meson-sm1-x96-max-plus.dtb |
 | 2 | HK1-Box | S905x3: NETWORK: 1000M / TF: 25Mtz / CPU: 2124Mtz | meson-sm1-hk1box-vontar-x3.dtb |
 | 3 | H96-Max-X3 | S905x3: NETWORK: 1000M / TF: 50Mtz / CPU: 2124Mtz | meson-sm1-h96-max-x3.dtb |
