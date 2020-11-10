@@ -31,6 +31,7 @@ reboot
 
 Wait for the installation to complete. remove the USB hard disk, unplug/plug in the power again, reboot into EMMC.
 
+
 Upgrading OpenWrt: `Login in to openwrt` → `system menu` → `file transfer` → upload ***`s905x3-openwrt.zip`*** to ***`/tmp/upload/`***, enter the `system menu` → `TTYD terminal` → input command: 
 ```shell script
 mv -f /tmp/upload/s905x3-openwrt.zip /mnt/mmcblk2p4
@@ -41,6 +42,21 @@ chmod 755 s905x3-update.sh
 ./s905x3-update.sh s905x3-openwrt.img
 reboot
 ```
+
+## Option description when installing into emmc. You can refer to the [dtb library](https://github.com/ophub/op/tree/main/router/phicomm_n1/armbian/dtb-amlogic) when you customize the file name.
+
+| Serial | Box | Types | Description | DTB |
+| ---- | ---- | ---- | ---- |
+| 1 | X96-Max+ | Standard | S905x3: NETWORK: 1000M / TF: 30Mtz / CPU: 2124Mtz | meson-sm1-x96-max-plus.dtb |
+| 2 | HK1-Box | Standard | S905x3: NETWORK: 1000M / TF: 25Mtz / CPU: 2124Mtz | meson-sm1-hk1box-vontar-x3.dtb |
+| 3 | H96-Max-X3 | Standard | S905x3: NETWORK: 1000M / TF: 50Mtz / CPU: 2124Mtz | meson-sm1-h96-max-x3.dtb |
+| 4 | X96-Max-4G | Standard | S905x2: NETWORK: 1000M / TF: 50Mtz / CPU: 1944Mtz | meson-g12a-x96-max.dtb |
+| 5 | X96-Max-2G | Standard | S905x2: NETWORK: 100M  / TF: 50Mtz / CPU: 1944Mtz | meson-g12a-x96-max-rmii.dtb |
+| 6 | X96-Max+ | Beta | 905x3: NETWORK: 1000M / TF: 30Mtz / CPU: 2244Mtz | meson-sm1-x96-max-plus-oc.dtb |
+| 7 | HK1-Box | Beta | S905x3: NETWORK: 1000M / TF: 25Mtz / CPU: 2184Mtz | meson-sm1-hk1box-vontar-x3-oc.dtb |
+| 8 | H96-Max-X3 | Beta | S905x3: NETWORK: 1000M / TF: 50Mtz / CPU: 2208Mtz | meson-sm1-h96-max-x3-oc.dtb |
+| 9 | Octopus-Planet | Standard | S905x3: NETWORK: 1000M / TF: 30Mtz / CPU: 2124Mtz | meson-gxm-octopus-planet.dtb |
+| 0 | Other | - | Enter the dtb file name | YOUR DTB NAME |
 
 Note: If used as a bypass gateway, you can add custom firewall rules as needed (Network → Firewall → Custom Rules):
 ```shell script
