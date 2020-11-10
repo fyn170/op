@@ -53,7 +53,15 @@ The software package supports Github Action cloud compilation, and the compiled 
 - `sudo ./make -h`: Display help information and view detailed description of each parameter.
 - `sudo ./make`: If you are familiar with the relevant setting requirements of the phicomm_n1 firmware, you can follow the prompts, such as selecting the firmware you want to make, the kernel version, setting the ROOTFS partition size, etc. If you don’t know these settings, just press Enter.
 
-- The difference between `s905x3` and `phicomm-n1` is the dtb file specified in `/boot/uEnv.txt`. This script supports compiling `make -d -b n1_x96` together. It is recommended that you understand the description of both firmwares. [View S905x3 description](https://github.com/ophub/op/tree/main/router/s905x3)
+| Parameter | Types | Description |
+| ---- | ---- | ---- |
+| -d | Defaults | Compile all cores and all firmware types. |
+| -b | Firmware | Specify the firmware type. Write the firmware name individually, such as `-b n1` . Multiple firmware use `_` connect such as `-b n1_x96` |
+| -k | Kernel | Specify the kernel type. Write the kernel name individually such as `-k 5.4.50` . Multiple cores use `_` connection such as `-k 5.4.50_5.9.5` |
+| -s | Size | Specify the size of the root partition in MB. The default is 1024, and the specified size must be greater than 256. Such as `-s 1024` |
+| -h | help | View full documentation. |
+
+The difference between `s905x3` and `phicomm-n1` is the dtb file specified in `/boot/uEnv.txt`. This script supports compiling `make -d -b n1_x96` together. It is recommended that you understand the description of both firmwares. [View S905x3 description](https://github.com/ophub/op/tree/main/router/s905x3)
 
 ## Compilation method
 
