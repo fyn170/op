@@ -1,8 +1,8 @@
 #!/bin/bash
 #========================================================================================================================
 # https://github.com/ophub/op
-# Description: Automatically Build OpenWrt for PHICOMM-N1 & S905X3-BOXS
-# Function: Use armbian kernel to build openwrt for PHICOMM-N1 & S905X3-BOXS
+# Description: Automatically Build OpenWrt for S905x3-Boxs and Phicomm-N1
+# Function: Use armbian kernel to build openwrt for S905x3-Boxs and Phicomm-N1
 # Copyright (C) 2020 https://github.com/tuanqing/mknop
 # Copyright (C) 2020 https://github.com/ophub/op
 #========================================================================================================================
