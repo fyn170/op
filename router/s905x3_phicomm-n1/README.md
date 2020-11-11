@@ -5,7 +5,7 @@ You can download the OpwnWrt for Phicomm N1 firmware from [Actions](https://gith
 ## Firmware instructions
 
 - `n1-v*-openwrt_*.img`: For Phicomm-N1.
-- `x96-v*-openwrt_*.img`: Almost compatible with all S905x3 boxes to boot from USB hard disk, you can choose different box types when installing into EMMC.
+- `x96-v*-openwrt_*.img`: Almost compatible with all S905x3 boxes, you can choose different box types when installing into EMMC.
 - `hk1-v*-openwrt_*.img`: For HK1-Box(S905x3).
 - `h96-v*-openwrt_*.img`: For H96-Max-X3(S905x3).
 - `octopus-v*-openwrt_*.img` For Octopus-Planet.
