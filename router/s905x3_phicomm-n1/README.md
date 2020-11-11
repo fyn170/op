@@ -1,6 +1,6 @@
 # OpenWrt for Phicomm-N1 & S905x3-Boxs
 
-You can download the OpwnWrt for Phicomm N1 firmware from [Actions](https://github.com/ophub/op/actions). From the ` Build OpenWrt for S905x3 and Phicomm N1 `, Such as `openwrt-s905x3-phicomm-n1`. Unzip to get the `***.img` file. Or download from [Releases](https://github.com/ophub/op/releases). Such as `OpenWrt_*_${date}`. Then write the IMG file to the USB hard disk through software such as [balenaEtcher](https://www.balena.io/etcher/).
+You can download the OpwnWrt for Phicomm N1 firmware from [Actions](https://github.com/ophub/op/actions). From the ` Build OpenWrt for S905x3 and Phicomm N1 `, Such as `openwrt_s905x3_phicomm-n1_${date}`. Unzip to get the `openwrt*.img` file. Or download from [Releases](https://github.com/ophub/op/releases). Such as `openwrt_s905x3_phicomm-n1_${date}`. Then write the IMG file to the USB hard disk through software such as [balenaEtcher](https://www.balena.io/etcher/).
 
 ## Firmware instructions
 
@@ -83,7 +83,7 @@ iptables -t nat -I POSTROUTING -o br-lan -j MASQUERADE      #If the interface is
 
 ## Option description when installing into s905x3-boxs emmc
 
-You can refer to the [dtb library](https://github.com/ophub/op/tree/main/router/phicomm_n1/armbian/dtb-amlogic) when you customize the file name.
+You can refer to the [dtb library](https://github.com/ophub/op/tree/main/router/s905x3_phicomm-n1/armbian/dtb-amlogic) when you customize the file name.
 
 | Serial | Box | Description | DTB |
 | ---- | ---- | ---- | ---- |
@@ -109,8 +109,8 @@ iptables -t nat -I POSTROUTING -o br-lan -j MASQUERADE      #If the interface is
 ## Local compilation instructions
 The software package supports Github Action cloud compilation, and the compiled firmware can be downloaded directly in [Action](https://github.com/ophub/op/actions) and [Releases](https://github.com/ophub/op/releases). You can also compile locally:
 1. Clone the warehouse to the local. `git clone https://github.com/ophub/op`
-2. Create an `openwrt` folder in the local `op/router/phicomm_n1` directory, and upload the compiled openwrt firmware of the ARM kernel to the openwrt directory.
-3. Enter the /op root directory. Enter the phicomm_n1 directory and run `sudo ./router/phicomm_n1/make -d` to complete the compilation. The generated openwrt firmware supporting Phicomm N1 is in the `out` directory under the root directory.
+2. Create an `openwrt` folder in the local `op/router/s905x3_phicomm-n1` directory, and upload the compiled openwrt firmware of the ARM kernel to the openwrt directory.
+3. Enter the /op root directory. Enter the phicomm_n1 directory and run `sudo ./router/s905x3_phicomm-n1/make -d` to complete the compilation. The generated openwrt firmware is in the `out` directory under the root directory.
 
 ## Detailed make compile command
 - `sudo ./make -d -b n1 -k 5.9.5`: recommend. Use the default configuration, specify a kernel and a firmware for compilation.
@@ -134,7 +134,7 @@ The software package supports Github Action cloud compilation, and the compiled 
 
 ## Compilation method
 
-- Select ***`Build OpenWrt for S905x3 and Phicomm N1`*** on the [Action](https://github.com/ophub/op/actions) page.
+- Select ***`Build OpenWrt for S905x3-Boxs and Phicomm-N1`*** on the [Action](https://github.com/ophub/op/actions) page.
 - Click the ***`Run workflow`*** button.
 
 ## Configuration file function description
