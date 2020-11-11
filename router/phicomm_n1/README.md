@@ -1,8 +1,18 @@
-# OpenWrt for Phicomm-N1
+# OpenWrt for Phicomm-N1 & S905x3-Boxs
 
-You can download the OpwnWrt for Phicomm N1 firmware from [Actions](https://github.com/ophub/op/actions). From the ` Build OpenWrt for Phicomm N1 `, Such as `***-phicomm-n1-v5.4.50-openwrt-firmware or other kernel versions.` Unzip to get the `***.img` file. Or download from [Releases](https://github.com/ophub/op/releases). Such as `OpenWrt_Phicomm_N1_${date}`. Then write the IMG file to the USB hard disk through software such as [balenaEtcher](https://www.balena.io/etcher/).
+You can download the OpwnWrt for Phicomm N1 firmware from [Actions](https://github.com/ophub/op/actions). From the ` Build OpenWrt for S905x3 and Phicomm N1 `, Such as `openwrt-s905x3-phicomm-n1`. Unzip to get the `***.img` file. Or download from [Releases](https://github.com/ophub/op/releases). Such as `OpenWrt_*_${date}`. Then write the IMG file to the USB hard disk through software such as [balenaEtcher](https://www.balena.io/etcher/).
 
-The firmware supports USB hard disk booting. You can also Install the OpenWrt firmware in the USB hard disk into the EMMC partition of Phicomm N1, and start using it from N1.
+## Firmware instructions
+
+- `n1-v*-openwrt_*.img`: For Phicomm-N1.
+- `x96-v*-openwrt_*.img`: Almost compatible with all S905x3 boxes to boot from USB hard disk, you can choose different box types when installing into EMMC.
+- `hk1-v*-openwrt_*.img`: For HK1-Box(S905x3).
+- `h96-v*-openwrt_*.img`: For H96-Max-X3(S905x3).
+- `octopus-v*-openwrt_*.img` For Octopus-Planet.
+
+## Install to Phicomm-N1 emmc partition and upgrade instructions
+
+The `n1-v*-openwrt_*.img` firmware supports USB hard disk booting. You can also Install the OpenWrt firmware in the USB hard disk into the EMMC partition of Phicomm N1, and start using it from N1.
 
 Insert the ***`USB hard disk`*** with the written openwrt firmware into the Phicomm N1, and then plug it into the ***`power supply`***. The Phicomm N1 will automatically start the openwrt system from the USB hard disk, wait for about 2 minutes, select ***`OpenWrt`*** in the wireless wifi list of your computer, no password, the computer will automatically obtain the IP, Enter OpwnWrt's IP Address: ***`192.168.1.1`***, Account: ***`root`***, Password: ***`password`***, and then log in OpenWrt system.
 
@@ -28,6 +38,67 @@ dd if=/root/u-boot-2015-phicomm-n1.bin of=/dev/mmcblk1
 sync
 reboot
 ```
+
+## Install to S905x3-Boxs emmc partition and upgrade instructions
+
+The `x96-v*-openwrt_*.img` and related s905x3 kernel firmware supports USB hard disk booting. You can also Install the OpenWrt firmware in the USB hard disk into the EMMC partition of S905x3, and start using it from EMMC.
+
+- Open the developer mode: Settings → About this machine → Version number (for example: X96max plus...), click on the version number for 7 times in quick succession, and you will see that the developer mode is turned on.
+
+- Turn on USB debugging: After restarting, enter Settings → System → Advanced options → Developer options again (after entering, confirm that the status is on, and the USB debugging status in the list is also on)
+
+- Boot from U disk: Unplug the power → insert the Usb disk → insert the thimble into the AV port (top reset button) → insert the power → release the thimble of the av port → the system will boot from the Usb disk.
+
+- Log in to the system: Connect the computer and the s905x3 box with a network interface → turn off the wireless wifi on the computer → enable the wired connection → manually set the computer ip to the same network segment ip as openwrt, ipaddr such as ***`192.168.1.2`***. The netmask is ***`255.255.255.0`***, and others are not filled in. You can log in to the openwrt system from the browser, Enter OpwnWrt's IP Address: ***`192.168.1.1`***, Account: ***`root`***, Password: ***`password`***, and then log in OpenWrt system.
+
+- Tips: When booting from USB, the network card is 100M, and it will automatically become Gigabit after writing into EMMC.
+
+- Install OpenWrt: `Login in to openwrt` → `system menu` → `TTYD terminal` → input command: 
+```shell script
+cd /root
+chmod 755 s905x3-install.sh
+./s905x3-install.sh
+reboot
+```
+
+Wait for the installation to complete. remove the USB hard disk, unplug/plug in the power again, reboot into EMMC.
+
+
+Upgrading OpenWrt: `Login in to openwrt` → `system menu` → `file transfer` → upload ***`s905x3-openwrt.zip`*** to ***`/tmp/upload/`***, enter the `system menu` → `TTYD terminal` → input command: 
+```shell script
+mv -f /tmp/upload/s905x3-openwrt.zip /mnt/mmcblk2p4
+cp -f /root/s905x3-update.sh /mnt/mmcblk2p4
+cd /mnt/mmcblk2p4
+unzip s905x3-openwrt.zip    #Unzip the [ s905x3-openwrt.zip ] file to get [ s905x3-openwrt.img ]
+chmod 755 s905x3-update.sh
+./s905x3-update.sh s905x3-openwrt.img
+reboot
+```
+
+Note: If used as a bypass gateway, you can add custom firewall rules as needed (Network → Firewall → Custom Rules):
+```shell script
+iptables -t nat -I POSTROUTING -o eth0 -j MASQUERADE        #If the interface is eth0.
+iptables -t nat -I POSTROUTING -o br-lan -j MASQUERADE      #If the interface is br-lan bridged.
+```
+
+## Option description when installing into s905x3-boxs emmc
+
+You can refer to the [dtb library](https://github.com/ophub/op/tree/main/router/phicomm_n1/armbian/dtb-amlogic) when you customize the file name.
+
+| Serial | Box | Description | DTB |
+| ---- | ---- | ---- | ---- |
+| 1 | X96-Max+ | S905x3: NETWORK: 1000M / TF: 30Mtz / CPU: 2124Mtz | meson-sm1-x96-max-plus.dtb |
+| 2 | HK1-Box | S905x3: NETWORK: 1000M / TF: 25Mtz / CPU: 2124Mtz | meson-sm1-hk1box-vontar-x3.dtb |
+| 3 | H96-Max-X3 | S905x3: NETWORK: 1000M / TF: 50Mtz / CPU: 2124Mtz | meson-sm1-h96-max-x3.dtb |
+| 4 | X96-Max-4G | S905x2: NETWORK: 1000M / TF: 50Mtz / CPU: 1944Mtz | meson-g12a-x96-max.dtb |
+| 5 | X96-Max-2G | S905x2: NETWORK: 100M  / TF: 50Mtz / CPU: 1944Mtz | meson-g12a-x96-max-rmii.dtb |
+| 6 | X96-Max+ | 905x3: NETWORK: 1000M / TF: 30Mtz / CPU: 2244Mtz | meson-sm1-x96-max-plus-oc.dtb |
+| 7 | HK1-Box | S905x3: NETWORK: 1000M / TF: 25Mtz / CPU: 2184Mtz | meson-sm1-hk1box-vontar-x3-oc.dtb |
+| 8 | H96-Max-X3 | S905x3: NETWORK: 1000M / TF: 50Mtz / CPU: 2208Mtz | meson-sm1-h96-max-x3-oc.dtb |
+| 9 | Octopus-Planet | S905x3: NETWORK: 1000M / TF: 30Mtz / CPU: 2124Mtz | meson-gxm-octopus-planet.dtb |
+| 0 | Other | - | Enter the dtb file name |
+
+## Bypass gateway settings
 
 Note: If used as a bypass gateway, you can add custom firewall rules as needed (Network → Firewall → Custom Rules):
 ```shell script
