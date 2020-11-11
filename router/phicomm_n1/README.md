@@ -132,11 +132,9 @@ The software package supports Github Action cloud compilation, and the compiled 
 | -s | Size | Specify the size of the root partition in MB. The default is 1024, and the specified size must be greater than 256. Such as `-s 1024` |
 | -h | help | View full documentation. |
 
-The difference between `s905x3` and `phicomm-n1` is the dtb file specified in `/boot/uEnv.txt`. This script supports compiling `make -d -b n1_x96` together. It is recommended that you understand the description of both firmwares. [View S905x3 description](https://github.com/ophub/op/tree/main/router/s905x3)
-
 ## Compilation method
 
-- Select ***`Build OpenWrt for Phicomm N1`*** on the [Action](https://github.com/ophub/op/actions) page.
+- Select ***`Build OpenWrt for S905x3 and Phicomm N1`*** on the [Action](https://github.com/ophub/op/actions) page.
 - Click the ***`Run workflow`*** button.
 
 ## Configuration file function description
