@@ -1,7 +1,7 @@
 #========================================================================================================================
 # https://github.com/ophub/op
-# Description: Automatically Build OpenWrt for phicomm-n1 and s905x3-box
-# Function: Install and Upgrading the openwrt system to the emmc storage for phicomm-n1 and s905x3-box
+# Description: Automatically Build OpenWrt for Phicomm-N1 & S905x3-Boxs
+# Function: Install and Upgrading the openwrt system to the emmc storage for Phicomm-N1 & S905x3-Boxs
 # Copyright (C) 2020 https://github.com/tuanqing/mknop
 # Copyright (C) 2020 Flippy
 # Copyright (C) 2020 https://github.com/ophub/op
@@ -18,12 +18,12 @@ include $(INCLUDE_DIR)/package.mk
 define Package/$(PKG_NAME)
 	SECTION:=utils
 	CATEGORY:=Utilities
-	TITLE:=Install to emmc script for phicomm n1
+	TITLE:=Install to emmc storage for Phicomm-N1 and S905x3-Boxs
 	DEPENDS:=+block-mount +blkid +parted +dosfstools +e2fsprogs +lsblk +pv +resize2fs +tune2fs +losetup +uuidgen
 endef
 
 define Package/$(PKG_NAME)/description
-	Install and Upgrading the openwrt system to the emmc storage for phicomm-n1 and s905x3-box
+	Install and Upgrading the openwrt system to the emmc storage for Phicomm-N1 and S905x3-Boxs
 endef
 
 define Build/Prepare
