@@ -7,10 +7,10 @@
 # Copyright (C) 2020 https://github.com/ophub/op
 #========================================================================================================================
 
-tmp_path="router/phicomm_n1/tmp"
-out_path="router/phicomm_n1/out"
-armbian_path="router/phicomm_n1/armbian" # don't modify it
-openwrt_path="router/phicomm_n1/openwrt"
+tmp_path="router/s905x3_phicomm-n1/tmp"
+out_path="router/s905x3_phicomm-n1/out"
+armbian_path="router/s905x3_phicomm-n1/armbian" # don't modify it
+openwrt_path="router/s905x3_phicomm-n1/openwrt"
 device="phicomm-n1" # don't modify it
 image_name='v$kernel-openwrt'
 build_openwrt=("n1" "x96" "hk1" "h96" "octopus")
