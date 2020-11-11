@@ -1,27 +1,27 @@
 #!/bin/bash
 
-#========================================================================================================================
+#=================================================================================================================================
 # https://github.com/ophub/op
 # Description: Automatically Build OpenWrt firmware for Phicomm-N1 & S905x3-Boxs
 # Function: Update kernel.tar.xz files in the kernel directory with the latest dtb file.
 # Copyright (C) 2020 Flippy's Core files for Phicomm-N1 & S905x3-Boxs
 # Copyright (C) 2020 https://github.com/ophub/op
-#========================================================================================================================
+#=================================================================================================================================
 #
 # Usage: Use Ubuntu 18 LTS 64-bit
 # 01. Log in to the home directory of the local Ubuntu system
 # 02. git clone https://github.com/ophub/op.git
-# 03. Put the new *.dtb file into ~/op/router/phicomm_n1/armbian/dtb-amlogic/
-# 04. The script will update all core files in this directory: ~/op/router/phicomm_n1/armbian/phicomm-n1/kernel/
-# 05. cd ~/op/router/phicomm_n1/build_kernel/
+# 03. Put the new *.dtb file into ~/op/router/s905x3_phicomm-n1/armbian/dtb-amlogic/
+# 04. The script will update all core files in this directory: ~/op/router/s905x3_phicomm-n1/armbian/phicomm-n1/kernel/
+# 05. cd ~/op/router/s905x3_phicomm-n1/build_kernel/
 # 06. Run: sudo ./update_dtb.sh
-# 07. The updated file will overwrite the file in the original path: ~/op/router/phicomm_n1/armbian/phicomm-n1/kernel/
+# 07. The updated file will overwrite the file in the original path: ~/op/router/s905x3_phicomm-n1/armbian/phicomm-n1/kernel/
 # 08. git push to your github
-# 09. Github.com Build openwrt: ~/op/.github/workflows/build-openwrt-phicomm_n1.yml
+# 09. Github.com Build openwrt: ~/op/.github/workflows/build-openwrt-s905x3-phicomm_n1.yml
 #
 # Tips: If run 'sudo ./update_dtb.sh' is 'Command not found'. Run: sudo chmod +x update_dtb.sh
 #
-#========================================================================================================================
+#=================================================================================================================================
 
 # Default setting ( Don't modify )
 build_tmp_folder=${PWD}/"build_tmp"
