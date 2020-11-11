@@ -8,7 +8,7 @@ You can install Flippy’s OpenWrt firmware and use it. If you want to define so
 
 The first method: 
 ```shell script
-Example: ~/op/router/phicomm_n1/build-kernel/
+Example: ~/op/router/s905x3_phicomm-n1/build-kernel/
  ├── flippy
  │   ├── N1_Openwrt*.img                   # Recommend Use Flippy's N1_Openwrt.img files
  │   ├── OR: S905x3_Openwrt*.img           # Use Flippy's S905x3_Openwrt*.img files
@@ -23,7 +23,7 @@ sudo ./make_use_img.sh
 
 The second method: 
 ```shell script
-Example: ~/op/router/phicomm_n1/build-kernel/
+Example: ~/op/router/s905x3_phicomm-n1/build-kernel/
  ├── flippy
  │   ├── boot-5.9.5-flippy-48+.tar.gz
  │   ├── dtb-amlogic-5.9.5-flippy-48+.tar.gz
@@ -36,8 +36,15 @@ put ***`boot-${flippy_version}.tar.gz, dtb-amlogic-${flippy_version}.tar.gz & mo
 sudo ./make_use_kernel.sh
 ```
 
-The generated files ***` kernel.tar.gz & modules.tar.gz `*** will be directly placed in the kernel directory of this github: ***` ~/op/router/phicomm_n1/armbian/phicomm-n1/kernel/${build_save_folder} `***
+The generated files ***` kernel.tar.gz & modules.tar.gz `*** will be directly placed in the kernel directory of this github: ***` ~/op/router/s905x3_phicomm-n1/armbian/phicomm-n1/kernel/${build_save_folder} `***
+
+## Update and supplement dtb file
+
+Update kernel.tar.xz files in the kernel directory with the latest dtb file.
+```shell script
+sudo ./update_dtb.sh
+```
 
 ## Tips
 
-Use this github's program for Phicomm N1: ***` ~/op/router/phicomm_n1 `*** , you can customize ` default IP, hostname, theme, add/remove software packages `, etc. to generate special firmware.
+Use this github's program for Phicomm-N1 & S905x3-Boxs: ***` ~/op/router/s905x3_phicomm-n1 `*** , you can customize ` default IP, hostname, theme, add/remove software packages `, etc. to generate special firmware.
