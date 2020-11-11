@@ -2,7 +2,7 @@
 
 Install to emmc script for Phicomm N1 and S905x3 Box, which will help you to copy openwrt system to emmc.
 
-## Usage for phicomm n1
+## Usage for Phicomm-N1
 
 The firmware supports USB hard disk booting. You can also Install the OpenWrt firmware in the USB hard disk into the EMMC partition of Phicomm N1, and start using it from EMMC.
 
@@ -28,7 +28,7 @@ dd if=/root/u-boot-2015-phicomm-n1.bin of=/dev/mmcblk1
 reboot
 ```
 
-## Usage for S905x3 Box
+## Usage for S905x3-Boxs
 
 The firmware supports USB hard disk booting. You can also Install the OpenWrt firmware in the USB hard disk into the EMMC partition of S905x3 Box, and start using it from EMMC.
 
