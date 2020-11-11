@@ -1,11 +1,11 @@
 #========================================================================================================================
 # https://github.com/ophub/op
-# Description: Automatically Build OpenWrt for Phicomm N1
-# Function: Workflows for Build Phicomm N1
+# Description: Automatically Build OpenWrt for S905x3-Boxs and Phicomm-N1
+# Function: Workflows for Build S905x3-Boxs and Phicomm-N1
 # Cron: min (0 - 59) / hour (0 - 23) / day of month (1 - 31) / month (1 - 12) / day of week (0 - 6)(Sunday - Saturday)
 #========================================================================================================================
 
-name: Build OpenWrt for Phicomm N1
+name: Build OpenWrt for S905x3-Boxs and Phicomm-N1
 
 on:
   repository_dispatch:
@@ -21,8 +21,8 @@ on:
     #branches:
       #- main
     #paths:
-      #- 'router/phicomm_n1/.config'
-      #- '.github/workflows/build-openwrt-phicomm_n1.yml'
+      #- 'router/s905x3_phicomm-n1/.config'
+      #- '.github/workflows/build-openwrt-s905x3-phicomm_n1.yml'
   schedule:
     - cron: '0 20 * * 0'
   #watch:
@@ -32,13 +32,13 @@ env:
   REPO_URL: https://github.com/coolsnowwolf/lede
   REPO_BRANCH: master
   FEEDS_CONF: feeds.conf.default
-  CONFIG_FILE: router/phicomm_n1/.config
-  DIY_P1_SH: router/phicomm_n1/diy-part1.sh
-  DIY_P2_SH: router/phicomm_n1/diy-part2.sh
-  TMP_PATH: router/phicomm_n1/tmp
-  OUT_PATH: router/phicomm_n1/out
-  OPENWRT_PATH: router/phicomm_n1/openwrt
-  MAKE_FILE: router/phicomm_n1/make
+  CONFIG_FILE: router/s905x3_phicomm-n1/.config
+  DIY_P1_SH: router/s905x3_phicomm-n1/diy-part1.sh
+  DIY_P2_SH: router/s905x3_phicomm-n1/diy-part2.sh
+  TMP_PATH: router/s905x3_phicomm-n1/tmp
+  OUT_PATH: router/s905x3_phicomm-n1/out
+  OPENWRT_PATH: router/s905x3_phicomm-n1/openwrt
+  MAKE_FILE: router/s905x3_phicomm-n1/make
   UPLOAD_BIN_DIR: false
   UPLOAD_FIRMWARE: true
   UPLOAD_RELEASE: true
@@ -132,29 +132,29 @@ jobs:
       uses: actions/upload-artifact@v2
       if: steps.compile.outputs.status == 'success' && env.UPLOAD_BIN_DIR == 'true'
       with:
-        name: Bin_openwrt_armvirt_64_${{ env.FILE_DATE }}
+        name: bin_armvirt_64_${{ env.FILE_DATE }}
         path: openwrt/bin
         retention-days: ${{ env.RECENT_LASTEST }}
 
-    - name: Organize files
+    - name: Organize armvirt files
       id: organize
       if: env.UPLOAD_FIRMWARE == 'true' && !cancelled()
       run: |
         cd openwrt/bin/targets/*/*
         rm -rf packages
-        zip -r openwrt_armvirt_64_${{ env.FILE_DATE }}.zip *
+        zip -r armvirt_64_${{ env.FILE_DATE }}.zip *
         echo "TMPFILEPATH=$PWD/$(ls *.zip)" >> $GITHUB_ENV
         echo "::set-output name=status::success"
 
-    - name: Upload firmware directory
+    - name: Upload armvirt firmware directory
       uses: actions/upload-artifact@v2
       if: steps.organize.outputs.status == 'success' && env.UPLOAD_FIRMWARE == 'true' && !cancelled()
       with:
-        name: openwrt_armvirt_64_${{ env.FILE_DATE }}
+        name: armvirt_64_${{ env.FILE_DATE }}
         path: ${{ env.TMPFILEPATH }}
         retention-days: ${{ env.RECENT_LASTEST }}
 
-    - name: Build firmware for N1
+    - name: Build firmware for S905x3-Boxs and Phicomm-N1
       id: buildn1
       if: steps.organize.outputs.status == 'success' && env.UPLOAD_FIRMWARE == 'true' && !cancelled()
       run: |
@@ -168,15 +168,15 @@ jobs:
           cd $x && gzip *.img && cd ../
         done
         cp -rf ../openwrt/* .
-        zip -r openwrt_phicomm_n1_${{ env.FILE_DATE }}.zip *
+        zip -r openwrt_s905x3_phicomm-n1_${{ env.FILE_DATE }}.zip *
         echo "FILEPATH=$PWD/$(ls *.zip)" >> $GITHUB_ENV
         echo "::set-output name=status::success"
 
-    - name: Upload firmware directory for N1
+    - name: Upload firmware directory for S905x3-Boxs and Phicomm-N1
       uses: actions/upload-artifact@v2
       if: steps.buildn1.outputs.status == 'success' && env.UPLOAD_FIRMWARE == 'true' && !cancelled()
       with:
-        name: openwrt_phicomm_n1_${{ env.FILE_DATE }}
+        name: openwrt_s905x3_phicomm-n1_${{ env.FILE_DATE }}
         path: ${{ env.FILEPATH }}
         retention-days: ${{ env.RECENT_LASTEST }}
 
@@ -200,11 +200,11 @@ jobs:
       with:
         repo_token: ${{ secrets.GITHUB_TOKEN }}
         file: ${{ env.FILEPATH }}
-        tag: openwrt_phicomm_n1_${{ env.FILE_DATE }}
+        tag: openwrt_s905x3_phicomm-n1_${{ env.FILE_DATE }}
         overwrite: true
         file_glob: true
         body: |
-          This is OpenWrt firmware for Phicomm N1
+          This is OpenWrt firmware for S905x3-Boxs and Phicomm-N1
           * Firmware information
           Default IP: 192.168.1.1
           Default username: root
