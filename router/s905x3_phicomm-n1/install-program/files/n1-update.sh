@@ -126,3 +126,4 @@ pv -rpt ${loop}p2 | dd of=${dev_emmc}p2 conv=fsync 2>/dev/null
 echo ""
 
 echo "done, please [ reboot ] your phicomm-n1!"
+
