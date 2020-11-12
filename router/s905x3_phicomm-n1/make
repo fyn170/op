@@ -166,12 +166,23 @@ format_image() {
     mkfs.vfat -n "BOOT" ${loop}p1 >/dev/null 2>&1
     mke2fs -F -q -t ext4 -L "ROOTFS" -m 0 ${loop}p2 >/dev/null 2>&1
 
+    #Complete file
+    complete_path=${make_path}/router/s905x3_phicomm-n1/install-program/files
+    [ -f ${root}/root/hk1box-bootloader.img ] || cp -f ${complete_path}/hk1box-bootloader.img  ${root}/root/
+    [ -f ${root}/root/u-boot-2015-phicomm-n1.bin ] || cp -f ${complete_path}/u-boot-2015-phicomm-n1.bin  ${root}/root/
+    [ -f ${root}/root/s905x3-install.sh ] || cp -f ${complete_path}/s905x3-install.sh  ${root}/root/
+    [ -f ${root}/root/s905x3-update.sh ] || cp -f ${complete_path}/s905x3-update.sh  ${root}/root/
+    [ -f ${root}/usr/bin/n1-install.sh ] || cp -f ${complete_path}/n1-install.sh  ${root}/usr/bin/
+    [ -f ${root}/usr/bin/n1-update.sh ] || cp -f ${complete_path}/n1-update.sh  ${root}/usr/bin/
+    [ -f ${root}/etc/config/fstab ] || cp -f ${complete_path}/fstab  ${root}/etc/config/
+    [ -f ${root}/etc/config/fstab.bak ] || cp -f ${complete_path}/fstab.bak  ${root}/etc/config/
+
     #Write the specified bootloader
-    if [ "$build_op" != "n1" ]; then
-        BTLD_BIN="$root/root/hk1box-bootloader.img"
+    if [ "${build_op}" != "n1" ]; then
+        BTLD_BIN="${root}/root/hk1box-bootloader.img"
         if [ -f ${BTLD_BIN} ]; then
-           mkdir -p $root/lib/u-boot
-           cp -f ${BTLD_BIN} $root/lib/u-boot/
+           mkdir -p ${root}/lib/u-boot
+           cp -f ${BTLD_BIN} ${root}/lib/u-boot/
            #echo "Write bootloader for $build_op: [ $( ls $root/lib/u-boot/*.img 2>/dev/null ) ]."
            dd if=${BTLD_BIN} of=${lodev} bs=1 count=442 conv=fsync 2>/dev/null
            dd if=${BTLD_BIN} of=${lodev} bs=512 skip=1 seek=1 conv=fsync 2>/dev/null
