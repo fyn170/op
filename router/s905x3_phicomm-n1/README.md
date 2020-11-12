@@ -79,6 +79,14 @@ reboot
 
 Upgrade Recommended method: After the upgrade is completed, if the system cannot be started, you can plug in the USB hard disk with the openwrt system to boot once, until you can access the default IP of the firmware on the USB hard disk. Then unplug the USB hard drive, and officially boot from the emmc partition by unplugging/plugging in the power source.
 
+
+Write bootloader: If your box is X96-Max+, you must write the bootloader of HK1-Box included in the firmware to EMMC before it can be gigabit. This step is now integrated into the installation script and is automatically completed during installation:
+
+```shell script
+if=/root/hk1box-bootloader.img  of=/dev/mmcblk2 bs=1 count=442 conv=fsync 2>/dev/null
+if=/root/hk1box-bootloader.img  of=/dev/mmcblk2 bs=512 skip=1 seek=1 conv=fsync 2>/dev/null
+```
+
 Note: If used as a bypass gateway, you can add custom firewall rules as needed (Network → Firewall → Custom Rules):
 ```shell script
 iptables -t nat -I POSTROUTING -o eth0 -j MASQUERADE        #If the interface is eth0.
