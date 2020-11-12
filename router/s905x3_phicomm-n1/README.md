@@ -24,7 +24,7 @@ n1-install.sh
 Wait for the installation to complete. remove the USB hard disk, unplug/plug in the power again, reboot into EMMC.
 
 
-Upgrading OpenWrt: `Login in to openwrt` → `system menu` → `file transfer` → upload ***`phicomm-n1-openwrt.zip`*** to ***`/tmp/upload/`***`, enter the `system menu` → `TTYD terminal` → input command: 
+Upgrading OpenWrt: `Login in to openwrt` → `system menu` → `file transfer` → upload ***`phicomm-n1-openwrt.zip`*** to ***`/tmp/upload/`***, enter the `system menu` → `TTYD terminal` → input command: 
 ```shell script
 mv -f /tmp/upload/phicomm-n1-openwrt.zip  /opt
 cd /opt
@@ -63,7 +63,7 @@ chmod 755 s905x3-install.sh
 reboot
 ```
 
-Install Recommended practice: After writing the emmc partition from the USB hard disk, first plug in the original USB hard disk and restart it by unplugging/plugging in the power source until the boot is completed and the default IP: 192.168.1.1 can be accessed. Then unplug the USB hard drive, and officially boot from the emmc partition by unplugging/plugging in the power source.
+Install Recommended practice: After writing the emmc partition from the USB hard disk, ***`first plug in the original USB hard disk and restart it`*** by unplugging/plugging in the power source until the boot is completed and the default IP: 192.168.1.1 can be accessed. Then unplug the USB hard drive, and officially boot from the emmc partition by unplugging/plugging in the power source.
 
 
 Upgrading OpenWrt: `Login in to openwrt` → `system menu` → `file transfer` → upload ***`s905x3-openwrt.zip`*** to ***`/tmp/upload/`***, enter the `system menu` → `TTYD terminal` → input command: 
@@ -77,7 +77,7 @@ chmod 755 s905x3-update.sh
 reboot
 ```
 
-Upgrade Recommended method: After the upgrade is completed, if the system cannot be started, you can plug in the USB hard disk with the openwrt system to boot once, until you can access the default IP of the firmware on the USB hard disk. Then unplug the USB hard drive, and officially boot from the emmc partition by unplugging/plugging in the power source.
+Upgrade Recommended method: After the upgrade is completed, if the system cannot be started, ***`you can plug in the USB hard disk with the openwrt system to boot once`***, until you can access the default IP of the firmware on the USB hard disk. Then unplug the USB hard drive, and officially boot from the emmc partition by unplugging/plugging in the power source.
 
 
 Write bootloader: If your box is X96-Max+, you must write the bootloader of HK1-Box included in the firmware to EMMC before it can be gigabit. This step is now integrated into the installation script and is automatically completed during installation:
