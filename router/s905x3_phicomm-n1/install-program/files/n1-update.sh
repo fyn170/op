@@ -189,7 +189,7 @@ sync
 umount /mnt/${DST_NAME}p3
 
 echo "Edit config files ... "
-#cd /mnt/${DST_NAME}p2/root
+#cd /mnt/${DST_NAME}p2/usr/bin/
 #rm -rf n1-install.sh n1-update.sh
 
 cd /mnt/${DST_NAME}p2/etc/rc.d

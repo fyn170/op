@@ -7,6 +7,10 @@
 # Copyright (C) 2020 https://github.com/ophub/op
 #===================================================================================
 
+SKIP_MB=16
+BOOT_MB=256
+ROOT_MB=1024
+
 die() {
     echo -e "\033[1;31mError:\033[0m $1" && exit 1
 }
@@ -41,10 +45,10 @@ if [ $(blkid ${dev_emmc}p[1-3] | grep -E 'BOOT_EMMC|ROOT_EMMC|DATA' | wc -l) != 
     dd if=$dev_emmc of=u-boot.img bs=1M count=4 2>/dev/null
 
     echo "create mbr and partition..."
-    parted -s $dev_emmc mklabel msdos
-    parted -s $dev_emmc mkpart primary fat32 700M 956M
-    parted -s $dev_emmc mkpart primary ext4 957M 1981M
-    parted -s $dev_emmc mkpart primary ext4 1982M 100%
+    parted -s $dev_emmc mklabel msdos 2>/dev/null
+    parted -s $dev_emmc mkpart primary fat32 $((SKIP_MB))M $((SKIP_MB + BOOT_MB -1))M 2>/dev/null
+    parted -s $dev_emmc mkpart primary ext4 $((SKIP_MB + BOOT_MB))M $((SKIP_MB + BOOT_MB + ROOT_MB -1))M 2>/dev/null
+    parted -s $dev_emmc mkpart primary ext4 $((SKIP_MB + BOOT_MB + ROOT_MB))M 100% 2>/dev/null
 
     echo "restore u-boot..."
     dd if=u-boot.img of=$dev_emmc conv=fsync bs=1 count=442 2>/dev/null
@@ -57,16 +61,16 @@ if [ $(blkid ${dev_emmc}p[1-3] | grep -E 'BOOT_EMMC|ROOT_EMMC|DATA' | wc -l) != 
         umount -f ${dev_emmc}p* 2>/dev/null
     fi
 
-    echo "format boot partiton..."
-    mkfs.fat -F 32 -n "BOOT_EMMC" $part_boot >/dev/null
+    echo "format [ BOOT_EMMC ] partiton..."
+    mkfs.fat -F 32 -n "BOOT_EMMC" $part_boot 2>/dev/null
 
-    echo "format root partiton..."
-    mke2fs -t ext4 -F -q -L "ROOT_EMMC" -m 0 $part_root >/dev/null
-    e2fsck -n $part_root >/dev/null
+    echo "format [ ROOT_EMMC ] partiton..."
+    mke2fs -t ext4 -F -q -L "ROOT_EMMC" -m 0 $part_root 2>/dev/null
+    e2fsck -n $part_root 2>/dev/null
 
-    echo "format data partiton..."
-    mke2fs -t ext4 -F -q -L "DATA" -m 0 $part_data >/dev/null
-    e2fsck -n $part_data >/dev/null
+    echo "format [ DATA ] partiton..."
+    mke2fs -t ext4 -F -q -L "DATA" -m 0 $part_data 2>/dev/null
+    e2fsck -n $part_data 2>/dev/null
 fi
 
 ins_boot="/install/boot"
@@ -163,7 +167,8 @@ macaddr=$(uuidgen | md5sum | sed 's/^\(..\)\(..\)\(..\)\(..\)\(..\).*$/fc:\1:\2:
     )
 }
 
-rm -f /usr/bin/n1-install.sh
+#rm -f /usr/bin/n1-install.sh
+#rm -f /usr/bin/n1-update.sh
 
 echo "sync..."
 cd /
