@@ -14,11 +14,11 @@ You can download the OpwnWrt for S905x3-Boxs and Phicomm-N1 firmware from [Actio
 
 The `n1-v*-openwrt_*.img` firmware supports USB hard disk booting. You can also Install the OpenWrt firmware in the USB hard disk into the EMMC partition of Phicomm N1, and start using it from N1.
 
-Insert the ***`USB hard disk`*** with the written openwrt firmware into the Phicomm N1, and then plug it into the ***`power supply`***. The Phicomm N1 will automatically start the openwrt system from the USB hard disk, wait for about 2 minutes, select ***`OpenWrt`*** in the wireless wifi list of your computer, no password, the computer will automatically obtain the IP, Enter OpwnWrt's IP Address: ***`192.168.1.1`***, Account: ***`root`***, Password: ***`password`***, and then log in OpenWrt system.
-
 ***`Install OpenWrt`***
 
-Log in to the default IP: 192.168.1.1: `Login in to openwrt` → `system menu` → `TTYD terminal` → input command: 
+Insert the ***`USB hard disk`*** with the written openwrt firmware into the Phicomm N1, and then plug it into the ***`power supply`***. The Phicomm N1 will automatically start the openwrt system from the USB hard disk, wait for about 2 minutes, select ***`OpenWrt`*** in the wireless wifi list of your computer, no password, the computer will automatically obtain the IP, Enter OpwnWrt's IP Address: ***`192.168.1.1`***, Account: ***`root`***, Password: ***`password`***, and then log in OpenWrt system.
+
+- Log in to the default IP: 192.168.1.1 → `Login in to openwrt` → `system menu` → `TTYD terminal` → input command: 
 ```shell script
 n1-install.sh
 reboot
@@ -28,9 +28,9 @@ Wait for the installation to complete. remove the USB hard disk, unplug/plug in 
 
 ***`Upgrading OpenWrt`***
 
-Write the new version of the openwrt system to the USB hard drive. Insert the USB hard disk of the openwrt system into the USB port of phicomm-n1 near HDMI. Plug in the power source, the openwrt system in the USB hard disk will be started. Log in to the default IP: 192.168.1.1, run the upgrade command, and use the system in the USB hard disk to upgrade the system in the EMMC partition in the phicomm-n1 box.
+Write the new version of the openwrt system to the USB hard drive. ***`Insert the USB hard disk`*** of the openwrt system into the USB port of phicomm-n1 near HDMI. Plug in the power source, the openwrt system in the USB hard disk will be started. Enter OpwnWrt's IP Address: ***`192.168.1.1`***, Account: ***`root`***, Password: ***`password`***, and then log in OpenWrt system, run the upgrade command, and use the system in the USB hard disk to upgrade the system in the EMMC partition in the phicomm-n1 box.
 
-Log in to the default IP: 192.168.1.1: `Login in to openwrt` → `system menu` → `TTYD terminal` → input command: 
+- Log in to the default IP: 192.168.1.1 → `Login in to openwrt` → `system menu` → `TTYD terminal` → input command: 
 ```shell script
 n1-update.sh
 reboot
