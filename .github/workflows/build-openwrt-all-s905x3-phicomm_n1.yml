@@ -24,7 +24,7 @@ on:
     #paths:
       #- '.github/workflows/build-openwrt-all-s905x3-phicomm_n1.yml'
   schedule:
-    - cron: '30 23 * * 0'
+    - cron: '0 21 * * 0'
   #watch:
     #types: started
 
@@ -78,13 +78,59 @@ jobs:
         TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
         TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
 
-    - name: Upload firmware directory
+    - name: Upload firmware directory for armvirt
       uses: actions/upload-artifact@v2
       if: steps.build.outputs.status == 'success' && env.UPLOAD_FIRMWARE == 'true' && !cancelled()
       with:
-        name: openwrt_s905x3_phicomm-n1_${{ env.FILE_DATE }}
-        path: ${{ env.FILEPATH }}
+        name: openwrt-armvirt-64_${{ env.FILE_DATE }}
+        path: ${{ env.FILEPATH }}/openwrt-armvirt-64-*
         retention-days: ${{ env.RECENT_LASTEST }}
+        if-no-files-found: ignore
+
+    - name: Upload firmware directory for N1
+      uses: actions/upload-artifact@v2
+      if: steps.build.outputs.status == 'success' && env.UPLOAD_FIRMWARE == 'true' && !cancelled()
+      with:
+        name: openwrt_phicomm-n1_${{ env.FILE_DATE }}
+        path: ${{ env.FILEPATH }}/openwrt_n1_*
+        retention-days: ${{ env.RECENT_LASTEST }}
+        if-no-files-found: ignore
+
+    - name: Upload firmware directory for x96
+      uses: actions/upload-artifact@v2
+      if: steps.build.outputs.status == 'success' && env.UPLOAD_FIRMWARE == 'true' && !cancelled()
+      with:
+        name: openwrt_x96_${{ env.FILE_DATE }}
+        path: ${{ env.FILEPATH }}/openwrt_x96_*
+        retention-days: ${{ env.RECENT_LASTEST }}
+        if-no-files-found: ignore
+
+    - name: Upload firmware directory for hk1
+      uses: actions/upload-artifact@v2
+      if: steps.build.outputs.status == 'success' && env.UPLOAD_FIRMWARE == 'true' && !cancelled()
+      with:
+        name: openwrt_hk1_${{ env.FILE_DATE }}
+        path: ${{ env.FILEPATH }}/openwrt_hk1_*
+        retention-days: ${{ env.RECENT_LASTEST }}
+        if-no-files-found: ignore
+
+    - name: Upload firmware directory for h96
+      uses: actions/upload-artifact@v2
+      if: steps.build.outputs.status == 'success' && env.UPLOAD_FIRMWARE == 'true' && !cancelled()
+      with:
+        name: openwrt_h96_${{ env.FILE_DATE }}
+        path: ${{ env.FILEPATH }}/openwrt_h96_*
+        retention-days: ${{ env.RECENT_LASTEST }}
+        if-no-files-found: ignore
+
+    - name: Upload firmware directory for octopus
+      uses: actions/upload-artifact@v2
+      if: steps.build.outputs.status == 'success' && env.UPLOAD_FIRMWARE == 'true' && !cancelled()
+      with:
+        name: openwrt_octopus_${{ env.FILE_DATE }}
+        path: ${{ env.FILEPATH }}/openwrt_octopus_*
+        retention-days: ${{ env.RECENT_LASTEST }}
+        if-no-files-found: ignore
 
     - name: Upload firmware to WeTransfer
       if: steps.build.outputs.status == 'success' && env.UPLOAD_WETRANSFER == 'true' && !cancelled()
