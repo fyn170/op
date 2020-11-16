@@ -162,10 +162,11 @@ jobs:
         sudo rm -rf $OUT_PATH
         mkdir -p $OPENWRT_PATH
         cp -rf openwrt/bin/targets/*/*/*.tar.gz $OPENWRT_PATH
+        cp -rf $(find openwrt/bin/targets/ -type f -name "*.buildinfo" -o -name "*.manifest") $OPENWRT_PATH
         sudo chmod +x $MAKE_FILE
         sudo $MAKE_FILE -d -b n1_x96_hk1_h96_octopus -k 5.4.77_5.9.8
         cd $OUT_PATH && gzip *.img
-        cp -f ../openwrt/*.tar.gz . && sync
+        cp -f ../openwrt/* . && sync
         echo "FILEPATH=$PWD" >> $GITHUB_ENV
         echo "::set-output name=status::success"
 
