@@ -152,6 +152,7 @@ jobs:
         name: openwrt_armvirt_64_${{ env.FILE_DATE }}
         path: ${{ env.TMPFILEPATH }}
         retention-days: ${{ env.RECENT_LASTEST }}
+        if-no-files-found: ignore
 
     - name: Build firmware for S905x3-Boxs and Phicomm-N1
       id: build
@@ -161,7 +162,7 @@ jobs:
         mkdir -p $OPENWRT_PATH
         cp -rf openwrt/bin/targets/*/*/*.tar.gz $OPENWRT_PATH
         sudo chmod +x $MAKE_FILE
-        sudo $MAKE_FILE -d -b n1_x96 -k 5.4.77_5.9.8
+        sudo $MAKE_FILE -d -b n1_x96_hk1_h96_octopus -k 5.4.77_5.9.8
         cd $OUT_PATH && gzip *.img
         cp -f ../openwrt/*.tar.gz . && sync
         echo "FILEPATH=$PWD" >> $GITHUB_ENV
@@ -176,12 +177,39 @@ jobs:
         retention-days: ${{ env.RECENT_LASTEST }}
         if-no-files-found: ignore
 
-    - name: Upload firmware directory for x96
+    - name: Upload firmware directory for X96-Max+
       uses: actions/upload-artifact@v2
       if: steps.build.outputs.status == 'success' && env.UPLOAD_FIRMWARE == 'true' && !cancelled()
       with:
-        name: openwrt_x96_${{ env.FILE_DATE }}
+        name: openwrt_x96-max_${{ env.FILE_DATE }}
         path: ${{ env.FILEPATH }}/openwrt_x96_*
+        retention-days: ${{ env.RECENT_LASTEST }}
+        if-no-files-found: ignore
+
+    - name: Upload firmware directory for HK1-Box
+      uses: actions/upload-artifact@v2
+      if: steps.build.outputs.status == 'success' && env.UPLOAD_FIRMWARE == 'true' && !cancelled()
+      with:
+        name: openwrt_hk1-box_${{ env.FILE_DATE }}
+        path: ${{ env.FILEPATH }}/openwrt_hk1_*
+        retention-days: ${{ env.RECENT_LASTEST }}
+        if-no-files-found: ignore
+
+    - name: Upload firmware directory for H96-Max-X3
+      uses: actions/upload-artifact@v2
+      if: steps.build.outputs.status == 'success' && env.UPLOAD_FIRMWARE == 'true' && !cancelled()
+      with:
+        name: openwrt_h96-max-x3_${{ env.FILE_DATE }}
+        path: ${{ env.FILEPATH }}/openwrt_h96_*
+        retention-days: ${{ env.RECENT_LASTEST }}
+        if-no-files-found: ignore
+
+    - name: Upload firmware directory for Octopus-Planet
+      uses: actions/upload-artifact@v2
+      if: steps.build.outputs.status == 'success' && env.UPLOAD_FIRMWARE == 'true' && !cancelled()
+      with:
+        name: openwrt_octopus-planet_${{ env.FILE_DATE }}
+        path: ${{ env.FILEPATH }}/openwrt_octopus_*
         retention-days: ${{ env.RECENT_LASTEST }}
         if-no-files-found: ignore
 
