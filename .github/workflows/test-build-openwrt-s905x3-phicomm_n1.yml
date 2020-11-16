@@ -5,7 +5,7 @@
 # Cron: min (0 - 59) / hour (0 - 23) / day of month (1 - 31) / month (1 - 12) / day of week (0 - 6)(Sunday - Saturday)
 #========================================================================================================================
 
-name: Build OpenWrt for All S905x3 and Phicomm-N1
+name: Test Build OpenWrt for S905x3 and Phicomm-N1
 
 
 on:
@@ -22,9 +22,9 @@ on:
     #branches:
       #- main
     #paths:
-      #- '.github/workflows/build-openwrt-all-s905x3-phicomm_n1.yml'
-  schedule:
-    - cron: '0 21 * * 0'
+      #- '.github/workflows/test-build-openwrt-s905x3-phicomm_n1.yml'
+  #schedule:
+    #- cron: '0 21 * * 0'
   #watch:
     #types: started
 
