@@ -132,7 +132,7 @@ jobs:
       uses: actions/upload-artifact@v2
       if: steps.compile.outputs.status == 'success' && env.UPLOAD_BIN_DIR == 'true'
       with:
-        name: bin_armvirt_64_${{ env.FILE_DATE }}
+        name: Bin_openwrt_armvirt_64_${{ env.FILE_DATE }}
         path: openwrt/bin
         retention-days: ${{ env.RECENT_LASTEST }}
         if-no-files-found: ignore
