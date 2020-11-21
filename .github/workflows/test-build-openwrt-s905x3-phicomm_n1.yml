@@ -22,7 +22,7 @@ on:
     #paths:
       #- '.github/workflows/test-build-openwrt-s905x3-phicomm_n1.yml'
   #schedule:
-    #- cron: '0 23 * * 0'
+    #- cron: '0 23 * * 0,3'
 
 env:
   OPENWRT_PATH: router/s905x3_phicomm-n1
