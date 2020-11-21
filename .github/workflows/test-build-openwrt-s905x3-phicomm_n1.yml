@@ -16,8 +16,6 @@ on:
         description: 'SSH connection to Actions'
         required: false
         default: 'false'
-  #release:
-    #types: published
   #push:
     #branches:
       #- main
@@ -25,8 +23,6 @@ on:
       #- '.github/workflows/test-build-openwrt-s905x3-phicomm_n1.yml'
   #schedule:
     #- cron: '0 23 * * 0'
-  #watch:
-    #types: started
 
 env:
   OPENWRT_PATH: router/s905x3_phicomm-n1
