@@ -169,8 +169,8 @@ format_image() {
     complete_path=${make_path}/router/s905x3_phicomm-n1/install-program/files
     [ -f ${root}/root/hk1box-bootloader.img ] || cp -f ${complete_path}/hk1box-bootloader.img  ${root}/root/
     [ -f ${root}/root/u-boot-2015-phicomm-n1.bin ] || cp -f ${complete_path}/u-boot-2015-phicomm-n1.bin  ${root}/root/
-    [ -f ${root}/root/s905x3-install.sh ] || cp -f ${complete_path}/s905x3-install.sh  ${root}/root/
-    [ -f ${root}/root/s905x3-update.sh ] || cp -f ${complete_path}/s905x3-update.sh  ${root}/root/
+    [ -f ${root}/usr/bin/s905x3-install.sh ] || cp -f ${complete_path}/s905x3-install.sh  ${root}/usr/bin/
+    [ -f ${root}/usr/bin/s905x3-update.sh ] || cp -f ${complete_path}/s905x3-update.sh  ${root}/usr/bin/
     [ -f ${root}/usr/bin/n1-install.sh ] || cp -f ${complete_path}/n1-install.sh  ${root}/usr/bin/
     [ -f ${root}/usr/bin/n1-update.sh ] || cp -f ${complete_path}/n1-update.sh  ${root}/usr/bin/
     [ -f ${root}/etc/config/fstab ] || cp -f ${complete_path}/fstab  ${root}/etc/config/
