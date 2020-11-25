@@ -10,18 +10,17 @@
 # check cmd param
 if  [ "$1" == "" ]; then
     IMG_NAME="/mnt/mmcblk2p4/*.img"
-    if  [ ! -f "$IMG_NAME" ]; then
-        echo "No upgrade image found in [ /mnt/mmcblk2p4/ ]."
-        exit 1
-    fi
 else
     IMG_NAME=$1
-    if  [ ! -f "$IMG_NAME" ]; then
-        echo "[ $IMG_NAME ] does not exist."
-        exit 1
-    fi
 fi
-echo "Start upgrade from [ ${IMG_NAME} ]"
+
+# check file
+if  [ ! -f "$IMG_NAME" ]; then
+    echo "[ $IMG_NAME ] does not exist."
+    exit 1
+else
+    echo "Start upgrade from [ ${IMG_NAME} ]"
+fi
 
 # find boot partition 
 BOOT_PART_MSG=$(lsblk -l -o NAME,PATH,TYPE,UUID,MOUNTPOINT | awk '$3~/^part$/ && $5 ~ /^\/boot$/ {print $0}')
