@@ -9,7 +9,7 @@
 
 # check cmd param
 if  [ "$1" == "" ]; then
-    IMG_NAME="/mnt/mmcblk2p4/*.img"
+    IMG_NAME=$( ls /mnt/mmcblk2p4/*.img | head -n 1 )
 else
     IMG_NAME=$1
 fi
