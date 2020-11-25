@@ -21,6 +21,7 @@ else
         exit 1
     fi
 fi
+echo "Start upgrade from [ ${IMG_NAME} ]"
 
 # find boot partition 
 BOOT_PART_MSG=$(lsblk -l -o NAME,PATH,TYPE,UUID,MOUNTPOINT | awk '$3~/^part$/ && $5 ~ /^\/boot$/ {print $0}')
