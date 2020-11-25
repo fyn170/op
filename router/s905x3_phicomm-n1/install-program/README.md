@@ -61,8 +61,8 @@ Install Recommended practice: After writing the emmc partition from the USB hard
 Upgrading OpenWrt: `Login in to openwrt` → `system menu` → `file transfer` → upload ***`s905x3-openwrt.zip`*** to ***`/tmp/upload/`***, enter the `system menu` → `TTYD terminal` → input command: 
 ```shell script
 mv -f /tmp/upload/s905x3-openwrt.zip /mnt/mmcblk2p4
-unzip -o /mnt/mmcblk2p4/s905x3-openwrt.zip -d /mnt/mmcblk2p4/    #Unzip the [ s905x3-openwrt.zip ] file to get [ s905x3-openwrt.img ]
-s905x3-update.sh /mnt/mmcblk2p4/s905x3-openwrt.img               #s905x3-update.sh  your_openwrt_imgFileName
+unzip -o /mnt/mmcblk2p4/s905x3-openwrt.zip -d /mnt/mmcblk2p4/   #Unzip [ s905x3-openwrt.zip ] file to get [ s905x3-openwrt.img ]
+s905x3-update.sh /mnt/mmcblk2p4/s905x3-openwrt.img              #s905x3-update.sh  your_openwrt_imgFileName
 reboot
 ```
 
