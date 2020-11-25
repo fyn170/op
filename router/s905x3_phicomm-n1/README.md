@@ -59,9 +59,7 @@ The `x96-v*-openwrt_*.img` and related s905x3 kernel firmware supports USB hard 
 
 - Install OpenWrt: `Login in to openwrt` → `system menu` → `TTYD terminal` → input command: 
 ```shell script
-cd /root
-chmod 755 s905x3-install.sh
-./s905x3-install.sh
+s905x3-install.sh
 reboot
 ```
 
