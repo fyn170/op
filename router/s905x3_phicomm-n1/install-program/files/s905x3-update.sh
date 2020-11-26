@@ -214,7 +214,6 @@ if  [ -f ${BOOTLOADER} ]; then
     fi
 fi
 
-rm -f /mnt/${NEW_ROOT_NAME}/root/s905x3-install.sh
 sync
 echo "Copy data complete ..."
 
