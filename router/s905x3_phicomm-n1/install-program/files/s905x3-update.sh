@@ -9,7 +9,7 @@
 
 # check cmd param
 if  [ "$1" == "" ]; then
-    IMG_NAME=$( ls /mnt/mmcblk2p4/*.img | head -n 1 )
+    IMG_NAME=$( ls /mnt/mmcblk2p4/*.img 2>/dev/null | head -n 1 )
 else
     IMG_NAME=$1
 fi
@@ -322,10 +322,10 @@ fi
 sync
 
 cd $WORK_DIR
-umount -f ${P1} ${P2}
-losetup -D
-rm -rf ${P1} ${P2}
-rm -f ${IMG_NAME}
+umount -f ${P1} ${P2} 2>/dev/null
+losetup -D 2>/dev/null
+rm -rf ${P1} ${P2} 2>/dev/null
+rm -f ${IMG_NAME} 2>/dev/null
 
 echo "The upgrade is complete, please [ restart ] the system!"
 
