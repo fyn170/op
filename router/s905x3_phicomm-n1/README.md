@@ -69,10 +69,13 @@ Install Recommended practice: After writing the emmc partition from the USB hard
 Upgrading OpenWrt: `Login in to openwrt` → `system menu` → `file transfer` → upload ***`s905x3-openwrt.img.gz`*** to ***`/tmp/upload/`***, enter the `system menu` → `TTYD terminal` → input command: 
 ```shell script
 mv -f /tmp/upload/s905x3-openwrt.img.gz /mnt/mmcblk2p4/
-gzip -df /mnt/mmcblk2p4/s905x3-openwrt.img.gz                   #gzip [ s905x3-openwrt.img.gz ] file to get [ s905x3-openwrt.img ]
-s905x3-update.sh /mnt/mmcblk2p4/s905x3-openwrt.img              #s905x3-update.sh  your_openwrt_imgFileName
+cp -f /usr/bin/s905x3-update.sh /mnt/mmcblk2p4/
+cd /mnt/mmcblk2p4/
+gzip -df s905x3-openwrt.img.gz                   #gzip [ s905x3-openwrt.img.gz ] file to get [ s905x3-openwrt.img ]
+s905x3-update.sh s905x3-openwrt.img              #s905x3-update.sh  your_openwrt_imgFileName
 reboot
 ```
+
 Tips: If there is only one `.img` file in the ***`/mnt/mmcblk2p4/`*** directory, you can just enter the ***`s905x3-update.sh`*** command without specifying a specific file name. The upgrade script will vaguely look for `.img` files from the fixed directory and try to upgrade.
 
 Upgrade Recommended method: After the upgrade is completed, if the system cannot be started, ***`you can plug in the USB hard disk with the openwrt system to boot once`***, until you can access the default IP of the firmware on the USB hard disk. Then unplug the USB hard drive, and officially boot from the emmc partition by unplugging/plugging in the power source.
