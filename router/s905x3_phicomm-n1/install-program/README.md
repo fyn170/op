@@ -63,7 +63,8 @@ Upgrading OpenWrt: `Login in to openwrt` → `system menu` → `file transfer` �
 mv -f /tmp/upload/*.img.gz /mnt/mmcblk2p4/
 cp -f /usr/bin/s905x3-update.sh /mnt/mmcblk2p4/
 gzip -df /mnt/mmcblk2p4/*.img.gz
-/mnt/mmcblk2p4/s905x3-update.sh            #s905x3-update.sh  your_openwrt_imgFileName.img
+/mnt/mmcblk2p4/s905x3-update.sh
+#/mnt/mmcblk2p4/s905x3-update.sh  your_openwrt_imgFileName.img
 reboot
 ```
 
