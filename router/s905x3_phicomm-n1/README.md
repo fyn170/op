@@ -115,13 +115,6 @@ You can refer to the [dtb library](https://github.com/ophub/op/tree/main/router/
 | 9 | Octopus-Planet | S905x3: NETWORK: 1000M / TF: 30Mtz / CPU: 2124Mtz | meson-gxm-octopus-planet.dtb |
 | 0 | Other | - | Enter the dtb file name |
 
-## Bypass gateway settings
-
-Note: If used as a bypass gateway, you can add custom firewall rules as needed (Network → Firewall → Custom Rules):
-```shell script
-iptables -t nat -I POSTROUTING -o eth0 -j MASQUERADE        #If the interface is eth0.
-iptables -t nat -I POSTROUTING -o br-lan -j MASQUERADE      #If the interface is br-lan bridged.
-```
 
 ## Local compilation instructions
 The software package supports Github Action cloud compilation, and the compiled firmware can be downloaded directly in [Action](https://github.com/ophub/op/actions) and [Releases](https://github.com/ophub/op/releases). You can also compile locally:
