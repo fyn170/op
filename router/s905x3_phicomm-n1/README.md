@@ -66,10 +66,10 @@ reboot
 Install Recommended practice: After writing the emmc partition from the USB hard disk, ***`first plug in the original USB hard disk and restart it`*** by unplugging/plugging in the power source until the boot is completed and the default IP: 192.168.1.1 can be accessed. Then unplug the USB hard drive, and officially boot from the emmc partition by unplugging/plugging in the power source.
 
 
-Upgrading OpenWrt: `Login in to openwrt` → `system menu` → `file transfer` → upload ***`s905x3-openwrt.zip`*** to ***`/tmp/upload/`***, enter the `system menu` → `TTYD terminal` → input command: 
+Upgrading OpenWrt: `Login in to openwrt` → `system menu` → `file transfer` → upload ***`s905x3-openwrt.img.gz`*** to ***`/tmp/upload/`***, enter the `system menu` → `TTYD terminal` → input command: 
 ```shell script
-mv -f /tmp/upload/s905x3-openwrt.zip /mnt/mmcblk2p4
-unzip -o /mnt/mmcblk2p4/s905x3-openwrt.zip -d /mnt/mmcblk2p4/   #Unzip [ s905x3-openwrt.zip ] file to get [ s905x3-openwrt.img ]
+mv -f /tmp/upload/s905x3-openwrt.img.gz /mnt/mmcblk2p4/
+gzip -df /mnt/mmcblk2p4/s905x3-openwrt.img.gz                   #Unzip [ s905x3-openwrt.img.gz ] file to get [ s905x3-openwrt.img ]
 s905x3-update.sh /mnt/mmcblk2p4/s905x3-openwrt.img              #s905x3-update.sh  your_openwrt_imgFileName
 reboot
 ```
