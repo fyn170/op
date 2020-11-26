@@ -327,5 +327,5 @@ losetup -D 2>/dev/null
 rm -rf ${P1} ${P2} 2>/dev/null
 rm -f ${IMG_NAME} 2>/dev/null
 
-echo "The upgrade is complete, please [ restart ] the system!"
+echo "The upgrade is complete, please [ reboot ] the system!"
 
