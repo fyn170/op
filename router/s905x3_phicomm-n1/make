@@ -3,6 +3,7 @@
 # https://github.com/ophub/op
 # Description: Automatically Build OpenWrt for S905x3-Boxs and Phicomm-N1
 # Function: Use armbian kernel to build openwrt for S905x3-Boxs and Phicomm-N1
+# Copyright (C) 2020 Flippy's Core files for Phicomm-N1 & S905x3-Boxs
 # Copyright (C) 2020 https://github.com/tuanqing/mknop
 # Copyright (C) 2020 https://github.com/ophub/op
 #========================================================================================================================
