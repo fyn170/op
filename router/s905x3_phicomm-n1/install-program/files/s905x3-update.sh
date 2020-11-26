@@ -325,7 +325,7 @@ cd $WORK_DIR
 umount -f ${P1} ${P2}
 losetup -D
 rm -rf ${P1} ${P2}
-rm -f ${$IMG_NAME}
+rm -f ${IMG_NAME}
 
 echo "The upgrade is complete, please [ restart ] the system!"
 
