@@ -190,6 +190,15 @@ format_image() {
            die "bootloader does not exist."
         fi
     fi
+    
+    if  [ -f ${root}/etc/banner ]; then
+	    op_version=$(echo $(ls ${root}/lib/modules/) 2>/dev/null)
+	    op_packaged_date=$(date +%Y-%m-%d)
+	    echo " OpenWrt Kernel: ${op_version}" >> ${root}/etc/banner
+	    echo " Firmware Website: https://github.com/ophub/op" >> ${root}/etc/banner
+	    echo " Packaged Date: ${op_packaged_date}" >> ${root}/etc/banner
+	    echo " -----------------------------------------------------" >> ${root}/etc/banner
+    fi
 }
 
 copy2image() {
