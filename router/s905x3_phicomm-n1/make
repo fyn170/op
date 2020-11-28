@@ -166,7 +166,7 @@ format_image() {
     mkfs.vfat -n "BOOT" ${loop}p1 >/dev/null 2>&1
     mke2fs -F -q -t ext4 -L "ROOTFS" -m 0 ${loop}p2 >/dev/null 2>&1
 
-    #Complete file
+    # Complete file
     complete_path=${make_path}/router/s905x3_phicomm-n1/install-program/files
     [ -f ${root}/root/hk1box-bootloader.img ] || cp -f ${complete_path}/hk1box-bootloader.img  ${root}/root/
     [ -f ${root}/root/u-boot-2015-phicomm-n1.bin ] || cp -f ${complete_path}/u-boot-2015-phicomm-n1.bin  ${root}/root/
@@ -177,7 +177,7 @@ format_image() {
     [ -f ${root}/etc/config/fstab ] || cp -f ${complete_path}/fstab  ${root}/etc/config/
     [ -f ${root}/etc/config/fstab.bak ] || cp -f ${complete_path}/fstab.bak  ${root}/etc/config/
 
-    #Write the specified bootloader
+    # Write the specified bootloader
     if [ "${build_op}" != "n1" ]; then
         BTLD_BIN="${root}/root/hk1box-bootloader.img"
         if [ -f ${BTLD_BIN} ]; then
@@ -191,13 +191,16 @@ format_image() {
         fi
     fi
     
+    # Add firmware version information to the terminal page
     if  [ -f ${root}/etc/banner ]; then
-	    op_version=$(echo $(ls ${root}/lib/modules/) 2>/dev/null)
-	    op_packaged_date=$(date +%Y-%m-%d)
-	    echo " OpenWrt Kernel: ${op_version}" >> ${root}/etc/banner
-	    echo " Firmware Website: https://github.com/ophub/op" >> ${root}/etc/banner
-	    echo " Packaged Date: ${op_packaged_date}" >> ${root}/etc/banner
-	    echo " -----------------------------------------------------" >> ${root}/etc/banner
+	op_version=$(echo $(ls ${root}/lib/modules/) 2>/dev/null)
+	op_packaged_date=$(date +%Y-%m-%d)
+	echo " OpenWrt Kernel: ${op_version}" >> ${root}/etc/banner
+	echo " Firmware Website: https://github.com/ophub/op" >> ${root}/etc/banner
+	echo " Phicomm-N1 installation command: n1-install.sh" >> ${root}/etc/banner
+	echo " S905x3-Boxs installation command: s905x3-install.sh" >> ${root}/etc/banner
+	echo " Packaged Date: ${op_packaged_date}" >> ${root}/etc/banner
+	echo " -----------------------------------------------------" >> ${root}/etc/banner
     fi
 }
 
