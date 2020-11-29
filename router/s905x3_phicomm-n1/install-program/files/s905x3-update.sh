@@ -266,7 +266,7 @@ if  [ -x ./usr/sbin/balethirq.pl ]; then
     if  grep "balethirq.pl" "./etc/rc.local"; then
         echo "balance irq is enabled"
     else
-    echo "enable balance irq"
+        echo "enable balance irq"
         sed -e "/exit/i\/usr/sbin/balethirq.pl" -i ./etc/rc.local
     fi
 fi
