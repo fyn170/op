@@ -61,9 +61,10 @@ jobs:
       id: build
       if: steps.download.outputs.status == 'success' && env.UPLOAD_FIRMWARE == 'true' && !cancelled()
       run: |
-        sudo chmod +x ${{ env.OPENWRT_PATH }}/make
-        sudo ${{ env.OPENWRT_PATH }}/make -d -b n1_x96_hk1_h96_octopus -k 5.4.77_5.9.8
-        cd ${{ env.OPENWRT_PATH }}/out && gzip *.img
+        cd ${{ env.OPENWRT_PATH }}
+        sudo chmod +x make
+        sudo ./make -d -b n1_x96_hk1_h96_octopus -k 5.4.77_5.9.8
+        cd out && gzip *.img
         cp -f ../openwrt/*.tar.gz . && sync
         echo "FILEPATH=$PWD" >> $GITHUB_ENV
         echo "::set-output name=status::success"
