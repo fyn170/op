@@ -23,7 +23,7 @@ In order to facilitate the customization of personalized openwrt firmware, the f
 
 ## Compilation method
 
-- Select ***`Build OpenWrt for S905x3 and Phicomm-N1`*** on the [Action](https://github.com/ophub/openwrt-s905x3-phicomm-n1/actions) page.
+- Select ***`Build OpenWrt for S905x3 and Phicomm-N1`*** on the [Action](https://github.com/ophub/op/actions) page.
 - Click the ***`Run workflow`*** button.
 
 ## Packaging method
