@@ -1,11 +1,11 @@
 #========================================================================================================================
-# https://github.com/ophub/op
+# https://github.com/ophub/openwrt-s905x3-phicomm-n1
 # Description: Automatically Build OpenWrt for S905x3-Boxs and Phicomm-N1
-# Function: Workflows for Build S905x3 and Phicomm-N1
+# Function: Workflows for Build S905x3-Boxs and Phicomm-N1
 # Cron: min (0 - 59) / hour (0 - 23) / day of month (1 - 31) / month (1 - 12) / day of week (0 - 6)(Sunday - Saturday)
 #========================================================================================================================
 
-name: Build OpenWrt for S905x3 and Phicomm-N1
+name: Build OpenWrt for S905x3-Boxs and Phicomm-N1
 
 on:
   repository_dispatch:
@@ -15,12 +15,6 @@ on:
         description: 'SSH connection to Actions'
         required: false
         default: 'false'
-  #push:
-    #branches:
-      #- main
-    #paths:
-      #- 'router/s905x3_phicomm-n1/.config'
-      #- '.github/workflows/build-openwrt-s905x3-phicomm_n1.yml'
   schedule:
     - cron: '0 17 * * 0,3'
 
@@ -31,16 +25,12 @@ env:
   CONFIG_FILE: router/s905x3_phicomm-n1/.config
   DIY_P1_SH: router/s905x3_phicomm-n1/diy-part1.sh
   DIY_P2_SH: router/s905x3_phicomm-n1/diy-part2.sh
-  TMP_PATH: router/s905x3_phicomm-n1/tmp
-  OUT_PATH: router/s905x3_phicomm-n1/out
-  OPENWRT_PATH: router/s905x3_phicomm-n1/openwrt
-  MAKE_FILE: router/s905x3_phicomm-n1/make
   UPLOAD_BIN_DIR: false
   UPLOAD_FIRMWARE: true
   UPLOAD_RELEASE: true
   UPLOAD_COWTRANSFER: false
   UPLOAD_WETRANSFER: true
-  RECENT_LASTEST: 30
+  RECENT_LASTEST: 15
   TZ: Asia/Shanghai
 
 jobs:
@@ -124,11 +114,11 @@ jobs:
       if: (!cancelled())
       run: df -hT
 
-    - name: Upload bin directory
+    - name: Upload OpenWrt bin directory to Actions
       uses: actions/upload-artifact@v2
       if: steps.compile.outputs.status == 'success' && env.UPLOAD_BIN_DIR == 'true'
       with:
-        name: Bin_openwrt_armvirt_64_${{ env.FILE_DATE }}
+        name: openwrt_bin_armvirt_64_${{ env.FILE_DATE }}
         path: openwrt/bin
         retention-days: ${{ env.RECENT_LASTEST }}
         if-no-files-found: ignore
@@ -142,7 +132,7 @@ jobs:
         echo "TMPFILEPATH=$PWD" >> $GITHUB_ENV
         echo "::set-output name=status::success"
 
-    - name: Upload armvirt firmware directory
+    - name: Upload armvirt directory to Actions
       uses: actions/upload-artifact@v2
       if: steps.organize.outputs.status == 'success' && env.UPLOAD_FIRMWARE == 'true' && !cancelled()
       with:
@@ -151,21 +141,22 @@ jobs:
         retention-days: ${{ env.RECENT_LASTEST }}
         if-no-files-found: ignore
 
-    - name: Build firmware for S905x3-Boxs and Phicomm-N1
-      id: build
+    - name: Build OpenWrt for S905x3-Boxs and Phicomm-N1
       if: steps.organize.outputs.status == 'success' && env.UPLOAD_FIRMWARE == 'true' && !cancelled()
+      id: build
       run: |
-        sudo rm -rf $OUT_PATH
-        mkdir -p $OPENWRT_PATH
-        cp -rf openwrt/bin/targets/*/*/*.tar.gz $OPENWRT_PATH
-        sudo chmod +x $MAKE_FILE
-        sudo $MAKE_FILE -d -b n1_x96_hk1_h96_octopus -k 5.4.77_5.9.8
-        cd $OUT_PATH && gzip *.img
-        cp -f ../openwrt/*.tar.gz . && sync
+        git clone https://github.com/ophub/amlogic-s9xxx-kernel-for-openwrt.git amlogic-s9xxx-kernel-for-openwrt
+        cd amlogic-s9xxx-kernel-for-openwrt/
+        mkdir -p openwrt-armvirt
+        cp -f ../openwrt/bin/targets/*/*/*.tar.gz openwrt-armvirt/
+        sudo chmod +x make
+        sudo ./make -d -b n1_x96_hk1_h96_octopus -k 5.4.77_5.9.8
+        cd out/ && gzip *.img
+        cp -f ../openwrt-armvirt/*.tar.gz . && sync
         echo "FILEPATH=$PWD" >> $GITHUB_ENV
         echo "::set-output name=status::success"
 
-    - name: Upload firmware directory for armvirt
+    - name: Upload OpenWrt Firmware to Actions for armvirt
       uses: actions/upload-artifact@v2
       if: steps.build.outputs.status == 'success' && env.UPLOAD_FIRMWARE == 'true' && !cancelled()
       with:
@@ -174,7 +165,7 @@ jobs:
         retention-days: ${{ env.RECENT_LASTEST }}
         if-no-files-found: ignore
 
-    - name: Upload firmware directory for Phicomm-N1
+    - name: Upload OpenWrt Firmware to Actions for Phicomm-N1
       uses: actions/upload-artifact@v2
       if: steps.build.outputs.status == 'success' && env.UPLOAD_FIRMWARE == 'true' && !cancelled()
       with:
@@ -183,7 +174,7 @@ jobs:
         retention-days: ${{ env.RECENT_LASTEST }}
         if-no-files-found: ignore
 
-    - name: Upload firmware directory for X96-Max+
+    - name: Upload OpenWrt Firmware to Actions for X96-Max+
       uses: actions/upload-artifact@v2
       if: steps.build.outputs.status == 'success' && env.UPLOAD_FIRMWARE == 'true' && !cancelled()
       with:
@@ -192,7 +183,7 @@ jobs:
         retention-days: ${{ env.RECENT_LASTEST }}
         if-no-files-found: ignore
 
-    - name: Upload firmware directory for HK1-Box
+    - name: Upload OpenWrt Firmware to Actions for HK1-Box
       uses: actions/upload-artifact@v2
       if: steps.build.outputs.status == 'success' && env.UPLOAD_FIRMWARE == 'true' && !cancelled()
       with:
@@ -201,7 +192,7 @@ jobs:
         retention-days: ${{ env.RECENT_LASTEST }}
         if-no-files-found: ignore
 
-    - name: Upload firmware directory for H96-Max-X3
+    - name: Upload OpenWrt Firmware to Actions for H96-Max-X3
       uses: actions/upload-artifact@v2
       if: steps.build.outputs.status == 'success' && env.UPLOAD_FIRMWARE == 'true' && !cancelled()
       with:
@@ -210,7 +201,7 @@ jobs:
         retention-days: ${{ env.RECENT_LASTEST }}
         if-no-files-found: ignore
 
-    - name: Upload firmware directory for Octopus-Planet
+    - name: Upload OpenWrt Firmware to Actions for Octopus-Planet
       uses: actions/upload-artifact@v2
       if: steps.build.outputs.status == 'success' && env.UPLOAD_FIRMWARE == 'true' && !cancelled()
       with:
@@ -219,21 +210,21 @@ jobs:
         retention-days: ${{ env.RECENT_LASTEST }}
         if-no-files-found: ignore
 
-    - name: Upload firmware to cowtransfer
+    - name: Upload OpenWrt Firmware to cowtransfer
       if: steps.build.outputs.status == 'success' && env.UPLOAD_COWTRANSFER == 'true' && !cancelled()
       run: |
         curl -fsSL git.io/file-transfer | sh
         ./transfer cow --block 2621440 -s -p 64 --no-progress ${{ env.FILEPATH }} 2>&1 | tee cowtransfer.log
         echo "COW_URL=$(cat cowtransfer.log | grep https | cut -f3 -d" ")" >> $GITHUB_ENV
 
-    - name: Upload firmware to WeTransfer
+    - name: Upload OpenWrt Firmware to WeTransfer
       if: steps.build.outputs.status == 'success' && env.UPLOAD_WETRANSFER == 'true' && !cancelled()
       run: |
         curl -fsSL git.io/file-transfer | sh
         ./transfer wet -s -p 16 --no-progress ${{ env.FILEPATH }} 2>&1 | tee wetransfer.log
         echo "WET_URL=$(cat wetransfer.log | grep https | cut -f3 -d" ")" >> $GITHUB_ENV
 
-    - name: Upload firmware to release
+    - name: Upload OpenWrt Firmware to Release
       uses: svenstaro/upload-release-action@v2
       if: steps.build.outputs.status == 'success' && env.UPLOAD_RELEASE == 'true' && !cancelled()
       with:
