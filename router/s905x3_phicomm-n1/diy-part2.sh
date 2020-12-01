@@ -19,10 +19,11 @@
 # Mydiy-luci-app-and-theme（use to /.config luci-app&theme）
 # ==========luci-app-url==========
 # git clone https://github.com/kenzok8/openwrt-packages.git package/openwrt-packages
-svn co https://github.com/ophub/op/trunk/router/s905x3_phicomm-n1/install-program package/install-program
 # ==========luci-theme-url==========
 # svn co https://github.com/Lienol/openwrt-package/trunk/lienol/luci-theme-bootstrap-mod package/luci-theme-bootstrap-mod
 
+
+#===== Recommended packages, Start =====
 packages=" \
 brcmfmac-firmware-43430-sdio brcmfmac-firmware-43455-sdio kmod-brcmfmac wpad kmod-fs-ext4 kmod-fs-vfat kmod-fs-exfat dosfstools e2fsprogs antfs-mount \
 kmod-usb2 kmod-usb3 kmod-usb-storage kmod-usb-storage-extras kmod-usb-storage-uas kmod-usb-net kmod-usb-net-asix-ax88179 kmod-usb-net-rtl8150 kmod-usb-net-rtl8152 \
@@ -33,4 +34,5 @@ sed -i '/FEATURES+=/ { s/cpiogz //; s/ext4 //; s/ramdisk //; s/squashfs //; }' t
 for x in $packages; do
     sed -i "/DEFAULT_PACKAGES/ s/$/ $x/" target/linux/armvirt/Makefile
 done
+#===== Recommended packages, End =====
 
