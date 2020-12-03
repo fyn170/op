@@ -21,7 +21,7 @@ on:
 env:
   REPO_URL: https://github.com/coolsnowwolf/lede
   REPO_BRANCH: master
-  FEEDS_CONF: feeds.conf.default
+  FEEDS_CONF: router/s905x3_phicomm-n1/feeds.conf.default
   CONFIG_FILE: router/s905x3_phicomm-n1/.config
   DIY_P1_SH: router/s905x3_phicomm-n1/diy-part1.sh
   DIY_P2_SH: router/s905x3_phicomm-n1/diy-part2.sh
