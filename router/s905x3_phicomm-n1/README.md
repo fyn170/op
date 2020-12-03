@@ -5,7 +5,7 @@ You can download the OpwnWrt for S905x3-Boxs and Phicomm-N1 firmware from [Relea
 Thanks ***`Flippy`***: The maker of Amlogic s9xxx Kernel for openwrt. A good life online starts with you.
 
 ## Build instructions
-For the personalized development of the S905x3-Boxs and Phicomm-N1 series of OpwnWrt firmware, it is now in an independent warehouse, please visit [https://github.com/ophub/amlogic-s9xxx-kernel-for-openwrt](https://github.com/ophub/amlogic-s9xxx-kernel-for-openwrt) to Fork. if useful, please click a Star.
+For the personalized development of the S905x3-Boxs and Phicomm-N1 series of OpwnWrt firmware, it is now in an independent warehouse, please visit [https://github.com/ophub/amlogic-s9xxx-openwrt](https://github.com/ophub/amlogic-s9xxx-openwrt) to Fork. if useful, please click a Star.
 
 
 ## Firmware instructions
@@ -23,12 +23,12 @@ For the personalized development of the S905x3-Boxs and Phicomm-N1 series of Opw
 
 ## Install to emmc partition or upgrade instructions
 
-[For more instructions please see: install-program](https://github.com/ophub/amlogic-s9xxx-kernel-for-openwrt/tree/main/install-program).
+[For more instructions please see: install-program](https://github.com/ophub/amlogic-s9xxx-openwrt/tree/main/install-program).
 
 ## Packaging method
 
 For packaging related methods, see:
-[https://github.com/ophub/amlogic-s9xxx-kernel-for-openwrt](https://github.com/ophub/amlogic-s9xxx-kernel-for-openwrt)
+[https://github.com/ophub/amlogic-s9xxx-openwrt](https://github.com/ophub/amlogic-s9xxx-openwrt)
 
 ## Configuration file function description
 
