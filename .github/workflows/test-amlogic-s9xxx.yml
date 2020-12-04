@@ -40,7 +40,7 @@ jobs:
       id: build
       if: (!cancelled())
       run: |
-        git clone --depth 1 https://github.com/ophub/amlogic-s9xxx-openwrt.git -b main amlogic-s9xxx-openwrt
+        git clone --depth 1 https://github.com/ophub/amlogic-s9xxx-openwrt.git
         cd amlogic-s9xxx-openwrt/
         mkdir -p openwrt-armvirt
         curl -s "https://api.github.com/repos/${GITHUB_REPOSITORY}/releases" | grep -o "openwrt_s905x3_.*/openwrt-armvirt-.*\.tar.gz" | head -n 1 > DOWNLOAD_URL
