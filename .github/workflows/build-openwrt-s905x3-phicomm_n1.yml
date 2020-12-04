@@ -145,7 +145,7 @@ jobs:
       if: steps.organize.outputs.status == 'success' && env.UPLOAD_FIRMWARE == 'true' && !cancelled()
       id: build
       run: |
-        git clone --depth 1 https://github.com/ophub/amlogic-s9xxx-openwrt.git -b main amlogic-s9xxx-openwrt
+        git clone --depth 1 https://github.com/ophub/amlogic-s9xxx-openwrt.git
         cd amlogic-s9xxx-openwrt/
         mkdir -p openwrt-armvirt
         cp -f ../openwrt/bin/targets/*/*/*.tar.gz openwrt-armvirt/
