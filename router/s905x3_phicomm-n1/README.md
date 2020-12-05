@@ -4,10 +4,6 @@ You can download the OpwnWrt for S905x3-Boxs and Phicomm-N1 firmware from [Relea
 
 Thanks ***`Flippy`***: The maker of Amlogic s9xxx Kernel for openwrt. A good life online starts with you.
 
-## Build instructions
-For the personalized development of the S905x3-Boxs and Phicomm-N1 series of OpwnWrt firmware, it is now in an independent warehouse, please visit [https://github.com/ophub/amlogic-s9xxx-openwrt](https://github.com/ophub/amlogic-s9xxx-openwrt) to Fork. if useful, please click a Star.
-
-
 ## Firmware instructions
 
 - `n1-v*-openwrt_*.img`: For Phicomm-N1.
@@ -16,14 +12,19 @@ For the personalized development of the S905x3-Boxs and Phicomm-N1 series of Opw
 - `h96-v*-openwrt_*.img`: For H96-Max-X3(S905x3).
 - `octopus-v*-openwrt_*.img` For Octopus-Planet.
 
+## Install to emmc partition or upgrade instructions
+
+Insert the USB hard disk with the written openwrt firmware. Log in to the default IP: 192.168.1.1 → Login in to openwrt → system menu → TTYD terminal → input command:
+
+- Phicomm-N1 installation command: `n1-install.sh`
+- S905x3-Boxs installation command: `s905x3-install.sh`
+
+[For more instructions please see: install-program](https://github.com/ophub/amlogic-s9xxx-openwrt/tree/main/install-program).
+
 ## Compilation method
 
 - Select ***`Build OpenWrt for S905x3 and Phicomm-N1`*** on the [Action](https://github.com/ophub/op/actions) page.
 - Click the ***`Run workflow`*** button.
-
-## Install to emmc partition or upgrade instructions
-
-[For more instructions please see: install-program](https://github.com/ophub/amlogic-s9xxx-openwrt/tree/main/install-program).
 
 ## Packaging method
 
@@ -39,7 +40,6 @@ For packaging related methods, see:
 | feeds.conf.default | Just put the feeds.conf.default file into the root directory of the warehouse, it will overwrite the relevant files in the OpenWrt source directory. |
 | diy-part1.sh | Execute before updating and installing feeds, you can write instructions for modifying the source code into the script, such as adding/modifying/deleting feeds.conf.default. |
 | diy-part2.sh | After updating and installing feeds, you can write the instructions for modifying the source code into the script, such as modifying the default IP, host name, theme, adding/removing software packages, etc. |
-
 
 ## .github/workflow/*.yml related environment variable description
 
@@ -80,4 +80,9 @@ For packaging related methods, see:
 | Default password | password |
 | Default WIFI name | OpenWrt |
 | Default WIFI password | none |
+
+## Build instructions
+For the personalized development of the S905x3-Boxs and Phicomm-N1 series of OpwnWrt firmware, it is now in an independent warehouse, please visit [https://github.com/ophub/amlogic-s9xxx-openwrt](https://github.com/ophub/amlogic-s9xxx-openwrt) to Fork. if useful, please click a Star.
+
+
 
