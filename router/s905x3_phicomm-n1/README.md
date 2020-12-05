@@ -2,7 +2,9 @@
 
 You can download the OpwnWrt for S905x3-Boxs and Phicomm-N1 firmware from [Releases](https://github.com/ophub/op/releases). Such as `openwrt_s905x3_phicomm-n1_${date}`. Then write the IMG file to the USB hard disk through software such as [balenaEtcher](https://www.balena.io/etcher/).
 
-Thanks ***`Flippy`***: The maker of Amlogic s9xxx Kernel for openwrt. A good life online starts with you.
+This OpenWrt firmware has used `Github Actions` to complete the integrated packaging work, using ***`Flippy's`*** [Amlogic S9xxx Kernel for OpenWrt](https://github.com/ophub/amlogic-s9xxx-openwrt) and [Installation and Updaue scripts](https://github.com/ophub/amlogic-s9xxx-openwrt/tree/main/install-program), etc. Special thanks.
+
+Flippy: The maker of Amlogic s9xxx Kernel for openwrt. A good life online starts with you.
 
 ## Firmware instructions
 
@@ -75,11 +77,6 @@ Insert the `USB hard disk` with the written `OpenWrt` firmware. Log in to the de
 | Default password | password |
 | Default WIFI name | OpenWrt |
 | Default WIFI password | none |
-
-## Packaging method
-
-For packaging related methods, see:
-[https://github.com/ophub/amlogic-s9xxx-openwrt](https://github.com/ophub/amlogic-s9xxx-openwrt)
 
 ## Build instructions
 For the personalized development of the S905x3-Boxs and Phicomm-N1 series of OpwnWrt firmware, it is now in an independent warehouse, please visit [https://github.com/ophub/amlogic-s9xxx-openwrt](https://github.com/ophub/amlogic-s9xxx-openwrt) to Fork. if useful, please click a Star.
