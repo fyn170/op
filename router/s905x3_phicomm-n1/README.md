@@ -26,11 +26,6 @@ Insert the `USB hard disk` with the written `OpenWrt` firmware. Log in to the de
 - Select ***`Build OpenWrt for S905x3 and Phicomm-N1`*** on the [Action](https://github.com/ophub/op/actions) page.
 - Click the ***`Run workflow`*** button.
 
-## Packaging method
-
-For packaging related methods, see:
-[https://github.com/ophub/amlogic-s9xxx-openwrt](https://github.com/ophub/amlogic-s9xxx-openwrt)
-
 ## Configuration file function description
 
 | Folder/file name | Features |
@@ -80,6 +75,11 @@ For packaging related methods, see:
 | Default password | password |
 | Default WIFI name | OpenWrt |
 | Default WIFI password | none |
+
+## Packaging method
+
+For packaging related methods, see:
+[https://github.com/ophub/amlogic-s9xxx-openwrt](https://github.com/ophub/amlogic-s9xxx-openwrt)
 
 ## Build instructions
 For the personalized development of the S905x3-Boxs and Phicomm-N1 series of OpwnWrt firmware, it is now in an independent warehouse, please visit [https://github.com/ophub/amlogic-s9xxx-openwrt](https://github.com/ophub/amlogic-s9xxx-openwrt) to Fork. if useful, please click a Star.
