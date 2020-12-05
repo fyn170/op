@@ -23,6 +23,7 @@ Insert the `USB hard disk` with the written `OpenWrt` firmware. Log in to the de
 
 [For more instructions please see: install-program](https://github.com/ophub/amlogic-s9xxx-openwrt/tree/main/install-program).
 
+
 ## Compilation method
 
 - Select ***`Build OpenWrt for S905x3 and Phicomm-N1`*** on the [Action](https://github.com/ophub/op/actions) page.
