@@ -4,6 +4,8 @@ You can download the OpwnWrt for S905x3-Boxs and Phicomm-N1 firmware from [Relea
 
 This OpenWrt firmware on the `Github Actions` to packaging was using ***`Flippy's`*** [Amlogic S9xxx Kernel for OpenWrt](https://github.com/ophub/amlogic-s9xxx-openwrt), and the [Installation and Updaue scripts](https://github.com/ophub/amlogic-s9xxx-openwrt/tree/main/install-program), etc. Special thanks The maker Flippy. A good life online starts with you.
 
+Welcome to use `forks` for personalized OpenWrt firmware configuration. If you like it, Please click the `stars`.
+
 ## Firmware instructions
 
 - `n1-v*-openwrt_*.img`: For Phicomm-N1.
