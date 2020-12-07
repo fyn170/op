@@ -79,8 +79,3 @@ Insert the `USB hard disk` with the written `OpenWrt` firmware. Log in to the de
 | Default WIFI name | OpenWrt |
 | Default WIFI password | none |
 
-## Build instructions
-For the personalized development of the S905x3-Boxs and Phicomm-N1 series of OpwnWrt firmware, it is now in an independent warehouse, please visit [https://github.com/ophub/amlogic-s9xxx-openwrt](https://github.com/ophub/amlogic-s9xxx-openwrt) to Fork. if useful, please click a Star.
-
-
-
