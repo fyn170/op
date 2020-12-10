@@ -1,6 +1,6 @@
-# OpenWrt for S905x3-Boxs and Phicomm-N1
+# OpenWrt for S905x3-Boxs
 
-You can download the OpwnWrt for S905x3-Boxs and Phicomm-N1 firmware from [Releases](https://github.com/ophub/op/releases). Such as `openwrt_s905x3_phicomm-n1_${date}`. Then write the IMG file to the USB hard disk through software such as [balenaEtcher](https://www.balena.io/etcher/).
+You can download the OpwnWrt for S905x3-Boxs firmware from [Releases](https://github.com/ophub/op/releases). Such as `openwrt_s905x3_${date}`. Then write the IMG file to the USB hard disk through software such as [balenaEtcher](https://www.balena.io/etcher/).
 
 This OpenWrt firmware on the `Github Actions` to packaging was using ***`Flippy's`*** [Amlogic S9xxx Kernel for OpenWrt](https://github.com/ophub/amlogic-s9xxx-openwrt), and the [Installation and Update scripts](https://github.com/ophub/amlogic-s9xxx-openwrt/tree/main/install-program), etc. Special thanks The maker `Flippy`.
 
@@ -8,7 +8,6 @@ Welcome to use `forks` for personalized OpenWrt firmware configuration. If you l
 
 ## Firmware instructions
 
-- `n1-v*-openwrt_*.img`: For Phicomm-N1.
 - `x96-v*-openwrt_*.img`: Almost compatible with all S905x3-Boxs, you can choose different box types when installing into EMMC.
 - `hk1-v*-openwrt_*.img`: For HK1-Box(S905x3).
 - `h96-v*-openwrt_*.img`: For H96-Max-X3(S905x3).
@@ -18,15 +17,17 @@ Welcome to use `forks` for personalized OpenWrt firmware configuration. If you l
 
 Insert the `USB hard disk` with the written `OpenWrt` firmware. Log in to the default IP: 192.168.1.1 → `Login in to openwrt` → `system menu` → `TTYD terminal` → input command: 
 
-- Phicomm-N1 installation command: `n1-install.sh`
-- S905x3-Boxs installation command: `s905x3-install.sh`
+```yaml
+s905x3-install.sh
+reboot
+```
 
 [For more instructions please see: install-program](https://github.com/ophub/amlogic-s9xxx-openwrt/tree/main/install-program).
 
 
 ## Compilation method
 
-- Select ***`Build OpenWrt for S905x3 and Phicomm-N1`*** on the [Action](https://github.com/ophub/op/actions) page.
+- Select ***`Build OpenWrt for S905x3`*** on the [Action](https://github.com/ophub/op/actions) page.
 - Click the ***`Run workflow`*** button.
 
 ## Configuration file function description

@@ -1,11 +1,11 @@
 #========================================================================================================================
-# https://github.com/ophub/openwrt-s905x3-phicomm-n1
-# Description: Automatically Build OpenWrt for S905x3-Boxs and Phicomm-N1
-# Function: Workflows for Build S905x3-Boxs and Phicomm-N1
+# https://github.com/ophub/op
+# Description: Automatically Build OpenWrt for Phicomm-N1
+# Function: Workflows for Build Phicomm-N1
 # Cron: min (0 - 59) / hour (0 - 23) / day of month (1 - 31) / month (1 - 12) / day of week (0 - 6)(Sunday - Saturday)
 #========================================================================================================================
 
-name: Build OpenWrt for S905x3-Boxs and Phicomm-N1
+name: Build OpenWrt for Phicomm-N1
 
 on:
   repository_dispatch:
@@ -21,10 +21,10 @@ on:
 env:
   REPO_URL: https://github.com/coolsnowwolf/lede
   REPO_BRANCH: master
-  FEEDS_CONF: router/s905x3_phicomm-n1/feeds.conf.default
-  CONFIG_FILE: router/s905x3_phicomm-n1/.config
-  DIY_P1_SH: router/s905x3_phicomm-n1/diy-part1.sh
-  DIY_P2_SH: router/s905x3_phicomm-n1/diy-part2.sh
+  FEEDS_CONF: router/phicomm_n1/feeds.conf.default
+  CONFIG_FILE: router/phicomm_n1/.config
+  DIY_P1_SH: router/phicomm_n1/diy-part1.sh
+  DIY_P2_SH: router/phicomm_n1/diy-part2.sh
   UPLOAD_BIN_DIR: false
   UPLOAD_FIRMWARE: true
   UPLOAD_RELEASE: true
@@ -141,7 +141,7 @@ jobs:
         retention-days: ${{ env.RECENT_LASTEST }}
         if-no-files-found: ignore
 
-    - name: Build OpenWrt for S905x3-Boxs and Phicomm-N1
+    - name: Build OpenWrt for Phicomm-N1
       if: steps.organize.outputs.status == 'success' && env.UPLOAD_FIRMWARE == 'true' && !cancelled()
       id: build
       run: |
@@ -150,7 +150,7 @@ jobs:
         mkdir -p openwrt-armvirt
         cp -f ../openwrt/bin/targets/*/*/*.tar.gz openwrt-armvirt/
         sudo chmod +x make
-        sudo ./make -d -b n1_x96_hk1_h96_octopus -k 5.4.77_5.9.8
+        sudo ./make -d -b n1 -k 5.4.77_5.9.8
         cd out/ && gzip *.img
         cp -f ../openwrt-armvirt/*.tar.gz . && sync
         echo "FILEPATH=$PWD" >> $GITHUB_ENV
@@ -174,42 +174,6 @@ jobs:
         retention-days: ${{ env.RECENT_LASTEST }}
         if-no-files-found: ignore
 
-    - name: Upload OpenWrt Firmware to Actions for X96-Max+
-      uses: actions/upload-artifact@v2
-      if: steps.build.outputs.status == 'success' && env.UPLOAD_FIRMWARE == 'true' && !cancelled()
-      with:
-        name: openwrt_x96-max_${{ env.FILE_DATE }}
-        path: ${{ env.FILEPATH }}/openwrt_x96_*
-        retention-days: ${{ env.RECENT_LASTEST }}
-        if-no-files-found: ignore
-
-    - name: Upload OpenWrt Firmware to Actions for HK1-Box
-      uses: actions/upload-artifact@v2
-      if: steps.build.outputs.status == 'success' && env.UPLOAD_FIRMWARE == 'true' && !cancelled()
-      with:
-        name: openwrt_hk1-box_${{ env.FILE_DATE }}
-        path: ${{ env.FILEPATH }}/openwrt_hk1_*
-        retention-days: ${{ env.RECENT_LASTEST }}
-        if-no-files-found: ignore
-
-    - name: Upload OpenWrt Firmware to Actions for H96-Max-X3
-      uses: actions/upload-artifact@v2
-      if: steps.build.outputs.status == 'success' && env.UPLOAD_FIRMWARE == 'true' && !cancelled()
-      with:
-        name: openwrt_h96-max-x3_${{ env.FILE_DATE }}
-        path: ${{ env.FILEPATH }}/openwrt_h96_*
-        retention-days: ${{ env.RECENT_LASTEST }}
-        if-no-files-found: ignore
-
-    - name: Upload OpenWrt Firmware to Actions for Octopus-Planet
-      uses: actions/upload-artifact@v2
-      if: steps.build.outputs.status == 'success' && env.UPLOAD_FIRMWARE == 'true' && !cancelled()
-      with:
-        name: openwrt_octopus-planet_${{ env.FILE_DATE }}
-        path: ${{ env.FILEPATH }}/openwrt_octopus_*
-        retention-days: ${{ env.RECENT_LASTEST }}
-        if-no-files-found: ignore
-
     - name: Upload OpenWrt Firmware to cowtransfer
       if: steps.build.outputs.status == 'success' && env.UPLOAD_COWTRANSFER == 'true' && !cancelled()
       run: |
@@ -230,10 +194,10 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
-        tag_name: openwrt_s905x3_phicomm-n1_${{ env.FILE_DATE }}
+        tag_name: openwrt_phicomm-n1_${{ env.FILE_DATE }}
         files: ${{ env.FILEPATH }}/*
         body: |
-          This is OpenWrt firmware for S905x3-Boxs and Phicomm-N1
+          This is OpenWrt firmware for Phicomm-N1
           * Firmware information
           Default IP: 192.168.1.1
           Default username: root
