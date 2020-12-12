@@ -36,7 +36,7 @@ jobs:
       if: (!cancelled())
       run: df -hT
 
-    - name: Build OpenWrt for S905x3-Boxs and Phicomm-N1
+    - name: Build OpenWrt for S9xxx-Boxs and Phicomm-N1
       id: build
       if: (!cancelled())
       run: |
