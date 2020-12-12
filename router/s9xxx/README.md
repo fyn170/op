@@ -1,6 +1,6 @@
-# OpenWrt for S905x3-Boxs
+# OpenWrt for S9xxx-Boxs
 
-You can download the OpwnWrt for S905x3-Boxs firmware from [Releases](https://github.com/ophub/op/releases). Such as `openwrt_s905x3_${date}`. Then write the IMG file to the USB hard disk through software such as [balenaEtcher](https://www.balena.io/etcher/).
+You can download the OpwnWrt for S9xxx-Boxs firmware from [Releases](https://github.com/ophub/op/releases). Such as `openwrt_s9xxx_${date}`. Then write the IMG file to the USB hard disk through software such as [balenaEtcher](https://www.balena.io/etcher/).
 
 This OpenWrt firmware on the `Github Actions` to packaging was using ***`Flippy's`*** [Amlogic S9xxx Kernel for OpenWrt](https://github.com/ophub/amlogic-s9xxx-openwrt), and the [Installation and Update scripts](https://github.com/ophub/amlogic-s9xxx-openwrt/tree/main/install-program), etc. Special thanks The maker `Flippy`.
 
@@ -8,17 +8,20 @@ Welcome to use `forks` for personalized OpenWrt firmware configuration. If you l
 
 ## Firmware instructions
 
-- `x96-v*-openwrt_*.img`: Almost compatible with all S905x3-Boxs, you can choose different box types when installing into EMMC.
+- `s9xxx-v*-openwrt_*.img`: Almost compatible with ***`all S9xxx-Boxs`***, you can choose different box types when installing into EMMC.
+- `x96-v*-openwrt_*.img`: For X96-Max+(S905x3).
 - `hk1-v*-openwrt_*.img`: For HK1-Box(S905x3).
 - `h96-v*-openwrt_*.img`: For H96-Max-X3(S905x3).
 - `octopus-v*-openwrt_*.img` For Octopus-Planet.
+- `belink-v*-openwrt_*.img` For Belink GT-King.
+- `belinkpro-v*-openwrt_*.img` For Belink GT-King Pro.
 
 ## Install to emmc partition or upgrade instructions
 
 Insert the `USB hard disk` with the written `OpenWrt` firmware. Log in to the default IP: 192.168.1.1 → `Login in to openwrt` → `system menu` → `TTYD terminal` → input command: 
 
 ```yaml
-s905x3-install.sh
+s9xxx-install.sh
 reboot
 ```
 
@@ -27,7 +30,7 @@ reboot
 
 ## Compilation method
 
-- Select ***`Build OpenWrt for S905x3`*** on the [Action](https://github.com/ophub/op/actions) page.
+- Select ***`Build OpenWrt for S9xxx`*** on the [Action](https://github.com/ophub/op/actions) page.
 - Click the ***`Run workflow`*** button.
 
 ## Configuration file function description
