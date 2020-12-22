@@ -204,5 +204,6 @@ jobs:
           Default password: password
           Default WIFI name: OpenWrt
           Default WIFI password: none
+          Installation command: n1-install.sh
           [WETRANSFER](${{ env.WET_URL }})
 
