@@ -74,7 +74,7 @@ reboot
 | Option | Value |
 | ---- | ---- |
 | Target System | QEMU ARM Virtual Machine |
-| Subtarget | ARMv8 multiplatform |
+| Subtarget | QEMU ARMv8 Virtual Machine(cortex-a53) |
 | Target Profile | Default |
 | Target Images | squashfs |
 | LuCI -> Applications | in the file: .config |
