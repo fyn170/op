@@ -29,7 +29,7 @@ env:
   UPLOAD_FIRMWARE: true
   UPLOAD_RELEASE: true
   UPLOAD_COWTRANSFER: false
-  UPLOAD_WETRANSFER: true
+  UPLOAD_WETRANSFER: false
   RECENT_LASTEST: 3
   TZ: Asia/Shanghai
 
@@ -207,5 +207,4 @@ jobs:
           Default WIFI name: OpenWrt
           Default WIFI password: none
           Installation command: n1-install.sh
-          [WETRANSFER](${{ env.WET_URL }})
 
