@@ -1,6 +1,6 @@
 # OpenWrt for S9xxx-Boxs
 
-Support Amlogic-s9xxx chip series such as S905x3, S905x2, S922x. You can download the OpwnWrt for S9xxx-Boxs firmware from [Releases](https://github.com/ophub/op/releases). Such as `openwrt_s9xxx_${date}`. Then write the IMG file to the USB hard disk through software such as [balenaEtcher](https://www.balena.io/etcher/).
+Support Amlogic-s9xxx chip series such as `S905x3`, `S905x2`, `S922x`, `S905x`, `S905d`, `s912`. You can download the OpwnWrt for S9xxx-Boxs firmware from [Releases](https://github.com/ophub/op/releases). Such as `openwrt_s9xxx_${date}`. Then write the IMG file to the USB hard disk through software such as [balenaEtcher](https://www.balena.io/etcher/).
 
 This OpenWrt firmware on the `Github Actions` to packaging was using ***`Flippy's`*** [Amlogic S9xxx Kernel for OpenWrt](https://github.com/ophub/amlogic-s9xxx-openwrt), and the [Installation and Update scripts](https://github.com/ophub/amlogic-s9xxx-openwrt/tree/main/install-program), etc. Special thanks The maker `Flippy`.
 
@@ -8,15 +8,21 @@ Welcome to use `forks` for personalized OpenWrt firmware configuration. If you l
 
 ## Firmware instructions
 
-- ***`s9xxx-v*-openwrt_*.img`: For all Amlogic-S9xxx series boxes.*** [🔍](https://www.ebay.com/sch/i.html?_nkw=amlogic)
+- `s905x3-v*-openwrt_*.img`: For all Amlogic-S905x3 series boxes.)
+- `s905x2-v*-openwrt_*.img`: For all Amlogic-s905x2 series boxes.)
+- `s922x-v*-openwrt_*.img`: For all Amlogic-s922x series boxes.)
+- `s905x-v*-openwrt_*.img`: For all Amlogic-s905x series boxes.)
+- `s905d-v*-openwrt_*.img`: For all Amlogic-s905d series boxes.)
+- `s912-v*-openwrt_*.img`: For all Amlogic-s912 series boxes.)
+
 - `x96-v*-openwrt_*.img`: For X96-Max+(S905x3). [🔍](https://www.ebay.com/itm/133605678868)
 - `hk1-v*-openwrt_*.img`: For HK1-Box(S905x3). [🔍](https://www.ebay.com/itm/174515007305)
 - `h96-v*-openwrt_*.img`: For H96-Max-X3(S905x3). [🔍](https://www.ebay.com/itm/293499265183)
-- `belink-v*-openwrt_*.img` For Belink GT-King. [🔍](https://www.ebay.com/itm/303604712848)
-- `belinkpro-v*-openwrt_*.img` For Belink GT-King Pro. [🔍](https://www.ebay.com/itm/324411782338)
-- `ugoos-v*-openwrt_*.img` For UGOOS AM6 Plus. [🔍](https://www.ebay.com/itm/254590989143)
-- `n1-v*-openwrt_*.img`: For Phicomm-N1.
-- `octopus-v*-openwrt_*.img` For Octopus-Planet.
+- `belink-v*-openwrt_*.img` For Belink GT-King(S922x). [🔍](https://www.ebay.com/itm/303604712848)
+- `belinkpro-v*-openwrt_*.img` For Belink GT-King Pro(S922x). [🔍](https://www.ebay.com/itm/324411782338)
+- `ugoos-v*-openwrt_*.img` For UGOOS AM6 Plus(S922x). [🔍](https://www.ebay.com/itm/254590989143)
+- `n1-v*-openwrt_*.img`: For Phicomm-N1(S905d).
+- `octopus-v*-openwrt_*.img` For Octopus-Planet(S912).
 
 The ***`s9xxx-v*-openwrt_*.img is the general OpenWrt firmware of all Amlogic-S9xxx series boxes`*** . You can write this OpenWrt firmware to the `USB hard disk` to start. When writing into EMMC through [s9xxx-install.sh](https://github.com/ophub/amlogic-s9xxx-openwrt/blob/main/install-program/files/s9xxx-install.sh), `select the name` of the box you own in the menu.
 
