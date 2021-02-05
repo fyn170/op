@@ -1,6 +1,6 @@
 # OpenWrt for Phicomm-N1
 
-You can download the OpwnWrt for Phicomm-N1 firmware from [Releases](https://github.com/ophub/op/releases). Such as `openwrt_phicomm-n1_${date}`. Then write the IMG file to the USB hard disk through software such as [balenaEtcher](https://www.balena.io/etcher/).
+You can download the OpwnWrt for Phicomm-N1 firmware from [Releases](https://github.com/ophub/op/releases). Such as `openwrt_n1_v${kernel}_${date}`. Then write the IMG file to the USB hard disk through software such as [balenaEtcher](https://www.balena.io/etcher/).
 
 This OpenWrt firmware on the `Github Actions` to packaging was using ***`Flippy's`*** [Amlogic S9xxx Kernel for OpenWrt](https://github.com/ophub/amlogic-s9xxx-openwrt), and the [Installation and Update scripts](https://github.com/ophub/amlogic-s9xxx-openwrt/tree/main/install-program), etc. Special thanks The maker `Flippy`.
 
@@ -8,7 +8,7 @@ Welcome to use `forks` for personalized OpenWrt firmware configuration. If you l
 
 ## Firmware instructions
 
-- `n1-v*-openwrt_*.img`: For Phicomm-N1.
+- `openwrt_n1-v*.img`: For Phicomm-N1.
 
 ## Install to emmc partition or upgrade instructions
 
