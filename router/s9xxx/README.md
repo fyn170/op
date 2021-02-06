@@ -2,7 +2,7 @@
 
 Support Amlogic-s9xxx chip series such as `S905x3`, `S905x2`, `S922x`, `S905x`, `S905d`, `s912`. You can download the OpwnWrt for S9xxx-Boxs firmware from [Releases](https://github.com/ophub/op/releases). Such as `openwrt_s9xxx_${date}`. Then write the IMG file to the USB hard disk through software such as [balenaEtcher](https://www.balena.io/etcher/).
 
-This OpenWrt firmware on the `Github Actions` to packaging was using ***`Flippy's`*** [Amlogic S9xxx Kernel for OpenWrt](https://github.com/ophub/amlogic-s9xxx-openwrt), and the [Installation and Update scripts](https://github.com/ophub/amlogic-s9xxx-openwrt/tree/main/install-program), etc. Special thanks The maker `Flippy`.
+This OpenWrt firmware on the `Github Actions` to packaging was using ***`Flippy's`*** [Amlogic S9xxx Kernel for OpenWrt](https://github.com/ophub/amlogic-s9xxx-openwrt), and the [Installation and Update scripts](https://github.com/ophub/amlogic-s9xxx-openwrt/tree/main/amlogic-s9xxx/install-program), etc. Special thanks The maker `Flippy`.
 
 Welcome to use `forks` for personalized OpenWrt firmware configuration. If you like it, Please click the `stars`.
 
@@ -23,9 +23,9 @@ Welcome to use `forks` for personalized OpenWrt firmware configuration. If you l
 - `openwrt_n1_v*.img`: For Phicomm-N1(S905d).
 - `openwrt_octopus_v*.img` For Octopus-Planet(S912).
 
-The ***`openwrt_s905x3_v*.img is the general OpenWrt firmware of all Amlogic-S9xxx series boxes`*** . You can write this OpenWrt firmware to the `USB hard disk` to start. When writing into EMMC through [s9xxx-install.sh](https://github.com/ophub/amlogic-s9xxx-openwrt/blob/main/install-program/files/s9xxx-install.sh), `select the name` of the box you own in the menu.
+The ***`openwrt_s905x3_v*.img is the general OpenWrt firmware of all Amlogic-S9xxx series boxes`*** . You can write this OpenWrt firmware to the `USB hard disk` to start. When writing into EMMC through [s9xxx-install.sh](https://github.com/ophub/amlogic-s9xxx-openwrt/tree/main/amlogic-s9xxx/install-program/files/s9xxx-install.sh), `select the name` of the box you own in the menu.
 
-For more OpenWrt firmware .dtb files are in the [dtb-amlogic](https://github.com/ophub/amlogic-s9xxx-openwrt/tree/main/armbian/dtb-amlogic) directory. You can use the `openwrt_s905x3_v*.img` firmware to install via USB hard disk. When writing into EMMC through [s9xxx-install.sh](https://github.com/ophub/amlogic-s9xxx-openwrt/blob/main/install-program/files/s9xxx-install.sh), [select 0: Enter the dtb file name of your box](https://github.com/ophub/amlogic-s9xxx-openwrt/tree/main/armbian/dtb-amlogic), and use the S9xxx-Boxes you own.
+For more OpenWrt firmware .dtb files are in the [dtb-amlogic](https://github.com/ophub/amlogic-s9xxx-openwrt/tree/main/amlogic-s9xxx/amlogic-dtb) directory. You can use the `openwrt_s905x3_v*.img` firmware to install via USB hard disk. When writing into EMMC through [s9xxx-install.sh](https://github.com/ophub/amlogic-s9xxx-openwrt/tree/main/amlogic-s9xxx/install-program/files/s9xxx-install.sh), [select 0: Enter the dtb file name of your box](https://github.com/ophub/amlogic-s9xxx-openwrt/tree/main/amlogic-s9xxx/amlogic-dtb), and use the S9xxx-Boxes you own.
 
 ## Install to emmc partition or upgrade instructions
 
@@ -36,7 +36,7 @@ s9xxx-install.sh
 reboot
 ```
 
-[For more instructions please see: install-program](https://github.com/ophub/amlogic-s9xxx-openwrt/tree/main/install-program).
+[For more instructions please see: install-program](https://github.com/ophub/amlogic-s9xxx-openwrt/tree/main/amlogic-s9xxx/install-program).
 
 
 ## Compilation method
