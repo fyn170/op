@@ -15,7 +15,7 @@ Welcome to use `forks` for personalized OpenWrt firmware configuration. If you l
 Insert the `USB hard disk` with the written `OpenWrt` firmware. Log in to the default IP: 192.168.1.1 → `Login in to openwrt` → `system menu` → `TTYD terminal` → input command: 
 
 ```yaml
-n1-install.sh
+s9xxx-install.sh
 reboot
 ```
 
