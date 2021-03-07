@@ -21,7 +21,7 @@ For more OpenWrt firmware .dtb files are in the [dtb-amlogic](https://github.com
 
 ## Install to EMMC and upgrade instructions
 
-Choose the corresponding firmware according to your Amlogic s9xxx STB. Then write the IMG file to the USB hard disk through software such as [balenaEtcher](https://www.balena.io/etcher/). Insert the USB hard disk into the Amlogic s9xxx STB. Common for all `Amlogic s9xxx STB`.
+Choose the corresponding firmware according to your Amlogic s9xxx STB. Then write the IMG file to the USB hard disk through software such as [balenaEtcher](https://www.balena.io/etcher/). Insert the USB hard disk into the STB. Common for all `Amlogic s9xxx STB`.
 
 ***`Install OpenWrt`***
 
