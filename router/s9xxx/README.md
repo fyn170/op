@@ -6,26 +6,18 @@ This OpenWrt firmware on the `Github Actions` to packaging was using ***`Flippy'
 
 ## Firmware instructions
 
-- `openwrt_s905x3_v*.img`: For all Amlogic-S905x3 series boxes.
-- `openwrt_s905x2_v*.img`: For all Amlogic-s905x2 series boxes.
-- `openwrt_s905x_v*.img`: For all Amlogic-s905x series boxes.
-- `openwrt_s905d_v*.img`: For all Amlogic-s905d series boxes.
-- `openwrt_s912_v*.img`: For all Amlogic-s912 series boxes.
-- `openwrt_s922x_v*.img`: For all Amlogic-s922x series boxes.
-- `openwrt_x96_v*.img`: For X96-Max+(S905x3). [🔍](https://tokopedia.link/uMaH09s41db)
-- `openwrt_hk1_v*.img`: For HK1-Box(S905x3). [🔍](https://tokopedia.link/pNHf5AE41db)
-- `openwrt_h96_v*.img`: For H96-Max-X3(S905x3). [🔍](https://tokopedia.link/wRh6SVI41db)
-- `openwrt_belink_v*.img` For Belink GT-King(S922x). [🔍](https://tokopedia.link/RAgZmOM41db)
-- `openwrt_belinkpro_v*.img` For Belink GT-King Pro(S922x). [🔍](https://tokopedia.link/sfTHlfS41db)
-- `openwrt_ugoos_v*.img` For UGOOS AM6 Plus(S922x). [🔍](https://tokopedia.link/pHGKXuV41db)
-- `openwrt_hg680p_v*.img`: For Fiberhome HG680P(S905x). [🔍](https://tokopedia.link/NWF1Skg21db)
-- `openwrt_b860h_v*.img`: For ZTE B860H(S905x). [🔍](https://tokopedia.link/fp8wG3711db)
-- `openwrt_n1_v*.img`: For Phicomm-N1(S905d).
-- `openwrt_octopus_v*.img` For Octopus-Planet(S912).
+| Model  | Boxes | OpenWrt Firmware |
+| ---- | ---- | ---- |
+| s905x3 | [x96](https://tokopedia.link/uMaH09s41db), [hk1](https://tokopedia.link/pNHf5AE41db), [h96](https://tokopedia.link/wRh6SVI41db) | openwrt_s905x3_v*.img |
+| s905x2 | x96max4g, x96max2g | openwrt_s905x2_v*.img |
+| s905x | [hg680p](https://tokopedia.link/NWF1Skg21db), [b860h](https://tokopedia.link/fp8wG3711db) | openwrt_s905x_v*.img |
+| s905d | n1 | openwrt_s905d_v*.img |
+| s922x | [belink](https://tokopedia.link/RAgZmOM41db), [belinkpro](https://tokopedia.link/sfTHlfS41db), [ugoos](https://tokopedia.link/pHGKXuV41db) | openwrt_s922x_v*.img |
+| s912 | octopus | openwrt_s912_v*.img |
 
-The ***`openwrt_s905x3_v*.img is the general OpenWrt firmware of all Amlogic-S9xxx series boxes`*** . You can write this OpenWrt firmware to the `USB hard disk` to start. When writing into EMMC through [s9xxx-install.sh](https://github.com/ophub/amlogic-s9xxx-openwrt/tree/main/amlogic-s9xxx/install-program/files/s9xxx-install.sh), `select the name` of the box you own in the menu.
+The ***`openwrt_s905x3_v*.img is the general OpenWrt firmware of all Amlogic-S9xxx series boxes`*** . You can write this OpenWrt firmware to the `USB hard disk` to start. When writing into EMMC through [openwrt-install](https://github.com/ophub/amlogic-s9xxx-openwrt/tree/main/amlogic-s9xxx/install-program/files/openwrt-install), `select the name` of the box you own in the menu.
 
-For more OpenWrt firmware .dtb files are in the [dtb-amlogic](https://github.com/ophub/amlogic-s9xxx-openwrt/tree/main/amlogic-s9xxx/amlogic-dtb) directory. You can use the `openwrt_s905x3_v*.img` firmware to install via USB hard disk. When writing into EMMC through [s9xxx-install.sh](https://github.com/ophub/amlogic-s9xxx-openwrt/tree/main/amlogic-s9xxx/install-program/files/s9xxx-install.sh), [select 0: Enter the dtb file name of your box](https://github.com/ophub/amlogic-s9xxx-openwrt/tree/main/amlogic-s9xxx/amlogic-dtb), and use the S9xxx-Boxes you own.
+For more OpenWrt firmware .dtb files are in the [dtb-amlogic](https://github.com/ophub/amlogic-s9xxx-openwrt/tree/main/amlogic-s9xxx/amlogic-dtb) directory. You can use the `openwrt_s905x3_v*.img` firmware to install via USB hard disk. When writing into EMMC through [openwrt-install](https://github.com/ophub/amlogic-s9xxx-openwrt/tree/main/amlogic-s9xxx/install-program/files/openwrt-install), [select 0: Enter the dtb file name of your box](https://github.com/ophub/amlogic-s9xxx-openwrt/tree/main/amlogic-s9xxx/amlogic-dtb), and use the S9xxx-Boxes you own.
 
 ## Install to EMMC partition and upgrade instructions
 
@@ -36,14 +28,14 @@ Choose the corresponding firmware according to your box. Then write the IMG file
 - Log in to the default IP: 192.168.1.1 → `Login in to openwrt` → `system menu` → `TTYD terminal` → input command: 
 
 ```yaml
-s9xxx-install.sh
+openwrt-install
 ```
 ***`Upgrade OpenWrt`***
 
 - Log in to the default IP: 192.168.1.1 →  `Login in to openwrt` → `system menu` → `file transfer` → upload ***`openwrt*.img.gz (Support suffix: *.img.xz, *.img.gz, *.7z, *.zip)`*** to ***`/tmp/upload/`***, enter the `system menu` → `TTYD terminal` → input command: 
 
 ```yaml
-s9xxx-update.sh
+openwrt-update
 ```
 
 [For more instructions please see: install-program](https://github.com/ophub/amlogic-s9xxx-openwrt/tree/main/amlogic-s9xxx/install-program)

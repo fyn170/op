@@ -6,7 +6,7 @@ This OpenWrt firmware on the `Github Actions` to packaging was using ***`Flippy'
 
 ## Firmware instructions
 
-- `openwrt_n1-v*.img`: For Phicomm-N1.
+- `openwrt_s905d-v*.img`: For Phicomm-N1.
 
 ## Install to EMMC partition and upgrade instructions
 
@@ -17,14 +17,14 @@ Choose the corresponding firmware according to your box. Then write the IMG file
 - Log in to the default IP: 192.168.1.1 → `Login in to openwrt` → `system menu` → `TTYD terminal` → input command: 
 
 ```yaml
-s9xxx-install.sh
+openwrt-install
 ```
 ***`Upgrade OpenWrt`***
 
 - Log in to the default IP: 192.168.1.1 →  `Login in to openwrt` → `system menu` → `file transfer` → upload ***`openwrt*.img.gz (Support suffix: *.img.xz, *.img.gz, *.7z, *.zip)`*** to ***`/tmp/upload/`***, enter the `system menu` → `TTYD terminal` → input command: 
 
 ```yaml
-s9xxx-update.sh
+openwrt-update
 ```
 
 [For more instructions please see: install-program](https://github.com/ophub/amlogic-s9xxx-openwrt/tree/main/amlogic-s9xxx/install-program)
