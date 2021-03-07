@@ -15,7 +15,7 @@ This OpenWrt firmware on the `Github Actions` to packaging was using ***`Flippy'
 | s922x | [belink](https://tokopedia.link/RAgZmOM41db), [belinkpro](https://tokopedia.link/sfTHlfS41db), [ugoos](https://tokopedia.link/pHGKXuV41db) | openwrt_s922x_v*.img |
 | s912 | octopus | openwrt_s912_v*.img |
 
-The ***`openwrt_s905x3_v*.img is the general OpenWrt firmware of all Amlogic-S9xxx series boxes`*** . You can write this OpenWrt firmware to the `USB hard disk` to start. When writing into EMMC through [openwrt-install](https://github.com/ophub/amlogic-s9xxx-openwrt/tree/main/amlogic-s9xxx/install-program/files/openwrt-install), `select the name` of the box you own in the menu.
+The OpenWrt firmware of the same `Model` is common. You can write this OpenWrt firmware to the `USB hard disk` to start. When writing into EMMC through [openwrt-install](https://github.com/ophub/amlogic-s9xxx-openwrt/tree/main/amlogic-s9xxx/install-program/files/openwrt-install), `select the name` of the box you own in the menu.
 
 For more OpenWrt firmware .dtb files are in the [dtb-amlogic](https://github.com/ophub/amlogic-s9xxx-openwrt/tree/main/amlogic-s9xxx/amlogic-dtb) directory. You can use the `openwrt_s905x3_v*.img` firmware to install via USB hard disk. When writing into EMMC through [openwrt-install](https://github.com/ophub/amlogic-s9xxx-openwrt/tree/main/amlogic-s9xxx/install-program/files/openwrt-install), [select 0: Enter the dtb file name of your box](https://github.com/ophub/amlogic-s9xxx-openwrt/tree/main/amlogic-s9xxx/amlogic-dtb), and use the S9xxx-Boxes you own.
 
