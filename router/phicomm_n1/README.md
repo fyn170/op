@@ -10,7 +10,7 @@ This OpenWrt firmware on the `Github Actions` to packaging was using ***`Flippy'
 
 ## Install to EMMC partition and upgrade instructions
 
-Choose the corresponding firmware according to your box. Then write the IMG file to the USB hard disk through software such as [balenaEtcher](https://www.balena.io/etcher/). Insert the USB hard disk into the S9xxx-Boxs. Common for all `s9xxx-Boxes`.
+Choose the corresponding firmware according to your box. Then write the IMG file to the USB hard disk through software such as [balenaEtcher](https://www.balena.io/etcher/). Insert the USB hard disk into the Amlogic S9xxx STB. Common for all `s9xxx-Boxes`.
 
 ***`Install OpenWrt`***
 
