@@ -1,12 +1,12 @@
-# OpenWrt for S9xxx-Boxs
+# OpenWrt for Amlogic s9xxx STB
 
-Support Amlogic-s9xxx chip series such as `S905x3`, `S905x2`, `S922x`, `S905x`, `S905d`, `s912`. You can download the OpwnWrt for S9xxx-Boxs firmware from [Releases](https://github.com/ophub/op/releases). Such as `openwrt_s9xxx_${date}`. Then write the IMG file to the USB hard disk through software such as [balenaEtcher](https://www.balena.io/etcher/).
+Support Amlogic s9xxx STB such as `S905x3`, `S905x2`, `S922x`, `S905x`, `S905d`, `s912`. You can download the OpwnWrt for Amlogic s9xxx STB firmware from [Releases](https://github.com/ophub/op/releases). Such as `openwrt_s9xxx_${date}`. Then write the IMG file to the USB hard disk through software such as [balenaEtcher](https://www.balena.io/etcher/).
 
 This OpenWrt firmware on the `Github Actions` to packaging was using ***`Flippy's`*** [Amlogic S9xxx Kernel for OpenWrt](https://github.com/ophub/amlogic-s9xxx-openwrt), and the [Install and Upgrade scripts](https://github.com/ophub/amlogic-s9xxx-openwrt/tree/main/amlogic-s9xxx/install-program), etc. Welcome to use `Forks` for [personalized OpenWrt firmware configuration](https://github.com/ophub/amlogic-s9xxx-openwrt/blob/main/router_config/Documentation.md). If you like it, Please click the `Star`.
 
 ## Firmware instructions
 
-| Model  | Boxes | OpenWrt Firmware |
+| Model  | STB | OpenWrt Firmware |
 | ---- | ---- | ---- |
 | s905x3 | [x96](https://tokopedia.link/uMaH09s41db), [hk1](https://tokopedia.link/pNHf5AE41db), [h96](https://tokopedia.link/wRh6SVI41db) | openwrt_s905x3_v*.img |
 | s905x2 | [x96max4g](https://tokopedia.link/HcfLaRzjqeb), [x96max2g](https://tokopedia.link/ro207Hsjqeb) | openwrt_s905x2_v*.img |
@@ -15,13 +15,13 @@ This OpenWrt firmware on the `Github Actions` to packaging was using ***`Flippy'
 | s912 | octopus | openwrt_s912_v*.img |
 | s905d | n1 | openwrt_s905d_v*.img |
 
-The OpenWrt firmware of the same `Model` is common. You can write this OpenWrt firmware to the `USB hard disk` to start. When writing into EMMC through [openwrt-install](https://github.com/ophub/amlogic-s9xxx-openwrt/tree/main/amlogic-s9xxx/install-program/files/openwrt-install), `select the name` of the box you own in the menu.
+The OpenWrt firmware of the same `Model` is common. You can write this OpenWrt firmware to the `USB hard disk` to start. When writing into EMMC through [openwrt-install](https://github.com/ophub/amlogic-s9xxx-openwrt/tree/main/amlogic-s9xxx/install-program/files/openwrt-install), `select the name` of the Amlogic s9xxx STB you own in the menu.
 
-For more OpenWrt firmware .dtb files are in the [dtb-amlogic](https://github.com/ophub/amlogic-s9xxx-openwrt/tree/main/amlogic-s9xxx/amlogic-dtb) directory. You can use the OpenWrt firmware to install via USB hard disk. When writing into EMMC through [openwrt-install](https://github.com/ophub/amlogic-s9xxx-openwrt/tree/main/amlogic-s9xxx/install-program/files/openwrt-install), [select 0: Enter the dtb file name of your box](https://github.com/ophub/amlogic-s9xxx-openwrt/tree/main/amlogic-s9xxx/amlogic-dtb), and use the S9xxx-Boxes you own.
+For more OpenWrt firmware .dtb files are in the [dtb-amlogic](https://github.com/ophub/amlogic-s9xxx-openwrt/tree/main/amlogic-s9xxx/amlogic-dtb) directory. You can use the OpenWrt firmware to install via USB hard disk. When writing into EMMC through [openwrt-install](https://github.com/ophub/amlogic-s9xxx-openwrt/tree/main/amlogic-s9xxx/install-program/files/openwrt-install), [select 0: Enter the dtb file name of your box](https://github.com/ophub/amlogic-s9xxx-openwrt/tree/main/amlogic-s9xxx/amlogic-dtb), and use the Amlogic s9xxx STB you own.
 
-## Install to EMMC partition and upgrade instructions
+## Install to EMMC and upgrade instructions
 
-Choose the corresponding firmware according to your box. Then write the IMG file to the USB hard disk through software such as [balenaEtcher](https://www.balena.io/etcher/). Insert the USB hard disk into the S9xxx-Boxs. Common for all `s9xxx-Boxes`.
+Choose the corresponding firmware according to your Amlogic s9xxx STB. Then write the IMG file to the USB hard disk through software such as [balenaEtcher](https://www.balena.io/etcher/). Insert the USB hard disk into the Amlogic s9xxx STB. Common for all `Amlogic s9xxx STB`.
 
 ***`Install OpenWrt`***
 
