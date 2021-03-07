@@ -1,6 +1,6 @@
 # OpenWrt for Phicomm-N1
 
-You can download the OpwnWrt for Phicomm-N1 firmware from [Releases](https://github.com/ophub/op/releases). Such as `openwrt_n1_v${kernel}_${date}`. Then write the IMG file to the USB hard disk through software such as [balenaEtcher](https://www.balena.io/etcher/).
+You can download the OpwnWrt for Phicomm-N1 firmware from [Releases](https://github.com/ophub/op/releases). Such as `openwrt_s905d_v${kernel}_${date}`. Then write the IMG file to the USB hard disk through software such as [balenaEtcher](https://www.balena.io/etcher/).
 
 This OpenWrt firmware on the `Github Actions` to packaging was using ***`Flippy's`*** [Amlogic S9xxx Kernel for OpenWrt](https://github.com/ophub/amlogic-s9xxx-openwrt), and the [Install and Upgrade scripts](https://github.com/ophub/amlogic-s9xxx-openwrt/tree/main/amlogic-s9xxx/install-program), etc. Welcome to use `Forks` for [personalized OpenWrt firmware configuration](https://github.com/ophub/amlogic-s9xxx-openwrt/blob/main/router_config/Documentation.md). If you like it, Please click the `Star`.
 
@@ -10,7 +10,7 @@ This OpenWrt firmware on the `Github Actions` to packaging was using ***`Flippy'
 
 ## Install to EMMC partition and upgrade instructions
 
-Choose the corresponding firmware according to your box. Then write the IMG file to the USB hard disk through software such as [balenaEtcher](https://www.balena.io/etcher/). Insert the USB hard disk into the S9xxx-Boxs. Common for `Phicomm-n1` and `s9xxx-Boxes`.
+Choose the corresponding firmware according to your box. Then write the IMG file to the USB hard disk through software such as [balenaEtcher](https://www.balena.io/etcher/). Insert the USB hard disk into the S9xxx-Boxs. Common for all `s9xxx-Boxes`.
 
 ***`Install OpenWrt`***
 
