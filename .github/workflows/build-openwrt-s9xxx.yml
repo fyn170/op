@@ -5,7 +5,7 @@
 # Source code repository: https://github.com/coolsnowwolf/lede / Branch: master
 #========================================================================================================================
 
-name: Build OpenWrt for S9xxx
+name: Build OpenWrt for S905x
 
 on:
   repository_dispatch:
@@ -14,13 +14,13 @@ on:
     #- cron: '0 17 * * 0'
 
 env:
-  REPO_URL: https://github.com/coolsnowwolf/lede
-  REPO_BRANCH: master
+  REPO_URL: https://github.com/Lienol/openwrt
+  REPO_BRANCH: 21.02
   FEEDS_CONF: router/amlogic_s9xxx/feeds.conf.default
   CONFIG_FILE: router/amlogic_s9xxx/.config
   DIY_P1_SH: router/amlogic_s9xxx/diy-part1.sh
   DIY_P2_SH: router/amlogic_s9xxx/diy-part2.sh
-  TZ: Asia/Shanghai
+  TZ: Asia/Jakarta
 
 jobs:
   build:
@@ -98,8 +98,8 @@ jobs:
       uses: ophub/amlogic-s9xxx-openwrt@main
       with:
         armvirt64_path: openwrt/bin/targets/*/*/*.tar.gz
-        amlogic_openwrt: s922x_s905x3_s905d_s912
-        amlogic_kernel: 5.10.100_5.4.180
+        amlogic_openwrt: s905x
+        amlogic_kernel: 5.4.180
 
     - name: Upload OpenWrt Firmware to Release
       uses: ncipollo/release-action@v1
@@ -118,4 +118,3 @@ jobs:
           Default WIFI name: OpenWrt
           Default WIFI password: none
           Install to EMMC: Login to OpenWrt → System → Amlogic Service → Install OpenWrt
-
