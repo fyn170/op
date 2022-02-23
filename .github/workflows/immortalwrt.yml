@@ -16,10 +16,10 @@ on:
 env:
   REPO_URL: https://github.com/immortalwrt/immortalwrt
   REPO_BRANCH: openwrt-21.02
-  FEEDS_CONF: router-config/immortal/feeds.conf.default
-  CONFIG_FILE: router-config/immortal/.config
-  DIY_P1_SH: router-config/immortal/diy-part1.sh
-  DIY_P2_SH: router-config/immortal/diy-part2.sh
+  FEEDS_CONF: router/immortal/feeds.conf.default
+  CONFIG_FILE: router/immortal/.config
+  DIY_P1_SH: router/immortal/diy-part1.sh
+  DIY_P2_SH: router/immortal/diy-part2.sh
   TZ: Asia/Jakarta
 
 jobs:
