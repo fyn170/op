@@ -73,12 +73,13 @@ git clone https://github.com/zsh-users/zsh-completions ./.oh-my-zsh/custom/plugi
 cp $GITHUB_WORKSPACE/amlogic-s9xxx/common-files/patches/zsh/.zshrc .
 cp $GITHUB_WORKSPACE/amlogic-s9xxx/common-files/patches/zsh/example.zsh ./.oh-my-zsh/custom/example.zsh
 popd
+
+# Add luci-theme-neobird
+git clone https://github.com/thinktip/luci-theme-neobird.git package/luci-theme-neobird
+
 # svn co https://github.com/vernesong/OpenClash/trunk/luci-app-openclash package/openclash
 # sed -i "/DEFAULT_PACKAGES/ s/$/ coreutils-nohup bash iptables dnsmasq-full curl ca-certificates ipset ip-full iptables-mod-tproxy iptables-mod-extra libcap libcap-bin ruby ruby-yaml kmod-tun/" target/linux/armvirt/Makefile
 # sed -i "/DEFAULT_PACKAGES/ s/$/ nft-qos kmod-nft-netdev kmod-nft-core kmod-nft-bridge nftables-json nftables-nojson libnftnl11 jansson4/" target/linux/armvirt/Makefile
 # Apply patch
 # git apply ../router-config/patches/{0001*,0002*}.patch --directory=feeds/luci
-
-# Add luci-theme-neobird
-git clone https://github.com/thinktip/luci-theme-neobird.git package/luci-theme-neobird
 # ------------------------------- Other ends -------------------------------
