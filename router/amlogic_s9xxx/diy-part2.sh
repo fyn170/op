@@ -16,7 +16,7 @@ sed -i 's/root::0:0:99999:7:::/root:$1$V4UetPzk$CYXluq4wUazHjmCDBCqXF.:0:0:99999
 
 # Set etc/openwrt_release
 sed -i "s|DISTRIB_REVISION='.*'|DISTRIB_REVISION='R$(date +%Y.%m.%d)'|g" package/base-files/files/etc/openwrt_release
-echo "DISTRIB_SOURCECODE='openwrt'" >>package/base-files/files/etc/openwrt_release
+echo "DISTRIB_SOURCECODE='KALYNXWRT'" >>package/base-files/files/etc/openwrt_release
 
 # Modify default IP（FROM 192.168.1.1 CHANGE TO 192.168.31.4）
 # sed -i 's/192.168.1.1/192.168.31.4/g' package/base-files/files/bin/config_generate
@@ -60,6 +60,19 @@ svn co https://github.com/gSpotx2f/luci-app-temp-status/trunk package/luci-app-t
 # sed -i "/DEFAULT_PACKAGES/ s/$/ brook chinadns-ng dns2socks hysteria ipt2socks kcptun microsocks naiveproxy pdnsd-alt shadowsocks-rust shadowsocksr-libev simple-obfs ssocks tcping trojan-go trojan-plus trojan v2ray-core v2ray-geodata v2ray-plugin xray-core xray-plugin/" target/linux/armvirt/Makefile
 
 # openclash
+svn co https://github.com/vernesong/OpenClash/trunk/luci-app-openclash package/openclash
+sed -i "/DEFAULT_PACKAGES/ s/$/ coreutils-nohup bash iptables dnsmasq-full curl ca-certificates ipset ip-full iptables-mod-tproxy iptables-mod-extra libcap libcap-bin ruby ruby-yaml kmod-tun/" target/linux/armvirt/Makefile
+
+# oh-my-zsh
+mkdir -p files/root
+pushd files/root
+git clone https://github.com/robbyrussell/oh-my-zsh ./.oh-my-zsh
+git clone https://github.com/zsh-users/zsh-autosuggestions ./.oh-my-zsh/custom/plugins/zsh-autosuggestions
+git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ./.oh-my-zsh/custom/plugins/zsh-syntax-highlighting
+git clone https://github.com/zsh-users/zsh-completions ./.oh-my-zsh/custom/plugins/zsh-completions
+cp $GITHUB_WORKSPACE/amlogic-s9xxx/common-files/patches/zsh/.zshrc .
+cp $GITHUB_WORKSPACE/amlogic-s9xxx/common-files/patches/zsh/example.zsh ./.oh-my-zsh/custom/example.zsh
+popd
 # svn co https://github.com/vernesong/OpenClash/trunk/luci-app-openclash package/openclash
 # sed -i "/DEFAULT_PACKAGES/ s/$/ coreutils-nohup bash iptables dnsmasq-full curl ca-certificates ipset ip-full iptables-mod-tproxy iptables-mod-extra libcap libcap-bin ruby ruby-yaml kmod-tun/" target/linux/armvirt/Makefile
 # sed -i "/DEFAULT_PACKAGES/ s/$/ nft-qos kmod-nft-netdev kmod-nft-core kmod-nft-bridge nftables-json nftables-nojson libnftnl11 jansson4/" target/linux/armvirt/Makefile
