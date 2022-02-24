@@ -67,7 +67,7 @@ jobs:
       
     - name: Theme neobird
       run: |
-        cd lede/package/lean  
+        cd lede
         rm -rf luci-theme-neobird  
         git clone https://github.com/thinktip/luci-theme-neobird.git  
         cd ~/lede/
