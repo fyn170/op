@@ -78,5 +78,7 @@ popd
 # sed -i "/DEFAULT_PACKAGES/ s/$/ nft-qos kmod-nft-netdev kmod-nft-core kmod-nft-bridge nftables-json nftables-nojson libnftnl11 jansson4/" target/linux/armvirt/Makefile
 # Apply patch
 # git apply ../router-config/patches/{0001*,0002*}.patch --directory=feeds/luci
-#
+
+# Add luci-theme-neobird
+git clone https://github.com/thinktip/luci-theme-neobird.git package/luci-theme-neobird
 # ------------------------------- Other ends -------------------------------
