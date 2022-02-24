@@ -64,7 +64,16 @@ jobs:
 
     - name: Install feeds
       run: cd openwrt && ./scripts/feeds install -a
-
+      
+    - name: Theme neobird
+      run: |
+        cd lede/package/lean  
+        rm -rf luci-theme-neobird  
+        git clone https://github.com/thinktip/luci-theme-neobird.git  
+        cd ~/lede/
+        make menuconfig #choose LUCI->Theme->Luci-theme-neobird  
+        make -j1 V=s
+        
     - name: Load custom configuration
       run: |
         [ -e files ] && mv files openwrt/files
