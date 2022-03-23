@@ -38,8 +38,11 @@ popd
 svn co https://github.com/vernesong/OpenClash/trunk/luci-app-openclash package/openwrt-openclash
 pushd package/openwrt-openclash/tools/po2lmo && make && sudo make install 2>/dev/null && popd
 
-# Add luci-theme-neobird
-git clone https://github.com/thinktip/luci-theme-neobird.git package/luci-theme-neobird
+# temperature
+svn co https://github.com/gSpotx2f/luci-app-temp-status/trunk package/luci-app-temp-status
+
+# Add luci-app-amlogic
+svn co https://github.com/ophub/luci-app-amlogic/trunk package/luci-app-amlogic
 
 # Add autocore
 # svn co https://github.com/ophub/amlogic-s9xxx-openwrt/trunk/amlogic-s9xxx/common-files/patches/autocore package/lean/autocore
