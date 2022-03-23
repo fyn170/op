@@ -14,7 +14,7 @@ on:
     #- cron: '0 17 * * 0'
 
 env:
-  REPO_URL: https://github.com/immortalwrt/immortalwrt
+  REPO_URL: https://github.com/openwrt/openwrt
   REPO_BRANCH: openwrt-21.02
   FEEDS_CONF: router/immortal/feeds.conf.default
   CONFIG_FILE: router/immortal/.config
